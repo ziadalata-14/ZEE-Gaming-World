@@ -24,15 +24,15 @@ body.inVR #panel,body.inVR #tag,body.inVR #reticle{display:none}
 </head>
 <body>
 <aside id="panel">
-<h1>🦆 Marsh Duck Hunt VR</h1><div id="version">V5 PRECISION AIM • Faster, Fewer Ducks</div>
+<h1>🦆 Marsh Duck Hunt VR</h1><div id="version">V6 WILDFLIGHT • 360° Weather + Night</div>
 <div id="score">Ducks 0 · Cash $0 · Ammo 5/5</div>
-<div id="message" role="status">Two fast ducks ahead; new birds arrive in smaller waves.</div>
-<div class="row"><label for="weather">Season</label><select id="weather"><option value="summer">☀️ Summer</option><option value="rain">🌧️ Rain</option><option value="snow">❄️ Snow</option></select><button id="cycle" type="button">Change season</button><button id="reset" type="button">Restart hunt</button><button id="toggleHud" type="button">Hide/show info board</button></div>
-<p><strong>Quest 3:</strong> Enter VR. <strong>Right controller trigger</strong> shoots; <strong>right grip</strong> reloads. <strong>Left trigger</strong> changes season. Press the right A button to hide/show the low info board. Laser and shot direction follow the shotgun barrels.</p>
-<p><strong>Desktop test:</strong> Ducks fly automatically. Click to shoot; drag to look; R reload; W change season; H toggle in-world info board.</p>
+<div id="message" role="status">Fewer, faster ducks arrive from all directions. Listen for warning calls.</div>
+<div class="row"><label for="weather">Season</label><select id="weather"><option value="summer">☀️ Summer</option><option value="rain">🌧️ Rain</option><option value="snow">❄️ Snow</option></select><button id="cycle" type="button">Change season</button><button id="reset" type="button">Restart hunt</button><button id="time" type="button">Switch to night</button><button id="light" type="button">Flashlight on/off</button><button id="toggleHud" type="button">Hide/show info board</button></div>
+<p><strong>Quest 3:</strong> Enter VR. <strong>Right controller trigger</strong> shoots; <strong>right grip</strong> reloads. <strong>Left trigger</strong> changes season. Press the right A button to hide/show the low info board. Red aiming dot follows the shotgun barrels. Earn the laser after 12 duck hits. Left X changes day/night; left grip toggles flashlight.</p>
+<p><strong>Desktop test:</strong> Ducks fly automatically. Click to shoot; drag to look; R reload; W change season; N day/night; F flashlight; H info board.</p>
 <div id="diagnostics">Checking VR controllers…</div>
 </aside>
-<div id="tag">DUCK HUNT VR · V5</div><div id="reticle" aria-hidden="true"></div><div id="enterVR"></div>
+<div id="tag">DUCK HUNT VR · V6</div><div id="reticle" aria-hidden="true"></div><div id="enterVR"></div>
 <canvas id="game"></canvas>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/+esm';
@@ -106,7 +106,8 @@ const duckColors={
 const types=['duck','duck','duck','duck','duck','duck','duck','duck','eagle','heron','osprey','red'];
 const sharedSphere = new THREE.SphereGeometry(1,11,8);
 const sharedCone = new THREE.ConeGeometry(1,1,5);
-let birds=[],cash=0,hits=0,ammo=5,reloading=0,ended=false,started=true,spawnWait=5.6,shotTime=0,weather='summer';
+let birds=[],cash=0,hits=0,ammo=5,reloading=0,ended=false,started=true,spawnWait=7.5,shotTime=0,weather='summer';
+let night=false,flashlightOn=false,windSpeed=0,windHeading=0,windTimer=0,laserEnabled=false,callTimer=0;
 const raycaster=new THREE.Raycaster();raycaster.far=72;
 const birdTargets=[];
 function makeBird(kind,initial=false,ix=0){
@@ -128,13 +129,18 @@ function makeBird(kind,initial=false,ix=0){
   // Subsequent birds enter from outside the forward view and cross quickly.
   const size=(initial?1.08:1.0)*(0.72+Math.random()*.32);
   g.scale.setScalar(size);
-  const z=initial?(-15.5-ix*4.5):(-14-Math.random()*21);
-  const side=Math.random()<.5?-1:1;
-  const x=initial?(ix%2===0?-7.2:7.2):(side*(18+Math.random()*3.5));
-  const y=initial?(2.75+(ix%2)*.55):(2.35+Math.random()*2.25);
-  const speed=4.1+Math.random()*2.7;
-  const vx=initial?(x<0?1:-1)*speed:-side*speed;
-  const b={group:g,kind,x,y,z,vx,phase:Math.random()*6.28,age:0,wings,size,initial};
+  // Approach from the entire 360-degree horizon; some take off from water.
+  const angle=initial?(-Math.PI/2+(ix-.5)*.4):Math.random()*Math.PI*2;
+  const radius=initial?17:24+Math.random()*13;
+  const x=initial?(ix===0?-8:8):Math.sin(angle)*radius;
+  const z=initial?-18:Math.cos(angle)*radius;
+  const waterLaunch=!initial&&Math.random()<.24;
+  const y=waterLaunch?-.10:(2.7+Math.random()*6.3);
+  const speed=6.4+Math.random()*4.0;
+  const targetAngle=angle+Math.PI+(Math.random()-.5)*1.15;
+  const vx=initial?(x<0?1:-1)*speed:Math.sin(targetAngle)*speed;
+  const vz=initial?0:Math.cos(targetAngle)*speed;
+  const b={group:g,kind,x,y,z,vx,vz,phase:Math.random()*6.28,age:0,wings,size,initial,waterLaunch,baseY:y};
   g.position.set(x,y,z);
   for(const hit of [body,head,beak,tail]){hit.userData.bird=b;birdTargets.push(hit)}
   for(const {pivot} of wings){for(const child of pivot.children){child.userData.bird=b;birdTargets.push(child)}}
@@ -148,20 +154,20 @@ function discardBird(b){
 }
 function newWave(n=1){
   for(let i=0;i<n;i++){
-    if(birds.length>=5)break;
+    if(birds.length>=3)break;
     const kind=types[(Math.random()*types.length)|0];
     makeBird(kind,false,i);
   }
 }
 function ensureVisibleDucks(){
-  // Two moving ducks are guaranteed in front at startup, not six stationary targets.
-  for(let i=0;i<2;i++){makeBird('duck',true,i)}
+  // One moving duck starts ahead; other birds arrive from all directions.
+  makeBird('duck',true,0);
 }
 ensureVisibleDucks();
 function reset(){
   for(const b of [...birds])discardBird(b);
-  hits=0;cash=0;ammo=5;reloading=0;ended=false;started=true;spawnWait=5.6;
-  ensureVisibleDucks();displayNotice('New hunt — two fast ducks ahead!');updateScores();
+  hits=0;cash=0;ammo=5;reloading=0;ended=false;started=true;spawnWait=7.5;windSpeed=0;laserEnabled=false;
+  ensureVisibleDucks();displayNotice('New hunt — listen for approaching ducks!');updateScores();
 }
 function displayNotice(value){$('message').textContent=value;stateMessage=value;stateMessageTime=6;hudDirty=true}
 let stateMessage='Right trigger: FIRE  |  A: Board on/off',stateMessageTime=8,hudDirty=true,lastHUD=0;
@@ -187,16 +193,16 @@ function drawHUD(){
   ctx.fillStyle='rgba(8,29,23,.86)';ctx.beginPath();ctx.roundRect(16,12,992,424,30);ctx.fill();
   ctx.lineWidth=6;ctx.strokeStyle='#f2c47a';ctx.stroke();
   ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillStyle='#ffe49d';ctx.font='bold 53px system-ui';ctx.fillText('DUCK HUNT VR  •  V5',512,70);
+  ctx.fillStyle='#ffe49d';ctx.font='bold 53px system-ui';ctx.fillText('DUCK HUNT VR  •  V6',512,70);
   ctx.fillStyle='#ffffff';ctx.font='bold 42px system-ui';ctx.fillText(`DUCKS ${hits}     CASH $${cash}     AMMO ${ammo}/5`,512,155);
   ctx.fillStyle=weather==='snow'?'#cdf6ff':weather==='rain'?'#bfd2ff':'#ffe9a6';
-  ctx.font='bold 39px system-ui';ctx.fillText(`SEASON: ${weather.toUpperCase()}    |    BIRDS: ${birds.length}`,512,226);
+  ctx.font='bold 39px system-ui';ctx.fillText(`${weather.toUpperCase()}  |  ${night?'NIGHT':'DAY'}  |  WIND ${windSpeed.toFixed(1)} m/s`,512,226);
   const right=rightSlot();ctx.fillStyle=right?'#91ffc3':'#ffce80';
   ctx.font='bold 31px system-ui';ctx.fillText(right?'RIGHT HAND: CONNECTED':'RIGHT HAND: WAITING FOR CONTROLLER',512,292);
   ctx.fillStyle='#f9e6b4';ctx.font='28px system-ui';
   ctx.fillText(stateMessage.slice(0,62),512,352);
   ctx.fillStyle='#bfffe3';ctx.font='bold 24px system-ui';
-  ctx.fillText('RIGHT A = SHOW/HIDE   •   RIGHT TRIGGER = FIRE',512,406);
+  ctx.fillText('A: BOARD  |  X: NIGHT  |  LEFT GRIP: LIGHT  |  B: LASER',512,406);
   hudTexture.needsUpdate=true;hudDirty=false;
 }
 function updateScores(){
@@ -205,17 +211,17 @@ function updateScores(){
 }
 // Weather must work *inside immersive VR*, where HTML select menus are not visible.
 const weatherOrder=['summer','rain','snow'];
-const rainCount=380;
+const rainCount=620;
 const rainPositions=new Float32Array(rainCount*2*3);
-const snowCount=280;
+const snowCount=520;
 const snowPositions=new Float32Array(snowCount*3);
 function randField(i){return Math.sin(i*123.411)*43758.5453%1}
 for(let i=0;i<rainCount;i++){
-  let x=(Math.random()-.5)*48, z=-3-Math.random()*48,y=Math.random()*17-.5;
+  let x=(Math.random()-.5)*66, z=(Math.random()-.5)*66,y=Math.random()*17-.5;
   rainPositions[i*6]=x; rainPositions[i*6+1]=y; rainPositions[i*6+2]=z;
   rainPositions[i*6+3]=x-.13; rainPositions[i*6+4]=y-.55; rainPositions[i*6+5]=z;
 }
-for(let i=0;i<snowCount;i++){snowPositions[i*3]=(Math.random()-.5)*46;snowPositions[i*3+1]=Math.random()*13;snowPositions[i*3+2]=-3-Math.random()*45}
+for(let i=0;i<snowCount;i++){snowPositions[i*3]=(Math.random()-.5)*68;snowPositions[i*3+1]=Math.random()*16;snowPositions[i*3+2]=(Math.random()-.5)*68}
 const rainGeo=new THREE.BufferGeometry();rainGeo.setAttribute('position',new THREE.BufferAttribute(rainPositions,3));
 const rainLines=new THREE.LineSegments(rainGeo,new THREE.LineBasicMaterial({color:0xb1cedf,transparent:true,opacity:.62}));scene.add(rainLines);
 const snowGeo=new THREE.BufferGeometry();snowGeo.setAttribute('position',new THREE.BufferAttribute(snowPositions,3));
@@ -236,9 +242,25 @@ function setWeather(next){
     leafMaterial.color.setHex(0xc5d7ce);islandMat.color.setHex(0xb4bcb5);reedMat.color.setHex(0xc2d0c6);waterMaterial.color.setHex(0x688e9d);
     sun.intensity=1.75;
   }
-  rainLines.visible=next==='rain';snowPoints.visible=next==='snow';
+  rainLines.visible=next==='rain';snowPoints.visible=next==='snow';applyLighting();
   displayNotice('Season changed to '+next.toUpperCase());
 }
+// Time of day and a left-hand headlamp that follows the controller.
+const moon=new THREE.DirectionalLight(0x9eb9ed,.32);moon.position.set(18,25,14);scene.add(moon);
+const flashlight=new THREE.SpotLight(0xfff2cf,18,32,Math.PI/7,.32,1.4);scene.add(flashlight);scene.add(flashlight.target);
+const leftLightDummy=new THREE.Group();scene.add(leftLightDummy);
+const redDot=mesh(new THREE.SphereGeometry(.075,10,8),new THREE.MeshBasicMaterial({color:0xff2222,depthTest:false}),scene);redDot.renderOrder=45;
+function applyLighting(){
+  const base=weather==='rain'?0x657b87:weather==='snow'?0xc6d6df:0x8cb8c6;
+  if(night){scene.background.set(0x071322);scene.fog.color.set(0x101f31);sun.intensity=.075;moon.intensity=.42;}
+  else{scene.background.set(base);scene.fog.color.set(weather==='rain'?0x708892:weather==='snow'?0xc2ced6:0x9ebcb2);sun.intensity=weather==='rain'?.78:weather==='snow'?1.75:2.35;moon.intensity=.1;}
+  flashlight.visible=night&&flashlightOn;
+  $('time').textContent=night?'Switch to day':'Switch to night';
+  $('light').textContent=flashlightOn?'Flashlight OFF':'Flashlight ON';hudDirty=true;
+}
+function toggleNight(){night=!night;applyLighting();displayNotice(night?'NIGHT HUNT — left grip controls flashlight':'DAY HUNT')}
+function toggleLight(){flashlightOn=!flashlightOn;applyLighting();displayNotice(flashlightOn?'Flashlight ON':'Flashlight OFF')}
+$('time').onclick=toggleNight;$('light').onclick=toggleLight;
 let lastSeasonChange=0;
 function changeSeason(){
   // XR emits both session and controller select events, so one press must change only once.
@@ -292,7 +314,7 @@ const slots=[0,1].map(i=>{
   const rayGun=makeShotgun();rayGun.position.set(0,-.055,-.14);rayGun.visible=false;ray.add(rayGun);
   const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,-.34),new THREE.Vector3(0,0,-23)]),new THREE.LineBasicMaterial({color:0xffe889,transparent:true,opacity:.3}));
   ray.add(line);line.visible=false;
-  const slot={i,ray,grip,gun,rayGun,line,source:null,hand:'none',lastTrigger:false,lastGrip:false,lastBoard:false};
+  const slot={i,ray,grip,gun,rayGun,line,source:null,hand:'none',lastTrigger:false,lastGrip:false,lastBoard:false,lastMode:false,lastLaser:false};
   ray.addEventListener('connected',e=>{
     slot.source=e.data;slot.hand=e.data?.handedness||'none';refreshControllers();
   });
@@ -312,9 +334,10 @@ function refreshControllers(){
     // the previous ~30-degree mismatch seen in Quest 3.
     slot.gun.visible=false;
     slot.rayGun.visible=isRight;
-    slot.rayGun.userData.laser.visible=isRight;
+    slot.rayGun.userData.laser.visible=isRight&&laserEnabled;
     slot.line.visible=false;
   }
+  desktopGun.userData.laser.visible=!immersive&&laserEnabled;
   desktopGun.visible=!immersive;
   fallbackGun.visible=immersive&&!rightSlot();
   hudDirty=true;
@@ -386,7 +409,7 @@ function fire(){
       point=contact.point.clone();hitBurst(point);
       if(bird.kind==='duck'){
         const award=bird.z>-18?50:bird.z>-27?100:200;
-        hits++;cash+=award;displayNotice('DUCK HIT! +$'+award);
+        hits++;cash+=award;displayNotice('DUCK HIT! +$'+award);if(hits===12){laserEnabled=true;refreshControllers();displayNotice('BONUS UNLOCKED: LASER AIM! Press B to toggle.')}
       }else if(bird.kind==='red'){
         ended=true;started=false;displayNotice('RED BIRD — GAME OVER. Press Restart.');
       }else{cash+=duckColors[bird.kind].value;displayNotice(bird.kind.toUpperCase()+' is protected! '+duckColors[bird.kind].value+' cash')}
@@ -401,7 +424,7 @@ function fire(){
   if(!ammo)reload();updateScores();
 }
 function onSelect(hand,slot){if(hand==='right')fire();else if(hand==='left')changeSeason()}
-function onSqueeze(hand){if(hand==='right')reload();else if(hand==='left')changeSeason()}
+function onSqueeze(hand){if(hand==='right')reload();else if(hand==='left')toggleLight()}
 function sessionSources(){
   const session=renderer.xr.getSession();if(!session)return;
   const src=session.inputSources;
@@ -448,7 +471,10 @@ function updateControllerButtons(){
     if(t&&!slot.lastTrigger)onSelect(slot.hand,slot);
     if(g&&!slot.lastGrip)onSqueeze(slot.hand);
     if(slot.hand==='right'&&board&&!slot.lastBoard)toggleInfoBoard();
-    slot.lastTrigger=t;slot.lastGrip=g;slot.lastBoard=board;
+    if(slot.hand==='left'&&board&&!slot.lastBoard)toggleNight();
+    const secondary=!!(buttons[5]?.pressed||(buttons[5]?.value>.75));
+    if(slot.hand==='right'&&secondary&&!slot.lastLaser&&hits>=12){laserEnabled=!laserEnabled;refreshControllers();displayNotice(laserEnabled?'LASER ON':'LASER OFF')}
+    slot.lastLaser=secondary;slot.lastTrigger=t;slot.lastGrip=g;slot.lastBoard=board;
   }
 }
 function updateFallbackGun(){
@@ -458,35 +484,66 @@ function updateFallbackGun(){
   fallbackGun.position.copy(pos).add(new THREE.Vector3(.43,-.36,-.83).applyQuaternion(quat));
   fallbackGun.quaternion.copy(quat);
 }
+function playDuckCall(){
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  if(!audioCtx)audioCtx=new AC();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+  const now=audioCtx.currentTime;
+  for(let i=0;i<3;i++){
+    const osc=audioCtx.createOscillator(),filter=audioCtx.createBiquadFilter(),gain=audioCtx.createGain();
+    osc.type='sawtooth';filter.type='lowpass';filter.frequency.value=720;
+    const t=now+i*.22;osc.frequency.setValueAtTime(360,t);osc.frequency.exponentialRampToValueAtTime(180,t+.15);
+    gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.065,t+.035);gain.gain.exponentialRampToValueAtTime(.0001,t+.18);
+    osc.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);osc.start(t);osc.stop(t+.2);
+  }
+ }catch(e){}
+}
+function updateWind(dt){windTimer-=dt;if(windTimer<=0){windTimer=9+Math.random()*12;windSpeed=.5+Math.random()*6;windHeading=Math.random()*Math.PI*2;hudDirty=true}}
+function updateFlashlight(){
+ if(!flashlight.visible)return;
+ const slot=slots.find(s=>s.hand==='left');const origin=new THREE.Vector3(),direction=new THREE.Vector3(0,0,-1),quat=new THREE.Quaternion();
+ const source=slot?slot.ray:renderer.xr.getCamera(camera);
+ source.updateWorldMatrix(true,false);source.getWorldPosition(origin);source.getWorldQuaternion(quat);direction.applyQuaternion(quat);
+ flashlight.position.copy(origin);flashlight.target.position.copy(origin).addScaledVector(direction,9);flashlight.target.updateMatrixWorld();
+}
+function updateRedDot(){
+ const {o,d}=shotRay();const r=new THREE.Raycaster(o,d,0,70);const landHit=r.intersectObjects([water,...scene.children.filter(x=>x.isMesh&&x.geometry?.type==='CylinderGeometry')],false)[0];
+ const birdHit=r.intersectObjects(birdTargets,false)[0];let distance=25;
+ if(landHit)distance=Math.min(distance,landHit.distance);if(birdHit)distance=Math.min(distance,birdHit.distance);
+ redDot.position.copy(o).addScaledVector(d,distance);redDot.visible=!laserEnabled;
+ redDot.scale.setScalar(Math.max(.55,distance/25));
+}
 function updateBirds(dt,t){
   if(!started)return;
   spawnWait-=dt;
-  if(spawnWait<=0){newWave(1+(Math.random()<.35?1:0));spawnWait=4.8+Math.random()*2.8}
+  if(spawnWait<=0){newWave(1);spawnWait=7+Math.random()*5;callTimer=0}
   for(const b of [...birds]){
     b.age+=dt;
-    b.x+=b.vx*dt;
-    b.group.position.set(b.x,b.y+.22*Math.sin(b.age*2.1+b.phase),b.z+.32*Math.sin(b.age*.65+b.phase));
-    b.group.rotation.y=b.vx<0?Math.PI:0;
+    b.x+=(b.vx+Math.sin(windHeading)*windSpeed*.42)*dt;
+    b.z+=(b.vz+Math.cos(windHeading)*windSpeed*.42)*dt;
+    if(b.waterLaunch)b.y=Math.min(3.8,b.baseY+b.age*1.7);
+    b.group.position.set(b.x,b.y+.22*Math.sin(b.age*2.1+b.phase),b.z);
+    b.group.rotation.y=-Math.atan2(b.vz,b.vx);
     for(const w of b.wings){w.pivot.rotation.z=.35*Math.sin(b.age*17+b.phase);w.pivot.rotation.x=w.side*(.45+.55*Math.sin(b.age*17+b.phase))}
-    if(Math.abs(b.x)>26||b.age>16)discardBird(b);
+    if(Math.hypot(b.x,b.z)>46||b.age>15)discardBird(b);
   }
   // No automatic 4-bird refill: quiet intervals make shots harder and realistic.
-  if(birds.length===0&&spawnWait>1.6)spawnWait=1.6;
+  if(birds.length===0&&spawnWait>5.5)spawnWait=5.5;
 }
 function updateWeather(dt,t){
   if(weather==='rain'){
     const a=rainPositions;
     for(let i=0;i<rainCount;i++){
       const j=i*6;a[j+1]-=dt*17;a[j+4]-=dt*17;
-      if(a[j+1]<-.3){a[j+1]=13;a[j+4]=12.45}
+      if(a[j+1]<-.3){a[j+1]=13;a[j+4]=12.45;a[j]=(Math.random()-.5)*66;a[j+3]=a[j]-.13;a[j+2]=(Math.random()-.5)*66;a[j+5]=a[j+2]}
     }
     rainGeo.attributes.position.needsUpdate=true;
   }else if(weather==='snow'){
     const a=snowPositions;
     for(let i=0;i<snowCount;i++){
       const j=i*3;a[j+1]-=dt*1.6;
-      a[j]+=.09*dt*Math.sin(t*.0006+i);
-      if(a[j+1]<-.35){a[j+1]=11.5;a[j]=(Math.random()-.5)*46}
+      a[j]+=dt*(Math.sin(windHeading)*windSpeed*.35+.09*Math.sin(t*.0006+i));a[j+2]+=dt*Math.cos(windHeading)*windSpeed*.35;
+      if(a[j+1]<-.35||Math.abs(a[j])>34||Math.abs(a[j+2])>34){a[j+1]=12+Math.random()*4;a[j]=(Math.random()-.5)*68;a[j+2]=(Math.random()-.5)*68}
     }
     snowGeo.attributes.position.needsUpdate=true;
   }
@@ -505,6 +562,8 @@ window.addEventListener('keydown',e=>{
   if(e.key.toLowerCase()==='r')reload();
   if(e.key.toLowerCase()==='w')changeSeason();
   if(e.key.toLowerCase()==='h')toggleInfoBoard();
+  if(e.key.toLowerCase()==='n')toggleNight();
+  if(e.key.toLowerCase()==='f')toggleLight();
   if(e.key===' ')fire();
 });
 let lastT=0,diagClock=0;
@@ -512,8 +571,9 @@ renderer.setAnimationLoop((t)=>{
   const dt=Math.min(.05,Math.max(0,lastT?(t-lastT)/1000:0));lastT=t;
   updateControllerButtons();updateFallbackGun();
   if(reloading>0){reloading-=dt;if(reloading<=0){reloading=0;ammo=5;displayNotice('RELOADED');updateScores()}}
-  if(stateMessageTime>0){stateMessageTime-=dt;if(stateMessageTime<=0){stateMessage='RIGHT TRIGGER: FIRE  |  A: BOARD  |  LEFT: SEASON';hudDirty=true}}
-  updateBirds(dt,t);updateWeather(dt,t);
+  if(stateMessageTime>0){stateMessageTime-=dt;if(stateMessageTime<=0){stateMessage='RIGHT: FIRE  |  LEFT: SEASON/LIGHT  |  X: NIGHT';hudDirty=true}}
+  updateWind(dt);if(started&&!ended&&spawnWait<2.6&&callTimer<=0){playDuckCall();callTimer=1}if(callTimer>0)callTimer-=dt;
+  updateBirds(dt,t);updateWeather(dt,t);updateFlashlight();updateRedDot();
   boat.rotation.z=Math.sin(t*.00078)*.009;
   water.position.y=-.52+Math.sin(t*.0013)*.015;
   for(let i=0;i<reeds.length;i++)reeds[i].rotation.z=Math.sin(t*.0013+i)*.075;
@@ -528,7 +588,7 @@ renderer.setAnimationLoop((t)=>{
   if(diagClock>.3){
     diagClock=0;
     const slot=rightSlot();
-    $('diagnostics').textContent=`V5 ACTIVE | Ducks in world: ${birds.length} | Season: ${weather.toUpperCase()}\nXR: ${renderer.xr.isPresenting?'IMMERSIVE':'DESKTOP'} | Right hand: ${slot?'TRACKED (slot '+slot.i+')':'WAITING'} | Left hand: ${slots.some(s=>s.hand==='left')?'DETECTED':'WAITING'}`;
+    $('diagnostics').textContent=`V6 ACTIVE | Ducks in world: ${birds.length} | Season: ${weather.toUpperCase()}\nXR: ${renderer.xr.isPresenting?'IMMERSIVE':'DESKTOP'} | Right hand: ${slot?'TRACKED (slot '+slot.i+')':'WAITING'} | Left hand: ${slots.some(s=>s.hand==='left')?'DETECTED':'WAITING'}`;
     hudDirty=true;
   }
   if(hudDirty||t-lastHUD>1300){drawHUD();lastHUD=t}
