@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="theme-color" content="#142539">
-<title>Air Strike VR V5 | ZEE Gaming World</title>
+<title>Air Strike VR V6 - Stable Road | ZEE Gaming World</title>
 <style>
  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#8eb9d0;color:#f5fbff;font:14px/1.4 Arial,Helvetica,sans-serif}
  canvas{display:block;outline:0}
@@ -29,7 +29,7 @@
 </head>
 <body>
 <div id="panel">
- <div id="title">✈ AIR STRIKE VR <span id="version">V5 • QUEST 3</span></div>
+ <div id="title">✈ AIR STRIKE VR <span id="version">V6 • STABLE ROAD</span></div>
  <div id="status" role="status">Loading your original 3D aircraft and vehicles…</div>
  <div id="assets" aria-label="Embedded models loading status">
   <span id="a-f16" class="loading">F-16: loading</span>
@@ -61,7 +61,9 @@ window.addEventListener('unhandledrejection',e=>notice('Game error: '+(e.reason?
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x8abbe0);
 scene.fog=new THREE.FogExp2(0xb1d4e0,0.00044);
-const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.08,18000);
+// The chase camera is tens of metres from the aircraft. A 1 m near plane
+// retains all gameplay geometry and greatly improves ground depth precision.
+const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,1,10000);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.4));
 renderer.setSize(innerWidth,innerHeight);
@@ -77,15 +79,54 @@ document.body.appendChild(vrButton);
 scene.add(new THREE.HemisphereLight(0xe6f2ff,0x51643a,2.9));
 const sun=new THREE.DirectionalLight(0xfff4d8,3.2);sun.position.set(90,330,-220);scene.add(sun);
 
-// Ground with geometric scenery for unmistakable forward motion.
-const earth=new THREE.Mesh(new THREE.PlaneGeometry(24000,24000),new THREE.MeshStandardMaterial({color:0x75865e,roughness:1}));
+// V6: grass, asphalt and lane paint are shaded ON ONE terrain surface.
+// There is no second road plane or stacked lane geometry to fight for depth.
+// World-space coordinates keep the road fixed when the terrain is recentered.
+const groundMat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,metalness:0});
+groundMat.onBeforeCompile=shader=>{
+ shader.uniforms.zeeGrass={value:new THREE.Color(0x75865e)};
+ shader.uniforms.zeeAsphalt={value:new THREE.Color(0x48534a)};
+ shader.uniforms.zeePaint={value:new THREE.Color(0xbab9a5)};
+ shader.vertexShader=shader.vertexShader.replace('#include <common>',`#include <common>
+ varying vec2 vZeeGroundXZ;`);
+ shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>',`#include <project_vertex>
+ vZeeGroundXZ=(modelMatrix*vec4(transformed,1.0)).xz;`);
+ shader.fragmentShader=shader.fragmentShader.replace('#include <common>',`#include <common>
+ varying vec2 vZeeGroundXZ;
+ uniform vec3 zeeGrass;
+ uniform vec3 zeeAsphalt;
+ uniform vec3 zeePaint;
+ // Pixel-footprint coverage, not a hard threshold: thin distant lines blend
+ // away instead of flashing between fully bright and fully dark pixels.
+ float zeeSpan(float center,float halfWidth,float pixelWidth){
+  float width=max(pixelWidth,0.001);
+  float overlap=min(center+width*0.5,halfWidth)-max(center-width*0.5,-halfWidth);
+  return clamp(overlap/width,0.0,1.0);
+ }`);
+ shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
+ vec2 footprint=max(fwidth(vZeeGroundXZ),vec2(0.025));
+ // Same 49 m road and 15 km extent as V5, centered at world z=-4200.
+ float roadCoverage=zeeSpan(vZeeGroundXZ.x,24.5,footprint.x)
+                    *zeeSpan(vZeeGroundXZ.y+4200.0,7500.0,footprint.y);
+ // Same dashed layout, but paint belongs to the asphalt's own surface.
+ float dashZ=mod(vZeeGroundXZ.y-120.0+49.5,99.0)-49.5;
+ float laneCoverage=zeeSpan(vZeeGroundXZ.x,0.8,footprint.x)
+                    *zeeSpan(dashZ,6.5,footprint.y);
+ float laneStart=1.0-smoothstep(126.5-footprint.y*0.5,
+                              126.5+footprint.y*0.5,vZeeGroundXZ.y);
+ // Fade sub-pixel, far-away markings smoothly; no temporal dithering.
+ float laneFade=(1.0-smoothstep(450.0,1350.0,length(vViewPosition)))
+               *(1.0-smoothstep(20.0,55.0,footprint.y));
+ vec3 surfaceColor=mix(zeeGrass,zeeAsphalt,roadCoverage);
+ surfaceColor=mix(surfaceColor,zeePaint,
+                  roadCoverage*laneCoverage*laneStart*laneFade);
+ diffuseColor.rgb*=surfaceColor;`);
+};
+groundMat.customProgramCacheKey=()=> 'zee-ground-single-surface-v6';
+const earth=new THREE.Mesh(new THREE.PlaneGeometry(24000,24000),groundMat);
+earth.name='V6 single-surface terrain and road';
 earth.rotation.x=-Math.PI/2;earth.position.y=-.1;scene.add(earth);
-const roadMat=new THREE.MeshStandardMaterial({color:0x48534a,roughness:1});
-const road=new THREE.Mesh(new THREE.PlaneGeometry(49,15000),roadMat);
-road.rotation.x=-Math.PI/2;road.position.set(0,.04,-4200);scene.add(road);
-const laneMarks=new THREE.InstancedMesh(new THREE.BoxGeometry(1.6,.08,13),new THREE.MeshBasicMaterial({color:0xe3debb}),140);
 const node=new THREE.Object3D();
-for(let i=0;i<140;i++){node.position.set(0,.13,120-i*99);node.updateMatrix();laneMarks.setMatrixAt(i,node.matrix);}laneMarks.instanceMatrix.needsUpdate=true;scene.add(laneMarks);
 const woods=new THREE.InstancedMesh(new THREE.ConeGeometry(6,24,5),new THREE.MeshStandardMaterial({color:0x385c3c,roughness:1}),155);
 for(let i=0;i<155;i++){
  const x=(Math.random()-.5)*3900,z=190-Math.random()*7200,s=.55+Math.random()*.85;
@@ -211,7 +252,7 @@ seedTargets();
  sceneReady=true;
  const count=Object.values(loaded).filter(Boolean).length;
  ui.status.textContent='YOUR UPLOADED MODELS: '+count+'/4 LOADED';
- if(count===4)notice('All FOUR original 3D models are loaded inside V5. Automatic forward flight is ON.');
+ if(count===4)notice('All FOUR original 3D models are loaded inside V6. Automatic forward flight is ON.');
  else notice('Loaded '+count+'/4 original models. See asset status; no separate model uploads are required.');
 })();
 
@@ -301,8 +342,10 @@ function update(dt){
  jet.rotation.x=THREE.MathUtils.damp(jet.rotation.x,-inp.pitch*.40,3.8,dt);
  aim(forward);jet.position.addScaledVector(forward,speed*dt);
  jet.position.y=THREE.MathUtils.clamp(jet.position.y,22,550);
- // Ground follows the jet so the horizon does not run out of terrain.
- earth.position.x=jet.position.x;earth.position.z=jet.position.z;
+ // Recenter only in large steps, beyond the visible horizon. The surface
+ // color uses world positions, so the road does not slide or jump with it.
+ earth.position.x=Math.round(jet.position.x/1024)*1024;
+ earth.position.z=Math.round(jet.position.z/1024)*1024;
  cooldown=Math.max(0,cooldown-dt);if(inp.trigger)shoot();
  flashTimer=Math.max(0,flashTimer-dt);flash.visible=flashTimer>0;
  for(let i=shots.length-1;i>=0;i--){
