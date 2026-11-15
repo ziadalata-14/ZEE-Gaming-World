@@ -1,40 +1,397 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title>Air Strike VR V3 — Quest 3</title><style>body{margin:0;background:#071320;color:white;font:16px Arial;overflow:hidden}#ui{position:fixed;top:12px;left:12px;background:#071522b9;padding:13px;border-radius:12px;z-index:3;max-width:360px}button{font-size:17px;padding:10px 15px;border:0;border-radius:8px;background:#f7b733;color:#111;font-weight:bold;cursor:pointer;margin:4px}#hud{font-size:15px;line-height:1.6}#notice{position:fixed;bottom:16px;left:12px;background:#071522bb;padding:10px;border-radius:8px;z-index:3}#vrButton{position:fixed!important;bottom:18px!important;right:16px!important;left:auto!important;z-index:9!important}canvas{display:block}</style></head><body><div id="ui"><b>✈ AIR STRIKE V3 — CHASE CAMERA FIX</b><div id="hud">Targets: <span id="targets">0</span> | Destroyed: <span id="score">0</span> | Health: <span id="hp">100</span><br>Speed: <span id="speed">140</span> | Altitude: <span id="alt">90</span></div><button id="restart">Restart mission</button><button id="shoot">FIRE</button><div style="font-size:13px;margin-top:7px">Quest: left stick steer/pitch, right trigger fire, right stick throttle. Desktop: WASD / arrows, Space fire, Shift boost. VR camera follows behind and above aircraft.</div></div><div id="notice">Loading supplied F-16 and ground vehicles…</div><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"}}</script><script type="module">
-import * as THREE from 'three';import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';import {VRButton} from 'three/addons/webxr/VRButton.js';
-window.addEventListener('error',e=>{const n=document.querySelector('#notice');if(n)n.textContent='Error: '+(e.message||'unknown')});window.addEventListener('unhandledrejection',e=>{const n=document.querySelector('#notice');if(n)n.textContent='Error: '+(e.reason?.message||String(e.reason))});const scene=new THREE.Scene();scene.background=new THREE.Color(0x8cc3e2);scene.fog=new THREE.FogExp2(0xa5c8d7,.00065);const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,10000);const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('local-floor');document.body.appendChild(renderer.domElement);document.body.appendChild(VRButton.createButton(renderer));scene.add(new THREE.HemisphereLight(0xcbe9ff,0x5b6b47,2.3));const sun=new THREE.DirectionalLight(0xfff1d0,2.8);sun.position.set(200,400,-250);scene.add(sun);
-const ground=new THREE.Mesh(new THREE.PlaneGeometry(14000,14000,36,36),new THREE.MeshStandardMaterial({color:0x7a8760,roughness:1}));ground.rotation.x=-Math.PI/2;scene.add(ground);const grid=new THREE.GridHelper(14000,140,0x6a735b,0x77805f);grid.position.y=.13;scene.add(grid);
-// Visible ground motion: runway stripes and roadside landmarks establish forward travel.
-const markerMaterial=new THREE.MeshBasicMaterial({color:0xf2e6b2});
-for(let i=0;i<180;i++){const stripe=new THREE.Mesh(new THREE.BoxGeometry(2,.15,17),markerMaterial);stripe.position.set(0,.25,-i*95);scene.add(stripe);}
-for(let i=0;i<120;i++){const side=i%2?-1:1;const post=new THREE.Mesh(new THREE.BoxGeometry(2,13,2),new THREE.MeshStandardMaterial({color:0xe2d4a0}));post.position.set(side*75,6.5,-i*100);scene.add(post);}
-for(let i=0;i<230;i++){const x=(Math.random()-.5)*12000,z=(Math.random()-.5)*12000;const h=5+Math.random()*35;const m=new THREE.Mesh(new THREE.ConeGeometry(6+Math.random()*8,h,5),new THREE.MeshStandardMaterial({color:0x3b6540}));m.position.set(x,h/2,z);scene.add(m)}
-const plane=new THREE.Group();scene.add(plane);const playerVisual=new THREE.Group();plane.add(playerVisual);const placeholder=new THREE.Group();const silver=new THREE.MeshStandardMaterial({color:0xc6d1da,metalness:.45,roughness:.48,side:THREE.DoubleSide});const fuselage=new THREE.Mesh(new THREE.CylinderGeometry(1.8,2.6,24,10),silver);fuselage.rotation.x=Math.PI/2;placeholder.add(fuselage);const wing=new THREE.Mesh(new THREE.BoxGeometry(25,.35,7),silver);wing.position.z=1;placeholder.add(wing);const tail=new THREE.Mesh(new THREE.BoxGeometry(10,.3,4),silver);tail.position.z=10;placeholder.add(tail);const fin=new THREE.Mesh(new THREE.BoxGeometry(.35,5,5),silver);fin.position.set(0,2,9);placeholder.add(fin);const nose=new THREE.Mesh(new THREE.ConeGeometry(1.8,6,10),silver);nose.rotation.x=-Math.PI/2;nose.position.z=-15;placeholder.add(nose);playerVisual.add(placeholder);plane.position.set(0,95,0);
-const loader=new GLTFLoader();const status=document.querySelector('#notice');function fitModel(obj,target){const box=new THREE.Box3().setFromObject(obj),size=new THREE.Vector3();box.getSize(size);let mx=Math.max(size.x,size.y,size.z);if(mx>0)obj.scale.multiplyScalar(target/mx);const b=new THREE.Box3().setFromObject(obj),center=b.getCenter(new THREE.Vector3());obj.position.sub(center);return obj}
-// F-16 glTF model orientation is adjustable independently of flight physics.
-loader.load('./general_dynamics_f-16_-_falcon.glb',g=>{const model=fitModel(g.scene,28);model.rotation.y=Math.PI;playerVisual.add(model);placeholder.visible=false;status.textContent='F-16 loaded. Chase camera above and behind; automatic forward flight active.';},undefined,e=>{console.error('F-16 load:',e);status.textContent='F-16 model failed to load. Check HTTPS hosting and model file names.'});
-const tanks=[];const shots=[];const explosions=[];let score=0,hp=100,forwardSpeed=140,elapsed=0;const tankFiles=['t-64bm_bulat.glb','t90_low-poly_tank.glb','ural-4320.glb'];const models={};for(const f of tankFiles)loader.load('./'+f,g=>{models[f]=g.scene;for(const t of tanks)if(t.file===f&&!t.loaded){t.group.clear();let mesh=fitModel(models[f].clone(true),20);t.group.add(mesh);t.loaded=true}},undefined,e=>{console.error('Ground model load:',f,e);status.textContent='Some ground models failed to load; placeholder targets remain.'});
-function spawnTargets(){for(const t of tanks)scene.remove(t.group);tanks.length=0;for(let i=0;i<36;i++){const f=tankFiles[i%3];const group=new THREE.Group();group.position.set((Math.random()-.5)*1800,1,-180-i*110-Math.random()*100);const body=new THREE.Mesh(new THREE.BoxGeometry(13,5,23),new THREE.MeshStandardMaterial({color:i%2?0x4b6541:0x666d52}));body.position.y=3;group.add(body);scene.add(group);const t={group,file:f,loaded:false,alive:true};tanks.push(t);if(models[f]){group.clear();group.add(fitModel(models[f].clone(true),20));t.loaded=true}}document.querySelector('#targets').textContent=tanks.length}spawnTargets();
-const keys={};addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault()});addEventListener('keyup',e=>keys[e.code]=false);let firing=false;document.querySelector('#shoot').addEventListener('pointerdown',()=>firing=true);for(const event of ['pointerup','pointercancel','pointerleave'])document.querySelector('#shoot').addEventListener(event,()=>firing=false);document.querySelector('#restart').onclick=()=>{plane.position.set(0,95,0);plane.rotation.set(0,0,0);forwardSpeed=140;score=0;hp=100;spawnTargets();for(const s of shots)scene.remove(s.mesh);shots.length=0;};
-const forward=new THREE.Vector3(),right=new THREE.Vector3(),desired=new THREE.Vector3(),cameraOffset=new THREE.Vector3(0,18,65),clock=new THREE.Clock();let cooldown=0;function fire(){if(cooldown>0)return;cooldown=.11;forward.set(Math.sin(plane.rotation.y),0,-Math.cos(plane.rotation.y));for(const side of [-1,1]){const origin=new THREE.Vector3(side*4,-1,-9).applyQuaternion(plane.quaternion).add(plane.position);const mesh=new THREE.Mesh(new THREE.SphereGeometry(.6,6,6),new THREE.MeshBasicMaterial({color:0xffdd54}));mesh.position.copy(origin);scene.add(mesh);shots.push({mesh,vel:forward.clone().multiplyScalar(520),life:2.6})}}
-function boom(p){const m=new THREE.Mesh(new THREE.SphereGeometry(5,10,8),new THREE.MeshBasicMaterial({color:0xff7d20,transparent:true,opacity:.95}));m.position.copy(p);scene.add(m);explosions.push({mesh:m,life:.5})}
-function controls(){let x=0,y=0,throttle=0,trigger=firing||keys.Space;x+=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0);y+=(keys.KeyS||keys.ArrowDown?1:0)-(keys.KeyW||keys.ArrowUp?1:0);throttle+=(keys.ShiftLeft?1:0)-(keys.ControlLeft?1:0);const session=renderer.xr.getSession();if(session){for(const input of session.inputSources){const pad=input.gamepad;if(!pad)continue;const axes=pad.axes||[];if(input.handedness==='left'){x+=axes[2]||axes[0]||0;y+=axes[3]||axes[1]||0}else if(input.handedness==='right'){throttle-=axes[3]||axes[1]||0;trigger ||= !!pad.buttons[0]?.pressed||!!pad.buttons[1]?.pressed}}}return {x:THREE.MathUtils.clamp(x,-1,1),y:THREE.MathUtils.clamp(y,-1,1),throttle,trigger}}
-function update(dt){dt=Math.min(dt,.045);elapsed+=dt;const c=controls();forwardSpeed=THREE.MathUtils.clamp(forwardSpeed+c.throttle*55*dt,75,290);plane.rotation.y-=c.x*dt*.65;plane.rotation.z=THREE.MathUtils.damp(plane.rotation.z,-c.x*.34,3,dt);plane.rotation.x=THREE.MathUtils.damp(plane.rotation.x,-c.y*.20,2.6,dt);// Plane continuously advances along its nose direction, including while no buttons are pressed.
-const heading=new THREE.Vector3(Math.sin(plane.rotation.y),0,-Math.cos(plane.rotation.y));plane.position.addScaledVector(heading,forwardSpeed*dt);plane.position.y=THREE.MathUtils.clamp(plane.position.y-c.y*55*dt,22,550);cooldown-=dt;if(c.trigger)fire();for(let i=shots.length-1;i>=0;i--){const s=shots[i];s.mesh.position.addScaledVector(s.vel,dt);s.life-=dt;let hit=false;for(const t of tanks){if(t.alive&&s.mesh.position.distanceTo(t.group.position)<15){t.alive=false;scene.remove(t.group);boom(t.group.position.clone().add(new THREE.Vector3(0,7,0)));score++;hit=true;break}}if(s.life<0||s.mesh.position.y<0||hit){scene.remove(s.mesh);shots.splice(i,1)}}for(let i=explosions.length-1;i>=0;i--){const e=explosions[i];e.life-=dt;e.mesh.scale.setScalar(1+(0.5-e.life)*6);e.mesh.material.opacity=Math.max(0,e.life*2);if(e.life<=0){scene.remove(e.mesh);explosions.splice(i,1)}}for(const t of tanks)if(t.alive&&Math.abs(t.group.position.x-plane.position.x)<20&&Math.abs(t.group.position.z-plane.position.z)<30&&plane.position.y<35){hp=Math.max(0,hp-12*dt)}document.querySelector('#score').textContent=score;document.querySelector('#hp').textContent=Math.ceil(hp);document.querySelector('#speed').textContent=Math.round(forwardSpeed);document.querySelector('#alt').textContent=Math.round(plane.position.y);if(hp<=0){status.textContent='Aircraft lost — press Restart mission';forwardSpeed=75}}
-// Chase camera: airplane remains centered ahead and BELOW the viewer, with visible wings.
-// For WebXR, camera pose comes from headset tracking, so move a parent rig instead.
-const chaseRig=new THREE.Group();scene.add(chaseRig);chaseRig.add(camera);
-const chaseOffset=new THREE.Vector3(0,23,74);const chaseLook=new THREE.Vector3(0,0,-26);
-chaseRig.position.copy(plane.position).add(chaseOffset);
-function chase(dt){
- const heading=plane.rotation.y;
- const offset=chaseOffset.clone().applyAxisAngle(THREE.Object3D.DEFAULT_UP,heading);
- desired.copy(plane.position).add(offset);
- chaseRig.position.lerp(desired,1-Math.exp(-dt*5));
- const target=plane.position.clone().add(new THREE.Vector3(0,0,-26).applyAxisAngle(THREE.Object3D.DEFAULT_UP,heading));
- // In VR keep the horizon stable: headset controls looking around, aircraft bank never rolls the view.
- const view=new THREE.Matrix4().lookAt(chaseRig.position,target,new THREE.Vector3(0,1,0));
- const orientation=new THREE.Quaternion().setFromRotationMatrix(view);
- chaseRig.quaternion.slerp(orientation,1-Math.exp(-dt*6));
- // Desktop uses the same chase position. In VR this local camera is an XR-tracked head.
-}
-renderer.setAnimationLoop(()=>{const dt=clock.getDelta();update(dt);chase(dt);renderer.render(scene,camera)});addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <title>Air Strike VR V4 - F-16 + Forward Cannon</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#081827;color:#fff;font:15px Arial,sans-serif}
+    canvas{display:block}
+    #ui{position:fixed;top:10px;left:10px;z-index:5;background:#061524d9;border:1px solid #a5ccdf55;border-radius:11px;padding:11px 13px;max-width:min(375px,calc(100% - 40px));line-height:1.55}
+    #ui strong{font-size:16px;letter-spacing:.3px}
+    #hud{margin-top:4px;font-size:14px}
+    #modelState{color:#b4ecff;font-size:13px}
+    .actions{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}
+    button{cursor:pointer;font:700 15px Arial,sans-serif;border:0;border-radius:8px;min-height:43px;padding:9px 14px;background:#f8b52f;color:#17212c;touch-action:manipulation}
+    button:focus-visible{outline:3px solid white;outline-offset:2px}
+    .hint{font-size:12px;color:#daeaf3}
+    #notice{position:fixed;bottom:13px;left:12px;z-index:5;max-width:min(70%,520px);font-size:12px;background:#0a1b2cd9;border-radius:8px;padding:9px 11px;overflow-wrap:anywhere}
+    #vrButton{position:fixed!important;bottom:16px!important;right:16px!important;left:auto!important;z-index:9!important}
+    @media(max-width:520px){#ui{font-size:13px;padding:8px 10px}#ui strong{font-size:14px}.hint{font-size:11px}#notice{font-size:11px}}
+  </style>
+  <script type="importmap">
+  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"}}
+  </script>
+</head>
+<body>
+  <div id="ui">
+    <strong>✈ AIR STRIKE V4 - F-16 FORWARD FIRE</strong>
+    <div id="hud">Targets: <span id="targets">36</span> | Destroyed: <span id="score">0</span> | Health: <span id="hp">100</span><br>Speed: <span id="speed">140</span> | Altitude: <span id="alt">95</span> | Heading: <span id="heading">0</span>°</div>
+    <div id="modelState">Loading your original F-16 model...</div>
+    <div class="actions"><button id="restart" type="button">Restart mission</button><button id="shoot" type="button">HOLD TO FIRE</button></div>
+    <div class="hint">Quest 3: left stick steer / climb / dive; right trigger cannon; right stick speed.<br>
+    Desktop: A / D steer, W climb, S dive, Space fire, Shift / Ctrl speed.<br>
+    Camera is ALWAYS behind and above the airplane. Cannon fires along its nose.</div>
+  </div>
+  <div id="notice" role="status" aria-live="polite">Loading aircraft and targets. Forward flight begins automatically.</div>
+  <script type="module">
+    import * as THREE from 'three';
+    import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+    import {VRButton} from 'three/addons/webxr/VRButton.js';
+
+    // WebXR rendering: the camera is attached to a third-person chase rig,
+    // not to the aircraft itself. Its parent places the Quest viewer behind / above.
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x91c4e3);
+    scene.fog = new THREE.FogExp2(0xa3cad8, 0.00065);
+    const camera = new THREE.PerspectiveCamera(65, innerWidth / innerHeight, 0.1, 10000);
+    const renderer = new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+    renderer.setSize(innerWidth,innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.65));
+    renderer.xr.enabled = true;
+    renderer.xr.setReferenceSpaceType('local-floor');
+    document.body.appendChild(renderer.domElement);
+    document.body.appendChild(VRButton.createButton(renderer));
+    const hemi = new THREE.HemisphereLight(0xd5eeff,0x617149,2.2);
+    scene.add(hemi);
+    const sunlight = new THREE.DirectionalLight(0xffefd0,2.7);
+    sunlight.position.set(240,440,-280);
+    scene.add(sunlight);
+
+    const notice = document.getElementById('notice');
+    const stateText = document.getElementById('modelState');
+    const labels = {
+      targets:document.getElementById('targets'),score:document.getElementById('score'),
+      hp:document.getElementById('hp'),speed:document.getElementById('speed'),
+      alt:document.getElementById('alt'),heading:document.getElementById('heading')
+    };
+    function showError(message){console.error(message);notice.textContent=message;}
+    window.addEventListener('error',e=>showError('Game error: '+(e.message||'unknown')));
+    window.addEventListener('unhandledrejection',e=>showError('Game error: '+(e.reason?.message||String(e.reason))));
+
+    // Infinite-look terrain: motion of runway markings and landmarks proves travel.
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(16000,16000),new THREE.MeshStandardMaterial({color:0x80916a,roughness:1}));
+    ground.rotation.x=-Math.PI/2;
+    scene.add(ground);
+    const grid = new THREE.GridHelper(14000,140,0x62795b,0x80916a);
+    grid.position.y=.13;
+    scene.add(grid);
+    const stripeMat = new THREE.MeshBasicMaterial({color:0xf5e5b0});
+    const postMat = new THREE.MeshStandardMaterial({color:0xd6cda5});
+    for(let i=0;i<145;i++){
+      const stripe = new THREE.Mesh(new THREE.BoxGeometry(2,.14,18),stripeMat);
+      stripe.position.set(0,.3,-i*95);scene.add(stripe);
+      if(i%2===0){for(const side of [-1,1]){
+        const post=new THREE.Mesh(new THREE.BoxGeometry(2,12,2),postMat);
+        post.position.set(side*78,6,-i*95);scene.add(post);
+      }}
+    }
+    const treeGeo = new THREE.ConeGeometry(10,30,5);
+    const treeMat = new THREE.MeshStandardMaterial({color:0x3f7548,roughness:1});
+    for(let i=0;i<160;i++){
+      const tree=new THREE.Mesh(treeGeo,treeMat);
+      const sz=.65+Math.random()*.75;tree.scale.setScalar(sz);
+      tree.position.set((Math.random()-.5)*10500,15*sz,(Math.random()-.5)*11000);
+      scene.add(tree);
+    }
+
+    const UP = new THREE.Vector3(0,1,0);
+    const LOCAL_FORWARD = new THREE.Vector3(0,0,-1);
+    const plane = new THREE.Group();
+    plane.rotation.order = 'YXZ'; // Yaw, pitch, and bank without mixing the forward axis.
+    plane.position.set(0,95,0);
+    scene.add(plane);
+    const aircraftVisual = new THREE.Group();
+    plane.add(aircraftVisual);
+
+    // Visible backup while original aircraft loads. Removed on successful load.
+    const fallback = new THREE.Group();
+    const metal = new THREE.MeshStandardMaterial({color:0xcbd5dc,metalness:.35,roughness:.55,side:THREE.DoubleSide});
+    const cylinder=new THREE.Mesh(new THREE.CylinderGeometry(1.8,2.6,23,10),metal);
+    cylinder.rotation.x=Math.PI/2;fallback.add(cylinder);
+    const wing=new THREE.Mesh(new THREE.BoxGeometry(20,.35,6.5),metal);
+    wing.position.z=2;fallback.add(wing);
+    const tailWing=new THREE.Mesh(new THREE.BoxGeometry(9,.28,4),metal);
+    tailWing.position.z=9;fallback.add(tailWing);
+    const fin=new THREE.Mesh(new THREE.BoxGeometry(.3,4.5,4.5),metal);
+    fin.position.set(0,2.5,9);fallback.add(fin);
+    const cone=new THREE.Mesh(new THREE.ConeGeometry(1.8,5,10),metal);
+    cone.rotation.x=-Math.PI/2;cone.position.z=-13;fallback.add(cone);
+    aircraftVisual.add(fallback);
+
+    const loader = new GLTFLoader();
+    function fitModel(object,maxDimension){
+      object.updateWorldMatrix(true,true);
+      const bbox = new THREE.Box3().setFromObject(object);
+      const sz = bbox.getSize(new THREE.Vector3());
+      const max = Math.max(sz.x,sz.y,sz.z);
+      if(max<=0||!Number.isFinite(max))throw new Error('GLB has empty geometry');
+      object.scale.multiplyScalar(maxDimension/max);
+      object.updateWorldMatrix(true,true);
+      const after=new THREE.Box3().setFromObject(object);
+      object.position.sub(after.getCenter(new THREE.Vector3()));
+      object.updateWorldMatrix(true,true);
+      return object;
+    }
+
+    // ORIGINAL UPLOADED F-16. Verified source GLB is authored with its nose along
+    // +X in glTF world space. Rotate the entire centered object +90 degrees about Y
+    // to make the actual aircraft nose align with our local forward axis (-Z).
+    // V3 used 180 degrees, leaving the mesh pointing sideways relative to flight.
+    loader.load('./general_dynamics_f-16_-_falcon.glb',glb=>{
+      try{
+        const original=fitModel(glb.scene,30);
+        const align=new THREE.Group();
+        align.rotation.y=Math.PI/2;
+        align.add(original);
+        aircraftVisual.add(align);
+        aircraftVisual.remove(fallback);
+        stateText.textContent='Original uploaded F-16 loaded - nose aligned with flight and cannon';
+        notice.textContent='F-16 ready. Automatic forward flight and forward-only cannon active.';
+      }catch(err){showError('Uploaded F-16 could not be displayed: '+err.message);stateText.textContent='Fallback aircraft active';}
+    },undefined,err=>{
+      stateText.textContent='Fallback aircraft active - F-16 not loaded';
+      showError('Cannot load uploaded F-16. Upload all ZIP files together: '+(err?.message||'missing GLB'));
+    });
+
+    const tankFiles=['t-64bm_bulat.glb','t90_low-poly_tank.glb','ural-4320.glb'];
+    const tankTemplates={};
+    const targets=[];
+    let score=0,health=100,speed=140,gunCooldown=0,gunFlashTime=0;
+    const explosions=[];
+    const shots=[];
+
+    // A single real F-16 cannon is mounted near the left side of the nose.
+    // The muzzle is parented to the flight group, not to camera/world axes.
+    const muzzle = new THREE.Object3D();
+    muzzle.position.set(-1.45,.25,-8.5);
+    plane.add(muzzle);
+    const muzzleLight = new THREE.Mesh(
+      new THREE.SphereGeometry(1.0,7,6),
+      new THREE.MeshBasicMaterial({color:0xffcb59,transparent:true,opacity:.84,depthWrite:false})
+    );
+    muzzle.add(muzzleLight);muzzleLight.visible=false;
+    const tracerGeometry = new THREE.CylinderGeometry(.18,.28,6,6);
+    const tracerMaterial = new THREE.MeshBasicMaterial({color:0xffd16a});
+    const tracerOrientationAxis = new THREE.Vector3(0,1,0);
+    const ballOrigin = new THREE.Vector3();
+    const planeForward = new THREE.Vector3();
+    const aimPosition = new THREE.Vector3();
+    const stepEnd = new THREE.Vector3();
+    const tempForward = new THREE.Vector3();
+
+    function cannonDirection(out){
+      // Common orientation for BOTH flight and bullets. Never calculate
+      // sin(yaw) with the opposite sign (the bug that caused sideways fire).
+      return out.copy(LOCAL_FORWARD).applyQuaternion(plane.quaternion).normalize();
+    }
+    function shoot(){
+      if(gunCooldown>0 || health<=0)return;
+      gunCooldown=.075;
+      plane.updateWorldMatrix(true,false);
+      muzzle.getWorldPosition(ballOrigin);
+      cannonDirection(planeForward);
+      const tracer=new THREE.Mesh(tracerGeometry,tracerMaterial);
+      tracer.position.copy(ballOrigin);
+      tracer.quaternion.setFromUnitVectors(tracerOrientationAxis,planeForward);
+      scene.add(tracer);
+      // Cannon rounds retain their launch direction (normal bullet ballistics),
+      // while every NEW round points along the aircraft's CURRENT nose.
+      shots.push({mesh:tracer,velocity:planeForward.clone().multiplyScalar(690+speed),life:1.65});
+      gunFlashTime=.042;
+      muzzleLight.visible=true;
+    }
+
+    function explode(position){
+      const material=new THREE.MeshBasicMaterial({color:0xff902b,transparent:true,opacity:.98,depthWrite:false});
+      const mesh=new THREE.Mesh(new THREE.SphereGeometry(4.7,9,8),material);
+      mesh.position.copy(position);scene.add(mesh);
+      explosions.push({mesh,life:.56});
+    }
+    function createTargets(){
+      for(const t of targets)scene.remove(t.group);
+      targets.length=0;
+      for(let i=0;i<36;i++){
+        const file=tankFiles[i%3];
+        const group=new THREE.Group();
+        // More vehicles near the flight corridor so it's possible to attack.
+        const x=((i%6)-2.5)*63+(Math.random()-.5)*22;
+        group.position.set(x,1,-210-i*135-(Math.random()*65));
+        const dummy = new THREE.Mesh(new THREE.BoxGeometry(11,5,20),new THREE.MeshStandardMaterial({color:0x576b49}));
+        dummy.position.y=2.5;group.add(dummy);
+        scene.add(group);
+        const t={group,file,loaded:false,alive:true};
+        targets.push(t);
+        if(tankTemplates[file])installTank(t);
+      }
+      labels.targets.textContent=targets.length;
+    }
+    function installTank(t){
+      if(!t.alive||t.loaded||!tankTemplates[t.file])return;
+      try{
+        const model=fitModel(tankTemplates[t.file].clone(true),21);
+        t.group.clear();t.group.add(model);
+        t.loaded=true;
+      }catch(err){console.warn('Tank model not usable',t.file,err);}
+    }
+    for(const file of tankFiles){
+      loader.load('./'+file,glb=>{
+        tankTemplates[file]=glb.scene;
+        for(const t of targets)if(t.file===file)installTank(t);
+      },undefined,err=>console.warn('Vehicle load failed; placeholder retained:',file,err));
+    }
+    createTargets();
+
+    const pressed=Object.create(null);
+    addEventListener('keydown',e=>{
+      pressed[e.code]=true;
+      if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
+    });
+    addEventListener('keyup',e=>pressed[e.code]=false);
+    addEventListener('blur',()=>{for(const code of Object.keys(pressed))delete pressed[code];holdingFire=false;});
+    let holdingFire=false;
+    const fireButton=document.getElementById('shoot');
+    fireButton.addEventListener('pointerdown',e=>{holdingFire=true;fireButton.setPointerCapture?.(e.pointerId);});
+    for(const ev of ['pointerup','pointercancel','lostpointercapture'])fireButton.addEventListener(ev,()=>holdingFire=false);
+    document.getElementById('restart').addEventListener('click',()=>{
+      plane.position.set(0,95,0);plane.rotation.set(0,0,0);
+      health=100;score=0;speed=140;gunCooldown=0;gunFlashTime=0;
+      muzzleLight.visible=false;
+      for(const shot of shots)scene.remove(shot.mesh);shots.length=0;
+      for(const explosion of explosions){scene.remove(explosion.mesh);explosion.mesh.material.dispose();}
+      explosions.length=0;
+      createTargets();
+      chaseHeading=0;
+      chaseRig.position.copy(plane.position).add(chaseOffset);
+      chaseRig.lookAt(plane.position.clone().add(new THREE.Vector3(0,0,-20)));
+      notice.textContent='Mission restarted. Automatic forward flight active.';
+    });
+
+    function readInputs(){
+      let steer=0,pitch=0,throttle=0;
+      let trigger=holdingFire||!!pressed.Space;
+      steer+=Number(!!(pressed.KeyD||pressed.ArrowRight))-Number(!!(pressed.KeyA||pressed.ArrowLeft));
+      pitch+=Number(!!(pressed.KeyS||pressed.ArrowDown))-Number(!!(pressed.KeyW||pressed.ArrowUp));
+      throttle+=Number(!!(pressed.ShiftLeft||pressed.ShiftRight))-Number(!!(pressed.ControlLeft||pressed.ControlRight));
+      const session=renderer.xr.getSession();
+      if(session){
+        for(const source of session.inputSources){
+          const pad=source.gamepad;
+          if(!pad)continue;
+          const axes=pad.axes||[];
+          // On Quest Touch controllers 2/3 are usually thumbsticks. Some
+          // browsers expose only 0/1; don't discard an actual zero position.
+          const sx=axes.length>2?axes[2]:(axes[0]||0);
+          const sy=axes.length>3?axes[3]:(axes[1]||0);
+          if(source.handedness==='left'){steer+=sx;pitch+=sy;}
+          if(source.handedness==='right'){
+            throttle-=sy;
+            trigger ||= !!pad.buttons[0]?.pressed || !!pad.buttons[1]?.pressed;
+          }
+        }
+      }
+      const deadzone=v=>Math.abs(v)<.12?0:v;
+      return {steer:THREE.MathUtils.clamp(deadzone(steer),-1,1),pitch:THREE.MathUtils.clamp(deadzone(pitch),-1,1),throttle:THREE.MathUtils.clamp(deadzone(throttle),-1,1),trigger};
+    }
+
+    // Swept-sphere collision so fast tracer rounds cannot tunnel through a tank.
+    function segmentHitsSphere(from,to,center,radius){
+      const ab=new THREE.Vector3().subVectors(to,from);
+      const len2=ab.lengthSq();
+      if(len2<=1e-12)return from.distanceToSquared(center)<=radius*radius;
+      const t=THREE.MathUtils.clamp(new THREE.Vector3().subVectors(center,from).dot(ab)/len2,0,1);
+      return new THREE.Vector3().copy(from).addScaledVector(ab,t).distanceToSquared(center)<=radius*radius;
+    }
+
+    function update(dt){
+      dt=Math.min(Math.max(dt,0),.05);
+      if(health<=0)return;
+      const input=readInputs();
+      speed=THREE.MathUtils.clamp(speed+input.throttle*57*dt,75,290);
+      plane.rotation.y-=input.steer*dt*.66;
+      plane.rotation.z=THREE.MathUtils.damp(plane.rotation.z,-input.steer*.29,4.2,dt);
+      plane.rotation.x=THREE.MathUtils.damp(plane.rotation.x,-input.pitch*.22,4,dt);
+      // Flight uses the SAME transformed local -Z vector as the gun.
+      // The former V3 sin(yaw) formula had the opposite X sign.
+      cannonDirection(planeForward);
+      plane.position.addScaledVector(planeForward,speed*dt);
+      plane.position.y=THREE.MathUtils.clamp(plane.position.y,22,520);
+      gunCooldown=Math.max(0,gunCooldown-dt);
+      if(input.trigger)shoot();
+      gunFlashTime=Math.max(0,gunFlashTime-dt);
+      muzzleLight.visible=gunFlashTime>0;
+
+      for(let i=shots.length-1;i>=0;i--){
+        const shot=shots[i];
+        aimPosition.copy(shot.mesh.position);
+        stepEnd.copy(aimPosition).addScaledVector(shot.velocity,dt);
+        let hit=false;
+        for(const target of targets){
+          if(!target.alive)continue;
+          const center=target.group.position.clone().add(new THREE.Vector3(0,4,0));
+          if(segmentHitsSphere(aimPosition,stepEnd,center,12)){
+            hit=true;target.alive=false;scene.remove(target.group);
+            explode(center);score++;break;
+          }
+        }
+        shot.mesh.position.copy(stepEnd);
+        shot.life-=dt;
+        if(hit||shot.life<=0||shot.mesh.position.y<0){
+          scene.remove(shot.mesh);shots.splice(i,1);
+        }
+      }
+      for(let i=explosions.length-1;i>=0;i--){
+        const e=explosions[i];e.life-=dt;
+        e.mesh.scale.setScalar(1+(.56-e.life)*6);
+        e.mesh.material.opacity=Math.max(0,e.life/.56);
+        if(e.life<=0){scene.remove(e.mesh);e.mesh.material.dispose();explosions.splice(i,1);}
+      }
+      for(const target of targets){
+        if(target.alive&&Math.abs(target.group.position.x-plane.position.x)<16&&Math.abs(target.group.position.z-plane.position.z)<21&&plane.position.y<22.5)
+          health=Math.max(0,health-15*dt);
+      }
+      labels.score.textContent=score;
+      labels.hp.textContent=Math.ceil(health);
+      labels.speed.textContent=Math.round(speed);
+      labels.alt.textContent=Math.round(plane.position.y);
+      labels.heading.textContent=((Math.round(-plane.rotation.y*180/Math.PI)%360)+360)%360;
+      if(health<=0){notice.textContent='Aircraft lost - select Restart mission.';}
+    }
+
+    // Follow position and yaw, NOT the aircraft's roll. This keeps the horizon
+    // stable in Quest 3 and always places the aircraft in front/below the viewer.
+    const chaseRig=new THREE.Group();scene.add(chaseRig);chaseRig.add(camera);
+    camera.position.set(0,0,0);
+    const chaseOffset=new THREE.Vector3(0,19,60);
+    let chaseHeading=0;
+    const targetPos=new THREE.Vector3();
+    const chaseLook=new THREE.Vector3();
+    chaseRig.position.copy(plane.position).add(chaseOffset);
+    chaseRig.lookAt(plane.position.clone().add(new THREE.Vector3(0,0,-20)));
+    function chase(dt){
+      let difference=plane.rotation.y-chaseHeading;
+      difference=Math.atan2(Math.sin(difference),Math.cos(difference));
+      chaseHeading+=difference*(1-Math.exp(-Math.min(dt,.05)*7));
+      targetPos.copy(chaseOffset).applyAxisAngle(UP,chaseHeading).add(plane.position);
+      // No lag in forward flight; only heading follows smoothly.
+      chaseRig.position.copy(targetPos);
+      chaseLook.set(0,1,-22).applyAxisAngle(UP,chaseHeading).add(plane.position);
+      const matrix=new THREE.Matrix4().lookAt(chaseRig.position,chaseLook,UP);
+      chaseRig.quaternion.setFromRotationMatrix(matrix);
+    }
+
+    const clock=new THREE.Clock();
+    renderer.setAnimationLoop(()=>{
+      const dt=clock.getDelta();
+      update(dt);
+      chase(dt);
+      renderer.render(scene,camera);
+    });
+    addEventListener('resize',()=>{
+      camera.aspect=innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth,innerHeight);
+    });
+  </script>
+</body>
+</html>
