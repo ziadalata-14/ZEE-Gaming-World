@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="theme-color" content="#101d27">
-<title>Air Strike VR V7 - Mountain Front | ZEE Gaming World</title>
+<title>Air Strike VR V8 - Green Valley / Fire Lock | ZEE Gaming World</title>
 <style>
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#90afc2;color:#eff4f6;font:14px/1.45 Arial,Helvetica,sans-serif}canvas{display:block;outline:0}button{font:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset:3px}
 #panel{position:fixed;z-index:6;left:16px;top:16px;width:325px;max-width:calc(100vw - 32px);box-sizing:border-box;padding:15px 16px;background:linear-gradient(135deg,#0b1b28ee,#142835e6);border:1px solid #c2d2dc38;border-radius:12px;box-shadow:0 10px 40px #08152240;backdrop-filter:blur(7px)}
@@ -18,27 +18,28 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#90afc2;col
 <body>
 <section id="panel">
 <div id="eyebrow">ZEE GAMING WORLD / QUEST 3</div>
-<div id="title">AIR STRIKE VR</div><div id="version">V7 &bull; MOUNTAIN FRONT</div>
+<div id="title">AIR STRIKE VR</div><div id="version">V8 &bull; GREEN VALLEY / FIRE LOCK</div>
 <div id="status" role="status">Loading your original aircraft and vehicles...</div>
 <div id="assets"><span id="a-f16" class="loading">F-16...</span><span id="a-bulat" class="loading">T-64...</span><span id="a-t90" class="loading">T-90...</span><span id="a-ural" class="loading">Ural...</span><span id="a-cannon" class="loading">AA gun...</span></div>
 <div class="stats"><div class="stat"><b id="hp">100</b><span>ARMOR</span></div><div class="stat"><b id="score">0</b><span>DESTROYED</span></div><div class="stat"><b><i id="ammo" style="font-style:normal">4</i><small>/4</small></b><span>MISSILES</span></div><div class="stat"><b id="flareState">RDY</b><span>FLARES</span></div></div>
 <div id="telemetry"><span id="speed">125</span> SPEED &nbsp; / &nbsp; <span id="alt">72</span> ALT &nbsp; / &nbsp; <span id="heading">000</span>&deg; HDG</div>
-<div id="combat">AUTOMATIC FORWARD FLIGHT</div><div id="notice" aria-live="polite">Your original F-16. Larger ground targets. A new mountain battlefield.</div>
-<div class="row"><button id="fire" class="primary" type="button">HOLD: CANNON</button><button id="missile" type="button">MISSILE [M]</button><button id="flares" type="button">FLARES [F]</button></div>
+<div id="combat">AUTOMATIC FORWARD FLIGHT</div><div id="notice" aria-live="polite">Hold FIRE near a target to lock it. Release to select another. Terrain contact is fatal.</div>
+<div class="row"><button id="fire" class="primary" type="button">HOLD: LOCK + FIRE</button><button id="missile" type="button">MISSILE [M]</button><button id="flares" type="button">FLARES [F]</button></div>
 <div class="row"><button id="restart" type="button">RESTART [R]</button><button id="pause" type="button">PAUSE [P]</button><button id="sound" type="button">SOUND: ON</button></div>
-<details><summary>Flight controls &amp; mission</summary><p><b>Quest:</b> Left stick steers / climbs / dives. Right stick changes speed. Right trigger fires cannon. Left trigger launches a locked missile. Left grip releases flares. Right grip pauses. B restarts.</p><p><b>Keyboard:</b> A/D turn, W/S climb/dive, SPACE cannon, M missile, F flares, Shift/Ctrl speed, P pause, R restart.</p><p>Keep a target ahead to acquire a missile lock. Missiles rearm automatically. Evade red tracer fire and incoming missiles. The camera stays above and behind the F-16 without rolling. Terrain clearance assistance is active.</p><p>All five original models are embedded. The Three.js engine still loads online. Open the HTTPS game page in Quest Browser and choose ENTER VR.</p></details>
+<details><summary>Flight controls &amp; mission</summary><p><b>Quest:</b> Left stick steers / climbs / dives. Right stick changes speed. Hold right trigger to lock a forward target and fire. Left trigger launches a locked missile. Left grip releases flares. Right grip pauses. B restarts.</p><p><b>Keyboard:</b> A/D turn, W/S climb/dive, SPACE cannon, M missile, F flares, Shift/Ctrl speed, P pause, R restart.</p><p>Point roughly toward a target and HOLD FIRE: the red marker locks it while your wings level. Release fire to choose again. Shots remain in the forward aiming sector; turning away or terrain blocking the target releases the lock. Left trigger still launches guided missiles. Fly above the ground and mountain ridges: contact now destroys the aircraft. There is no automatic terrain lift.</p><p>All five original models are embedded. The Three.js engine still loads online. Open the HTTPS game page in Quest Browser and choose ENTER VR.</p></details>
 </section>
-<div id="loading"><div>PREPARING MOUNTAIN FRONT<small>Loading original embedded 3D models...</small></div></div>
-<div id="missionEnd"><div><h1>MISSION ENDED</h1><p>Your aircraft has been disabled.</p><p>Press <b>R</b> or Quest <b>B</b> to restart.</p></div></div>
-<div id="badge">THIRD-PERSON FLIGHT &nbsp; / &nbsp; ORIGINAL F-16 &nbsp; / &nbsp; V7</div>
+<div id="loading"><div>PREPARING GREEN VALLEY<small>Loading original embedded 3D models...</small></div></div>
+<div id="missionEnd"><div><h1>MISSION ENDED</h1><p id="endReason">Your aircraft has been disabled.</p><p>Press <b>R</b> or Quest <b>B</b> to restart.</p></div></div>
+<div id="badge">THIRD-PERSON FLIGHT &nbsp; / &nbsp; ORIGINAL F-16 &nbsp; / &nbsp; V8</div>
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { VRButton } from 'three/addons/webxr/VRButton.js';
 
-// Air Strike V7. Built on the confirmed V6 flight, nose-axis and chase camera.
+// Air Strike V8. Based on the user-confirmed V7 original-model game.
+// Fire-button target lock, green terrain, off-road patrols and fatal terrain contact.
 // Embedded GLBs are the unmodified user uploads. No model-path dependency.
-const VERSION='V7 Mountain Front';
+const VERSION='V8 Green Valley / Fire Lock';
 const $=id=>document.getElementById(id);
 const ui={status:$('status'),notice:$('notice'),hp:$('hp'),score:$('score'),ammo:$('ammo'),flare:$('flareState'),speed:$('speed'),alt:$('alt'),heading:$('heading'),combat:$('combat')};
 let noticeTime=0;
@@ -53,7 +54,7 @@ function rand(){rngState=(Math.imul(1664525,rngState)+1013904223)>>>0;return rng
 const FORWARD=new THREE.Vector3(0,0,-1),UP=new THREE.Vector3(0,1,0),AXIS_Y=new THREE.Vector3(0,1,0);
 const tmp=new THREE.Vector3(),tmp2=new THREE.Vector3(),tmp3=new THREE.Vector3(),tmp4=new THREE.Vector3();
 const forward=new THREE.Vector3(),origin=new THREE.Vector3(),end=new THREE.Vector3();
-const scene=new THREE.Scene();scene.background=new THREE.Color(0xa6bfd0);scene.fog=new THREE.FogExp2(0xa9bec8,.000235);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0xa6c9dc);scene.fog=new THREE.FogExp2(0xadc9bc,.00021);
 const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,1,10000);
 let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});}catch(error){$('loading').innerHTML='<div>3D graphics could not start.<small>Open this page in Meta Quest Browser or a WebGL-enabled browser.</small></div>';throw error;}
@@ -62,12 +63,13 @@ renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('local-floor');render
 renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
 document.body.appendChild(renderer.domElement);
 const vrButton=VRButton.createButton(renderer);vrButton.id='vrButton';document.body.appendChild(vrButton);
-scene.add(new THREE.HemisphereLight(0xd9eaf3,0x677151,2.15));
+scene.add(new THREE.HemisphereLight(0xe1f1f8,0x568343,2.15));
 const sun=new THREE.DirectionalLight(0xffeed2,2.6);sun.position.set(-430,760,-510);scene.add(sun);
 renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();notice('Graphics context lost. Refresh the page to reload the embedded models.',999);});
 
 // Broad, continuous mountains. The central road and base valley remain flat.
-// This exact height function drives visible terrain, object placement and clearance.
+// Vertex heights define the same V7 surface. Collision and placement below
+// interpolate the ACTUAL triangle lattice, not a second, curved height field.
 function terrainHeight(x,z){
  const edge=smooth(480,1900,Math.abs(x));
  const ridge=.5+.5*Math.sin(x*.0027+1.65*Math.sin(z*.0011));
@@ -79,7 +81,37 @@ const BASE_SPACING=2200;
 function baseInfo(k){return {k,x:(Math.abs(k)%2===0?1:-1)*245,z:-1100-k*BASE_SPACING};}
 function nearestBase(z){return baseInfo(Math.round((-z-1100)/BASE_SPACING));}
 function inBase(x,z,margin=0){const b=nearestBase(z);return Math.abs(x-b.x)<140+margin&&Math.abs(z-b.z)<150+margin;}
-function clearLine(a,b){for(let i=1;i<10;i++){const t=i/10;if(lerp(a.y,b.y,t)<terrainHeight(lerp(a.x,b.x,t),lerp(a.z,b.z,t))+3)return false;}return true;}
+// PlaneGeometry(18000,18000,144,144) has 125-unit cells and diagonals b--d.
+// Terrain recentering is 1500 units (12 cells), so the global lattice never shifts.
+const TERRAIN_STEP=125;
+function surfaceHeight(x,z){
+ const gx=Math.floor(x/TERRAIN_STEP),gz=Math.floor(z/TERRAIN_STEP),x0=gx*TERRAIN_STEP,z0=gz*TERRAIN_STEP;
+ const u=(x-x0)/TERRAIN_STEP,v=(z-z0)/TERRAIN_STEP;
+ const h00=Math.fround(terrainHeight(x0,z0)),h10=Math.fround(terrainHeight(x0+TERRAIN_STEP,z0)),h01=Math.fround(terrainHeight(x0,z0+TERRAIN_STEP));
+ if(u+v<=1)return h00+u*(h10-h00)+v*(h01-h00);
+ const h11=Math.fround(terrainHeight(x0+TERRAIN_STEP,z0+TERRAIN_STEP));
+ return h11+(1-u)*(h01-h11)+(1-v)*(h10-h11);
+}
+function surfaceNormal(x,z,out){return out.set((surfaceHeight(x-8,z)-surfaceHeight(x+8,z))/16,1,(surfaceHeight(x,z-8)-surfaceHeight(x,z+8))/16).normalize();}
+// Exact segment / piecewise-planar ground intersection. The signed height is
+// linear between x, z and x+z lattice crossings, including mountain ridge edges.
+function terrainIntersectionT(a,b,clearance=0){
+ const cuts=[0,1];
+ for(const [from,to] of [[a.x,b.x],[a.z,b.z],[a.x+a.z,b.x+b.z]]){
+  const d=to-from;if(Math.abs(d)<1e-8)continue;
+  const first=Math.floor(Math.min(from,to)/TERRAIN_STEP)+1,last=Math.ceil(Math.max(from,to)/TERRAIN_STEP)-1;
+  for(let k=first;k<=last;k++){const t=(k*TERRAIN_STEP-from)/d;if(t>0&&t<1)cuts.push(t);}
+ }
+ cuts.sort((a,b)=>a-b);let t0=0,f0=a.y-surfaceHeight(a.x,a.z)-clearance;
+ if(f0<=0)return 0;
+ for(let i=1;i<cuts.length;i++){const t1=cuts[i];if(t1-t0<1e-9)continue;
+  const f1=lerp(a.y,b.y,t1)-surfaceHeight(lerp(a.x,b.x,t1),lerp(a.z,b.z,t1))-clearance;
+  if(f1<=0)return t0+(t1-t0)*f0/(f0-f1);
+  t0=t1;f0=f1;
+ }
+ return null;
+}
+function clearLine(a,b){return terrainIntersectionT(a,b,.3)===null;}
 
 // A single surface contains grass, roads, shoulders, junctions AND base aprons.
 // No stacked road/decal planes. Derivative filtering + distance fading prevents
@@ -99,10 +131,10 @@ groundMat.onBeforeCompile=shader=>{
  shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
  vec2 p=vZeeGroundXZ;vec2 fw=max(fwidth(p),vec2(.025));
  float n=terrainNoise(p*.006)*.65+terrainNoise(p*.021)*.35;
- vec3 grass=mix(vec3(.165,.209,.105),vec3(.335,.369,.202),n);
- vec3 rock=mix(vec3(.24,.235,.20),vec3(.43,.415,.357),n);
- float rocky=max(smoothstep(240.0,700.0,vZeeHeight),1.0-smoothstep(.62,.94,vZeeSlope));
- vec3 terrain=mix(grass,rock,rocky*.9);
+ vec3 grass=mix(vec3(.070,.205,.040),vec3(.235,.405,.100),n);
+ vec3 rock=mix(vec3(.185,.235,.155),vec3(.355,.385,.285),n);
+ float rocky=max(smoothstep(570.0,1050.0,vZeeHeight),1.0-smoothstep(.48,.83,vZeeSlope));
+ vec3 terrain=mix(grass,rock,rocky*.62);
  float k=floor((-p.y-1100.0)/2200.0+.5);float bz=-1100.0-k*2200.0;
  float bx=(mod(abs(k),2.0)<.5?1.0:-1.0)*245.0;
  float road=span(p.x,32.0,fw.x);
@@ -124,7 +156,7 @@ groundMat.onBeforeCompile=shader=>{
  terrain=mix(terrain,vec3(.56,.52,.36),markings*.85);
  diffuseColor.rgb*=terrain;`);
 };
-groundMat.customProgramCacheKey=()=> 'zee-one-surface-mountain-road-v7';
+groundMat.customProgramCacheKey=()=> 'zee-one-surface-green-valley-v8';
 const earthGeometry=new THREE.PlaneGeometry(18000,18000,144,144);earthGeometry.rotateX(-Math.PI/2);
 const earth=new THREE.Mesh(earthGeometry,groundMat);earth.name='Single-surface mountainous terrain / roads / base yards';scene.add(earth);
 let terrainTileX=Infinity,terrainTileZ=Infinity;
@@ -138,21 +170,21 @@ function updateTerrain(force=false){
  scatterScenery(cx,cz);
 }
 const node=new THREE.Object3D();
-const treeMat=new THREE.MeshStandardMaterial({color:0x385034,roughness:1});
+const treeMat=new THREE.MeshStandardMaterial({color:0x3f7736,roughness:1});
 const treeGeo=new THREE.ConeGeometry(7,25,6);treeGeo.translate(0,14,0);
 const woods=new THREE.InstancedMesh(treeGeo,treeMat,650);scene.add(woods);
-const rockMat=new THREE.MeshStandardMaterial({color:0x79766a,roughness:1});
+const rockMat=new THREE.MeshStandardMaterial({color:0x798270,roughness:1});
 const rocks=new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1,0),rockMat,170);scene.add(rocks);
 function scatterScenery(cx,cz){
  let nt=0,nr=0;
  for(let a=-14;a<=14;a++)for(let b=-15;b<=13;b++){
   const gx=Math.floor(cx/240)+a,gz=Math.floor(cz/240)+b;
   const x=gx*240+(hash(gx,gz)-.5)*200,z=gz*240+(hash(gx+93,gz)-.5)*200;
-  const y=terrainHeight(x,z);if(Math.abs(x)<62||inBase(x,z,38))continue;
-  if(y<440&&nt<650&&hash(gx-7,gz)>.16){
+  const y=surfaceHeight(x,z);if(Math.abs(x)<62||inBase(x,z,38))continue;
+  if(y<740&&nt<650&&hash(gx-7,gz)>.08){
    const s=.65+hash(gx,gz+5)*1.05;node.position.set(x,y,z);node.rotation.set(0,hash(gx,gz+19)*6.28,0);node.scale.set(s,s,s);node.updateMatrix();woods.setMatrixAt(nt++,node.matrix);
   }
-  if(nr<170&&hash(gx,gz+2)>.7){node.position.set(x+21,y+2,z+17);node.rotation.set(.2,hash(gx+11,gz)*6.28,.2);node.scale.set(4+hash(gx-1,gz)*10,3+hash(gx,gz-1)*5,5+hash(gx+1,gz)*7);node.updateMatrix();rocks.setMatrixAt(nr++,node.matrix);}
+  if(nr<170&&hash(gx,gz+2)>.7){node.position.set(x+21,surfaceHeight(x+21,z+17)+2,z+17);node.rotation.set(.2,hash(gx+11,gz)*6.28,.2);node.scale.set(4+hash(gx-1,gz)*10,3+hash(gx,gz-1)*5,5+hash(gx+1,gz)*7);node.updateMatrix();rocks.setMatrixAt(nr++,node.matrix);}
  }
  woods.count=nt;rocks.count=nr;for(const mesh of [woods,rocks]){mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();}
  node.scale.set(1,1,1);node.rotation.set(0,0,0);
@@ -195,10 +227,37 @@ const jet=new THREE.Group();jet.rotation.order='YXZ';jet.position.set(0,72,0);sc
 const airVisual=new THREE.Group();jet.add(airVisual);
 const fallback=new THREE.Group(),fallbackMat=new THREE.MeshStandardMaterial({color:0xbac7cf,roughness:.67,metalness:.23});
 for(const [size,pos] of [[[3,3,24],[0,0,0]],[[22,.4,6],[0,0,2]],[[9,.3,4],[0,0,9]],[[.4,4,4],[0,2,9]]]){const m=new THREE.Mesh(new THREE.BoxGeometry(...size),fallbackMat);m.position.set(...pos);fallback.add(m);}airVisual.add(fallback);
-function installJet(root){const actual=root;const align=new THREE.Group();align.rotation.y=Math.PI/2;align.add(actual);airVisual.add(align);airVisual.remove(fallback);}
+// Collision samples come from the original F-16 vertices, after its existing
+// orientation/size transform. This covers the nose, belly, wings and tail.
+let aircraftProbes=[new THREE.Vector3(0,-2,0),new THREE.Vector3(0,0,-14),new THREE.Vector3(-10,0,2),new THREE.Vector3(10,0,2),new THREE.Vector3(0,0,13)];
+let aircraftRadius=20;
+function configureAircraftCollision(root){
+ jet.updateWorldMatrix(true,true);const inv=new THREE.Matrix4().copy(jet.matrixWorld).invert(),cells=new Map(),extrema=Array(6).fill(null),v=new THREE.Vector3();
+ root.traverse(o=>{if(!o.isMesh)return;const m=new THREE.Matrix4().multiplyMatrices(inv,o.matrixWorld),p=o.geometry.getAttribute('position');
+  for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i).applyMatrix4(m);const key=Math.floor(v.x/1.8)+','+Math.floor(v.y/1.8)+','+Math.floor(v.z/1.8);
+   const old=cells.get(key);if(!old||v.y<old.y)cells.set(key,v.clone());for(let a=0;a<3;a++){const c=['x','y','z'][a];if(!extrema[a*2]||v[c]<extrema[a*2][c])extrema[a*2]=v.clone();if(!extrema[a*2+1]||v[c]>extrema[a*2+1][c])extrema[a*2+1]=v.clone();}}
+ });
+ if(cells.size){aircraftProbes=[...cells.values(),...extrema.filter(Boolean)];aircraftRadius=Math.max(...aircraftProbes.map(p=>p.length()))+.5;}
+}
+function installJet(root){const actual=root;const align=new THREE.Group();align.rotation.y=Math.PI/2;align.add(actual);airVisual.add(align);airVisual.remove(fallback);configureAircraftCollision(align);}
+const lastFlightPosition=new THREE.Vector3(),lastFlightQuaternion=new THREE.Quaternion();
+const sweepPosition=new THREE.Vector3(),sweepQuaternion=new THREE.Quaternion(),probeWorld=new THREE.Vector3();
+function aircraftTerrainContact(from,to,fromQ,toQ){
+ // Most flight frames are well above terrain: conservative local vertex bounds.
+ const r=aircraftRadius+1,minX=Math.min(from.x,to.x)-r,maxX=Math.max(from.x,to.x)+r,minZ=Math.min(from.z,to.z)-r,maxZ=Math.max(from.z,to.z)+r;
+ let highest=-Infinity;
+ for(let ix=Math.floor(minX/TERRAIN_STEP);ix<=Math.ceil(maxX/TERRAIN_STEP);ix++)for(let iz=Math.floor(minZ/TERRAIN_STEP);iz<=Math.ceil(maxZ/TERRAIN_STEP);iz++)highest=Math.max(highest,Math.fround(terrainHeight(ix*TERRAIN_STEP,iz*TERRAIN_STEP)));
+ if(Math.min(from.y,to.y)-r>highest+.15)return null;
+ const n=Math.max(1,Math.ceil(from.distanceTo(to)/1.4),Math.ceil(fromQ.angleTo(toQ)/.025));
+ for(let step=0;step<=n;step++){const u=step/n;sweepPosition.lerpVectors(from,to,u);sweepQuaternion.slerpQuaternions(fromQ,toQ,u);
+  for(const local of aircraftProbes){probeWorld.copy(local).applyQuaternion(sweepQuaternion).add(sweepPosition);
+   if(probeWorld.y<=surfaceHeight(probeWorld.x,probeWorld.z)+.15)return {u,point:probeWorld.clone()};}
+ }
+ return null;
+}
 const templates={},loaded={f16:false,bulat:false,t90:false,ural:false,cannon:false};
 const assetKeys=Object.keys(loaded),displayNames={f16:'F-16',bulat:'T-64',t90:'T-90',ural:'Ural',cannon:'AA gun'};
-let sceneReady=false,health=100,score=0,speed=125,missionTime=0,paused=false;
+let sceneReady=false,health=100,score=0,speed=125,missionTime=0,paused=false,deathReason="";
 const flightVelocity=new THREE.Vector3(0,0,-125);
 function aim(out){return out.copy(FORWARD).applyQuaternion(jet.quaternion).normalize();}
 function decodeGLB(key){const tag=$('embedded-'+key);if(!tag)throw new Error('Embedded '+key+' missing');const b=atob(tag.textContent.trim()),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer;}
@@ -258,37 +317,86 @@ const placeholderGeo=new THREE.BoxGeometry(12,7,30);
 const MODEL_YAW={bulat:Math.PI/2,t90:-Math.PI/2,ural:Math.PI/2,cannon:0,sam:0};
 function installTarget(t){if(!t.alive||t.modelLoaded||!templates[t.key])return;t.modelRoot.clear();const m=templates[t.key].clone(true);t.modelRoot.add(m);t.modelRoot.rotation.y=MODEL_YAW[t.key]||0;t.modelLoaded=true;const b=new THREE.Box3().setFromObject(templates[t.key]);t.height=b.getSize(tmp).y;t.centerHeight=t.height*.48;}
 function makeTarget(key,x,z,kind='vehicle'){
- const group=new THREE.Group();group.position.set(x,terrainHeight(x,z)+.12,z);const modelRoot=new THREE.Group();group.add(modelRoot);scene.add(group);
- const t={id:spawnSerial++,key,kind,group,modelRoot,modelLoaded:false,alive:true,hp:kind==='vehicle'?(key==='ural'?2:3):4,radius:kind==='vehicle'?19:15,height:12,centerHeight:6,prev:new THREE.Vector3(),velocity:new THREE.Vector3(),attack:2+rand()*4,lockTimer:0,dust:0};
+ const group=new THREE.Group();group.position.set(x,surfaceHeight(x,z)+.12,z);const modelRoot=new THREE.Group();group.add(modelRoot);scene.add(group);
+ const t={id:spawnSerial++,key,kind,group,modelRoot,modelLoaded:false,alive:true,hp:kind==='vehicle'?(key==='ural'?2:3):4,radius:kind==='vehicle'?19:15,height:12,centerHeight:6,prev:new THREE.Vector3(),prevCenter:new THREE.Vector3(),velocity:new THREE.Vector3(),attack:2+rand()*4,lockTimer:0,dust:0};
  targets.push(t);if(key==='sam'){modelRoot.add(samTemplate.clone(true));t.modelLoaded=true;t.centerHeight=7;}
  else{installTarget(t);if(!t.modelLoaded){const m=new THREE.Mesh(placeholderGeo,materials.olive);m.position.y=3.5;modelRoot.add(m);}}
- t.prev.copy(group.position);return t;
+ t.prev.copy(group.position);centerOf(t,t.prevCenter);return t;
 }
-function spawnVehicle(initial=false){
- const i=spawnSerial;const key=['bulat','t90','ural','bulat','t90'][i%5];const direction=i%3===1?1:-1;
- let z=initial?-340-(i%10)*155:jet.position.z+(Math.cos(jet.rotation.y)>.15?-1:1)*(800+rand()*1100);
- const x=direction<0?15:-15;
- for(let k=0;k<20&&targets.some(t=>t.alive&&t.kind==='vehicle'&&Math.abs(t.group.position.x-x)<18&&Math.abs(t.group.position.z-z)<90);k++)z-=110;
- const t=makeTarget(key,x,z);t.driveDirection=direction;t.driveSpeed=key==='ural'?14:8+rand()*3;t.group.rotation.y=direction<0?0:Math.PI;
- // A few tanks patrol the road shoulder instead of duplicating one convoy line.
- if(i%5===3){t.group.position.x=84;t.offRoad=true;}
- return t;
+const VEHICLE_COUNTS={road:6,field:8,mountain:8};
+const terrainUp=new THREE.Vector3(),terrainForward=new THREE.Vector3(),terrainRight=new THREE.Vector3(),terrainBack=new THREE.Vector3(),vehicleBasis=new THREE.Matrix4();
+function vehicleSpotOK(x,z,zone,spacing=true){
+ if(zone!=='road'&&(Math.abs(x)<70||inBase(x,z,32)))return false;
+ if(zone==='mountain'&&Math.abs(x)<560)return false;
+ surfaceNormal(x,z,terrainUp);if(terrainUp.y<.89)return false;
+ // Reject sharp crests and hollows beneath a full-size tank's footprint.
+ const h=surfaceHeight(x,z),sx=-terrainUp.x/terrainUp.y,sz=-terrainUp.z/terrainUp.y;
+ for(const [dx,dz] of [[-15,-15],[15,-15],[-15,15],[15,15]])if(Math.abs(surfaceHeight(x+dx,z+dz)-(h+sx*dx+sz*dz))>2.7)return false;
+ return !spacing||!targets.some(t=>t.alive&&t.kind==='vehicle'&&Math.hypot(t.group.position.x-x,t.group.position.z-z)<65);
 }
-function removeTarget(t){if(!t.alive)return;t.alive=false;scene.remove(t.group);const i=targets.indexOf(t);if(i>=0)targets.splice(i,1);if(lockedTarget===t){lockedTarget=null;lockProgress=0;}}
+function placeVehicle(t){
+ const p=t.group.position;surfaceNormal(p.x,p.z,terrainUp);
+ terrainForward.set(-Math.sin(t.driveYaw),0,-Math.cos(t.driveYaw));terrainForward.addScaledVector(terrainUp,-terrainForward.dot(terrainUp)).normalize();
+ terrainRight.crossVectors(terrainForward,terrainUp).normalize();terrainBack.copy(terrainForward).negate();vehicleBasis.makeBasis(terrainRight,terrainUp,terrainBack);t.group.quaternion.setFromRotationMatrix(vehicleBasis);
+ // Support the tracks/wheels on the rendered ground, not the curved source function.
+ let floor=surfaceHeight(p.x,p.z);
+ for(const [x,z] of [[-6,-12],[6,-12],[-6,12],[6,12],[0,0]]){
+  const q=new THREE.Vector3(x,0,z).applyQuaternion(t.group.quaternion);floor=Math.max(floor,surfaceHeight(p.x+q.x,p.z+q.z)-q.y);
+ }
+ p.y=floor+.15;
+}
+function choosePatrol(t){
+ for(let i=0;i<16;i++){const a=rand()*Math.PI*2,r=65+rand()*145,x=t.anchor.x+Math.cos(a)*r,z=t.anchor.z+Math.sin(a)*r;
+  if(!vehicleSpotOK(x,z,t.zone,false))continue;
+  let clear=true;for(let k=1;k<=4;k++)if(!vehicleSpotOK(lerp(t.group.position.x,x,k/4),lerp(t.group.position.z,z,k/4),t.zone,false)){clear=false;break;}
+  if(clear){t.waypoint=new THREE.Vector3(x,0,z);t.routeRetry=0;return;}
+ }
+ t.waypoint=null;t.routeRetry=1.7;
+}
+function spawnVehicle(initial=false,zone=null){
+ if(!zone)zone=Object.keys(VEHICLE_COUNTS).find(z=>targets.filter(t=>t.kind==='vehicle'&&t.zone===z).length<VEHICLE_COUNTS[z])||'field';
+ const slot=targets.filter(t=>t.kind==='vehicle'&&t.zone===zone).length,i=spawnSerial;
+ const key=zone==='road'?['bulat','t90','ural','t90','bulat','ural'][slot%6]:(slot%4===0?'bulat':'t90');
+ const direction=i%3===1?1:-1,headingSign=Math.cos(jet.rotation.y)>.15?-1:1;
+ let z=initial?-(330+slot*235+(zone==='road'?0:zone==='field'?135:440)):jet.position.z+headingSign*(750+rand()*1600),x=direction<0?15:-15;
+ if(zone==='road'){
+  for(let k=0;k<30&&targets.some(t=>t.alive&&t.kind==='vehicle'&&Math.abs(t.group.position.x-x)<18&&Math.abs(t.group.position.z-z)<90);k++)z-=120;
+ }else{
+  const side=slot%2===0?1:-1;let found=false;
+  for(let k=0;k<100;k++){
+   const trialX=zone==='field'?(Math.abs(jet.position.x)<440?side*(110+rand()*330):jet.position.x+(rand()-.5)*1250):(Math.abs(jet.position.x)<1100?side*(620+rand()*1350):jet.position.x+side*(250+rand()*1050));
+   const trialZ=z+(k===0?0:(rand()-.5)*650);
+   if(vehicleSpotOK(trialX,trialZ,zone)){x=trialX;z=trialZ;found=true;break;}
+  }
+  // A deterministic search ensures a terrain-supported location, even after
+  // unusual player turns. Never suspend a tank in the air above a steep slope.
+  if(!found){for(let k=0;k<150;k++){const trialX=side*(zone==='field'?95+(k%5)*72:570+(k%10)*92),trialZ=z+Math.floor(k/10)*90;if(vehicleSpotOK(trialX,trialZ,zone)){x=trialX;z=trialZ;found=true;break;}}}
+  if(!found){x=side*570;z-=450;}
+ }
+ const t=makeTarget(key,x,z);t.zone=zone;t.offRoad=zone!=='road';t.driveDirection=direction;t.driveSpeed=zone==='road'?(key==='ural'?14:8+rand()*3):5.5+rand()*3.5;t.driveYaw=direction<0?0:Math.PI;t.anchor=new THREE.Vector3(x,0,z);t.waypoint=null;t.routeRetry=0;
+ if(t.offRoad){choosePatrol(t);if(t.waypoint)t.driveYaw=Math.atan2(x-t.waypoint.x,z-t.waypoint.z);}
+ placeVehicle(t);t.prev.copy(t.group.position);centerOf(t,t.prevCenter);return t;
+}
+function removeTarget(t){if(!t.alive)return;t.alive=false;scene.remove(t.group);const i=targets.indexOf(t);if(i>=0)targets.splice(i,1);if(lockedTarget===t){lockedTarget=null;lockProgress=0;}if(gunLockTarget===t)gunLockTarget=null;}
 function updateBases(force=false){const nearest=Math.round((-jet.position.z-1100)/BASE_SPACING);const desired=[nearest-1,nearest,nearest+1];
  for(const k of desired){if(!force&&bases.some(b=>b.k===k))continue;const b=bases.find(b=>!desired.includes(b.k))||bases.find(b=>b.k===k)||bases[0];
   for(const d of b.defenses)removeTarget(d);b.defenses=[];b.k=k;const info=baseInfo(k);b.group.position.set(info.x,0,info.z);
   b.defenses.push(makeTarget('cannon',info.x-30,info.z-110,'aa'));b.defenses.push(makeTarget('sam',info.x+85,info.z+60,'sam'));
  }
 }
-function maintainTargets(){for(const t of [...targets])if(t.kind==='vehicle'&&Math.abs(t.group.position.z-jet.position.z)>2900)removeTarget(t);while(targets.filter(t=>t.kind==='vehicle').length<10)spawnVehicle();}
+function maintainTargets(){
+ for(const t of [...targets])if(t.kind==='vehicle'&&(Math.abs(t.group.position.z-jet.position.z)>3100||(t.zone!=='road'&&Math.hypot(t.group.position.x-jet.position.x,t.group.position.z-jet.position.z)>3800)))removeTarget(t);
+ for(const [zone,count] of Object.entries(VEHICLE_COUNTS)){let missing=count-targets.filter(t=>t.kind==='vehicle'&&t.zone===zone).length;while(missing-->0)spawnVehicle(false,zone);}
+}
 
 // Bounded visual effects. No full-screen flashes, camera shake or artificial roll.
 const sphereGeo=new THREE.SphereGeometry(1,10,7),tracerGeo=new THREE.CylinderGeometry(.18,.27,7,6);
 const friendlyTracer=new THREE.MeshBasicMaterial({color:0xffd99a}),hostileTracer=new THREE.MeshBasicMaterial({color:0xff674e});
 const shots=[],enemyShots=[],missiles=[],effects=[],decoys=[];
 let cooldown=0,flashTimer=0,damageGrace=0,missileAmmo=4,rearmTimer=0,missileCooldown=0,flareCooldown=0,enemyMissileCooldown=0;
-let lockedTarget=null,lockProgress=0,launchSide=1;
+let lockedTarget=null,lockProgress=0,launchSide=1,gunLockTarget=null,fireHeld=false;
+const GUN_ACQUIRE_COS=Math.cos(34*Math.PI/180),GUN_RETAIN_COS=Math.cos(43*Math.PI/180);
+const gunAimPoint=new THREE.Vector3(),gunBore=new THREE.Vector3(),gunDirection=new THREE.Vector3();
 const muzzle=new THREE.Object3D();muzzle.position.set(-1.4,.28,-10);jet.add(muzzle);
 const flash=new THREE.Mesh(new THREE.SphereGeometry(.9,8,6),new THREE.MeshBasicMaterial({color:0xffdf74,transparent:true,opacity:.8}));muzzle.add(flash);flash.visible=false;
 function removeEffect(i){const e=effects[i];scene.remove(e.mesh);e.mesh.material.dispose();effects.splice(i,1);}
@@ -307,24 +415,49 @@ function explosion(where,size=1){
 function updateEffects(dt){for(let i=effects.length-1;i>=0;i--){const e=effects[i];e.life-=dt;if(e.life<=0){removeEffect(i);continue;}const age=e.max-e.life;e.mesh.position.addScaledVector(e.velocity,dt);const s=e.size*(1+age*(e.smoke?.6:4));if(e.smoke)e.mesh.scale.set(s,s,1);else e.mesh.scale.setScalar(s);e.mesh.material.opacity=(e.smoke?.42:.9)*Math.min(1,e.life/e.max*1.7);}}
 const hpA=new THREE.Vector3(),hpDelta=new THREE.Vector3(),hpClose=new THREE.Vector3();
 function hitsSphere(a,b,c,r){hpDelta.subVectors(b,a);const len=hpDelta.lengthSq();const u=len>1e-9?clamp(hpA.subVectors(c,a).dot(hpDelta)/len,0,1):0;hpClose.copy(a).addScaledVector(hpDelta,u);return hpClose.distanceToSquared(c)<=r*r;}
-function centerOf(t,out){return out.copy(t.group.position).addScaledVector(UP,t.centerHeight);}
-function hitMovingTarget(a,b,t,r=t.radius){const aa=a.clone().sub(t.prev).addScaledVector(UP,-t.centerHeight),bb=b.clone().sub(t.group.position).addScaledVector(UP,-t.centerHeight);return hitsSphere(aa,bb,ZERO,r);}
+function centerOf(t,out){return out.set(0,t.centerHeight,0).applyQuaternion(t.group.quaternion).add(t.group.position);}
+function hitMovingTarget(a,b,t,r=t.radius){const aa=a.clone().sub(t.prevCenter),bb=b.clone().sub(centerOf(t,new THREE.Vector3()));return hitsSphere(aa,bb,ZERO,r);}
+function targetHitT(a,b,t,r=t.radius){
+ const v=a.clone().sub(t.prevCenter),d=b.clone().sub(centerOf(t,new THREE.Vector3())).sub(v),aa=d.lengthSq(),cc=v.lengthSq()-r*r;
+ if(cc<=0)return 0;if(aa<1e-12)return null;const bb=2*v.dot(d),disc=bb*bb-4*aa*cc;if(disc<0)return null;const u=(-bb-Math.sqrt(disc))/(2*aa);return u>=0&&u<=1?u:null;
+}
 const ZERO=new THREE.Vector3();
 function damageTarget(t,amount){if(!t?.alive)return;t.hp-=amount;if(t.hp<=0){const at=centerOf(t,new THREE.Vector3());explosion(at,t.kind==='vehicle'?1.5:1.9);removeTarget(t);score++;}else{puff(centerOf(t,tmp),9,.35,0xb49c75);}}
-function damagePlayer(amount){if(health<=0||damageGrace>0||missionTime<8)return;health=Math.max(0,health-amount);damageGrace=.7;soundFX('hit',.18);notice('Aircraft hit. Evade the tracers and use flares against missiles.',3);
- if(health<=0){explosion(jet.position,2.5);airVisual.visible=false;flash.visible=false;lockMarker.visible=false;sight.visible=false;$('missionEnd').style.display='flex';notice('Mission ended. Press R or Quest B to restart.',999);}
+function destroyAircraft(reason='ENEMY FIRE',impact=null){
+ if(health<=0&&deathReason)return;health=0;deathReason=reason;gunLockTarget=null;lockedTarget=null;lockProgress=0;fireHeld=false;
+ explosion(impact||jet.position,2.8);airVisual.visible=false;flash.visible=false;lockMarker.visible=false;sight.visible=false;
+ $('endReason').textContent=reason==='TERRAIN COLLISION'?'Your F-16 struck the ground or a mountain.':'Your aircraft was destroyed by enemy fire.';
+ $('missionEnd').style.display='flex';notice(reason+' - press R or Quest B to restart.',999);soundFX('hit',.18);
 }
-function shoot(){if(cooldown>0||health<=0||!sceneReady||paused)return;cooldown=.085;jet.updateWorldMatrix(true,false);muzzle.getWorldPosition(origin);aim(forward);const mesh=new THREE.Mesh(tracerGeo,friendlyTracer);mesh.position.copy(origin);mesh.quaternion.setFromUnitVectors(AXIS_Y,forward);scene.add(mesh);
- shots.push({mesh,velocity:forward.clone().multiplyScalar(750+speed),life:1.7});flashTimer=.05;flash.visible=true;soundFX('gun',.055);
+function damagePlayer(amount){if(health<=0||damageGrace>0||missionTime<8)return;health=Math.max(0,health-amount);damageGrace=.7;soundFX('hit',.18);notice('Aircraft hit. Evade the tracers and use flares against missiles.',3);if(health<=0)destroyAircraft();}
+function validGunTarget(t,retain=false){
+ if(!t?.alive)return false;centerOf(t,tmp);tmp.sub(jet.position);const d=tmp.length();if(d<42||d>(retain?1750:1450))return false;
+ if(tmp.divideScalar(d).dot(aim(gunBore))<(retain?GUN_RETAIN_COS:GUN_ACQUIRE_COS))return false;
+ return clearLine(jet.position,centerOf(t,tmp2));
+}
+function gunSolution(t,from,outDirection,outPoint){
+ if(!t?.alive)return false;centerOf(t,outPoint);const r=outPoint.clone().sub(from),v=t.velocity,shotSpeed=750+speed;
+ const a=v.lengthSq()-shotSpeed*shotSpeed,b=2*r.dot(v),c=r.lengthSq(),disc=b*b-4*a*c;
+ let travel=r.length()/shotSpeed;if(disc>=0&&Math.abs(a)>1e-8){const u=(-b-Math.sqrt(disc))/(2*a),w=(-b+Math.sqrt(disc))/(2*a);travel=Math.min(...[u,w].filter(x=>x>0));if(!Number.isFinite(travel))travel=r.length()/shotSpeed;}
+ outPoint.addScaledVector(v,Math.min(travel,2.2));outDirection.subVectors(outPoint,from).normalize();
+ // No bullets turn after launch. All new shots remain in a forward-only cone.
+ return outDirection.dot(aim(gunBore))>=GUN_RETAIN_COS&&clearLine(from,outPoint);
+}
+function shoot(){
+ if(cooldown>0||health<=0||!sceneReady||paused)return;cooldown=.085;jet.updateWorldMatrix(true,false);muzzle.getWorldPosition(origin);aim(forward);
+ if(fireHeld&&gunLockTarget&&gunSolution(gunLockTarget,origin,gunDirection,gunAimPoint))forward.copy(gunDirection);
+ const mesh=new THREE.Mesh(tracerGeo,friendlyTracer);mesh.position.copy(origin);mesh.quaternion.setFromUnitVectors(AXIS_Y,forward);scene.add(mesh);
+ shots.push({mesh,velocity:forward.clone().multiplyScalar(750+speed),life:2.25});flashTimer=.05;flash.visible=true;soundFX('gun',.055);
 }
 function updateShots(dt){
- for(let i=shots.length-1;i>=0;i--){const s=shots[i];end.copy(s.mesh.position).addScaledVector(s.velocity,dt);let didHit=false;
-  for(const t of targets){if(!t.alive)continue;if(hitMovingTarget(s.mesh.position,end,t)){damageTarget(t,1);didHit=true;break;}}
-  if(!didHit&&end.y<terrainHeight(end.x,end.z)){puff(end,4,.5,0xb8a580);didHit=true;}
-  s.mesh.position.copy(end);s.life-=dt;if(didHit||s.life<=0){scene.remove(s.mesh);shots.splice(i,1);}
+ for(let i=shots.length-1;i>=0;i--){const s=shots[i];end.copy(s.mesh.position).addScaledVector(s.velocity,dt);
+  const terrainT=terrainIntersectionT(s.mesh.position,end,.05);let first=terrainT===null?Infinity:terrainT,hitTarget=null;
+  for(const t of targets){if(!t.alive)continue;const u=targetHitT(s.mesh.position,end,t);if(u!==null&&u<first){first=u;hitTarget=t;}}
+  const hit=first!==Infinity;if(hit){end.lerpVectors(s.mesh.position,end,first);if(hitTarget)damageTarget(hitTarget,1);else puff(end,4,.5,0xa6aa83);}
+  s.mesh.position.copy(end);s.life-=dt;if(hit||s.life<=0){scene.remove(s.mesh);shots.splice(i,1);}
  }
- for(let i=enemyShots.length-1;i>=0;i--){const s=enemyShots[i];end.copy(s.mesh.position).addScaledVector(s.velocity,dt);const hit=hitsSphere(s.mesh.position,end,jet.position,10);
-  if(hit)damagePlayer(5);s.mesh.position.copy(end);s.life-=dt;if(hit||s.life<=0||end.y<terrainHeight(end.x,end.z)){scene.remove(s.mesh);enemyShots.splice(i,1);}
+ for(let i=enemyShots.length-1;i>=0;i--){const s=enemyShots[i];end.copy(s.mesh.position).addScaledVector(s.velocity,dt);const terrainT=terrainIntersectionT(s.mesh.position,end,.05);if(terrainT!==null)end.lerpVectors(s.mesh.position,end,terrainT);
+  const hit=hitsSphere(s.mesh.position,end,jet.position,10);if(hit)damagePlayer(5);s.mesh.position.copy(end);s.life-=dt;if(hit||s.life<=0||terrainT!==null){scene.remove(s.mesh);enemyShots.splice(i,1);}
  }
 }
 function enemyFire(t){if(enemyShots.length>42)return;const p=centerOf(t,new THREE.Vector3());p.y+=5;
@@ -362,15 +495,23 @@ function updateMissiles(dt){
   if(m.hostile){if(!m.diverted&&hitsSphere(p,end,jet.position,13)){damagePlayer(24);hit=true;explosion(end,.7);}if(m.diverted&&m.decoy?.life>0&&hitsSphere(p,end,m.decoy.mesh.position,13)){hit=true;explosion(end,.65);}}
   else{for(const t of targets){if(t.alive&&hitMovingTarget(p,end,t,t.radius+2)){const blast=centerOf(t,new THREE.Vector3());for(const other of [...targets])if(other.alive&&centerOf(other,tmp).distanceTo(blast)<48)damageTarget(other,6);hit=true;break;}}}
   p.copy(end);m.mesh.quaternion.setFromUnitVectors(FORWARD,m.dir);m.smoke-=dt;if(m.smoke<=0){puff(p,m.hostile?4.4:3.2,1.45,0xaaa99b,m.dir.clone().multiplyScalar(-3));m.smoke=.09;}
-  if(p.y<terrainHeight(p.x,p.z)+.5){if(!hit)explosion(p,.7);hit=true;}
+  if(p.y<surfaceHeight(p.x,p.z)+.5){if(!hit)explosion(p,.7);hit=true;}
   if(hit||m.life<=0){scene.remove(m.mesh);missiles.splice(i,1);}
  }
  for(let i=decoys.length-1;i>=0;i--){const d=decoys[i];d.life-=dt;d.velocity.y-=dt*8;d.mesh.position.addScaledVector(d.velocity,dt);d.mesh.material.opacity=clamp(d.life,0,1);d.smoke-=dt;if(d.smoke<=0){puff(d.mesh.position,2.5,.9,0xb1a58c);d.smoke=.22;}if(d.life<=0){scene.remove(d.mesh);d.mesh.material.dispose();decoys.splice(i,1);}}
 }
 function updateTargets(dt){
- for(const t of targets){t.prev.copy(t.group.position);
-  if(t.kind==='vehicle'){t.velocity.set(0,0,t.driveDirection*t.driveSpeed);t.group.position.addScaledVector(t.velocity,dt);t.group.position.y=terrainHeight(t.group.position.x,t.group.position.z)+.12;t.dust-=dt;
-   if(t.dust<=0&&t.group.position.distanceTo(jet.position)<850){tmp.copy(t.group.position);tmp.z-=t.driveDirection*15;tmp.y+=1.3;puff(tmp,t.offRoad?6:3,1,0x9a8a64,new THREE.Vector3(2,1.4,-t.driveDirection));t.dust=.55;}
+ for(const t of targets){t.prev.copy(t.group.position);centerOf(t,t.prevCenter);
+  if(t.kind==='vehicle'){
+   let canMove=true;
+   if(t.offRoad){t.routeRetry-=dt;if((!t.waypoint||Math.hypot(t.waypoint.x-t.group.position.x,t.waypoint.z-t.group.position.z)<20)&&t.routeRetry<=0)choosePatrol(t);
+    if(t.waypoint){const desired=Math.atan2(t.group.position.x-t.waypoint.x,t.group.position.z-t.waypoint.z),diff=Math.atan2(Math.sin(desired-t.driveYaw),Math.cos(desired-t.driveYaw));t.driveYaw+=clamp(diff,-dt*.8,dt*.8);}else canMove=false;
+   }
+   if(canMove){const x=t.group.position.x-Math.sin(t.driveYaw)*t.driveSpeed*dt,z=t.group.position.z-Math.cos(t.driveYaw)*t.driveSpeed*dt;
+    if(!t.offRoad||vehicleSpotOK(x,z,t.zone,false)){t.group.position.x=x;t.group.position.z=z;}else{t.waypoint=null;t.routeRetry=.3;t.driveYaw+=Math.PI*.7;}
+   }
+   placeVehicle(t);centerOf(t,t.velocity).sub(t.prevCenter).divideScalar(Math.max(dt,1e-5));t.dust-=dt;
+   if(t.dust<=0&&t.velocity.lengthSq()>1&&t.group.position.distanceTo(jet.position)<850){tmp.set(0,1.3,15).applyQuaternion(t.group.quaternion).add(t.group.position);puff(tmp,t.offRoad?5:3,1,0x97a57b,new THREE.Vector3(2,1.4,0));t.dust=.65;}
    continue;
   }
   const dist=t.group.position.distanceTo(jet.position);t.attack-=dt;
@@ -384,19 +525,35 @@ function updateTargets(dt){
  for(const b of bases)b.radar.userData.head.rotation.y+=dt*.6;
 }
 function displayName(t){return t?.key==='sam'?'SAM battery':displayNames[t?.key]||'target';}
-function updateLock(dt){
- let best=null,bestScore=Infinity;aim(forward);
- for(const t of targets){centerOf(t,tmp);tmp.sub(jet.position);const d=tmp.length();if(d<70||d>1550)continue;const dot=tmp.divideScalar(d).dot(forward);if(dot<.79)continue;if(!clearLine(jet.position,centerOf(t,tmp2)))continue;
-  const s=(1-dot)*1000+d*.09-(lockedTarget===t?35:0);if(s<bestScore){best=t;bestScore=s;}
- }
- if(best!==lockedTarget){lockedTarget=best;lockProgress=0;}else if(best)lockProgress=Math.min(1,lockProgress+dt);
- lockMarker.visible=!!best&&health>0;if(best){centerOf(best,lockMarker.position);lockMarker.position.y+=best.height*.7;lockMarker.quaternion.copy(chase.quaternion);lockMarker.scale.setScalar(clamp(jet.position.distanceTo(best.group.position)/500,.75,2.5));lockMaterial.color.setHex(lockProgress>=.65?0x8de9bd:0xf0ca82);}
+function chooseForwardTarget(){
+ let best=null,bestScore=Infinity;aim(gunBore);
+ for(const t of targets){if(!validGunTarget(t,false))continue;centerOf(t,tmp);tmp.sub(jet.position);const d=tmp.length(),dot=tmp.divideScalar(d).dot(gunBore);const score=(1-dot)*1600+d*.07-(lockedTarget===t?16:0);if(score<bestScore){best=t;bestScore=score;}}
+ return best;
 }
-const lockMaterial=new THREE.LineBasicMaterial({color:0xf0ca82,transparent:true,opacity:.8,depthTest:false,depthWrite:false});
-const markerPoints=[new THREE.Vector3(0,10,0),new THREE.Vector3(10,0,0),new THREE.Vector3(0,-10,0),new THREE.Vector3(-10,0,0)];
-const lockMarker=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(markerPoints),lockMaterial);lockMarker.visible=false;lockMarker.renderOrder=5;scene.add(lockMarker);
-const sightMat=new THREE.MeshBasicMaterial({color:0xe8f3e7,transparent:true,opacity:.58,side:THREE.DoubleSide,depthTest:true,depthWrite:false});
-const sight=new THREE.Mesh(new THREE.RingGeometry(2.7,3.3,24),sightMat);scene.add(sight);
+function updateLock(dt,holdingFire=false){
+ if(fireHeld&&!holdingFire){lockedTarget=null;lockProgress=0;}
+ fireHeld=holdingFire;
+ if(!holdingFire)gunLockTarget=null;
+ else if(!validGunTarget(gunLockTarget,true))gunLockTarget=chooseForwardTarget();
+ const best=gunLockTarget||chooseForwardTarget();
+ if(best!==lockedTarget){lockedTarget=best;lockProgress=gunLockTarget?1:0;}
+ else if(best)lockProgress=gunLockTarget?1:Math.min(1,lockProgress+dt);
+ lockMarker.visible=!!best&&health>0;
+ if(best){centerOf(best,lockMarker.position);lockMarker.quaternion.copy(chase.quaternion);lockMarker.scale.setScalar(clamp(jet.position.distanceTo(best.group.position)/470,.8,3.5));lockMaterial.opacity=gunLockTarget?1:.58;}
+}
+const lockMaterial=new THREE.MeshBasicMaterial({color:0xff3038,transparent:true,opacity:.75,depthTest:false,depthWrite:false,toneMapped:false});
+const lockMarker=new THREE.Group();
+for(const x of [-1,1])for(const y of [-1,1]){const h=new THREE.Mesh(new THREE.PlaneGeometry(6.5,.85),lockMaterial);h.position.set(x*10,y*13,0);lockMarker.add(h);const v=new THREE.Mesh(new THREE.PlaneGeometry(.85,6.5),lockMaterial);v.position.set(x*13,y*10,0);lockMarker.add(v);}
+lockMarker.traverse(o=>{o.renderOrder=12;});lockMarker.visible=false;scene.add(lockMarker);
+const sightMat=new THREE.MeshBasicMaterial({color:0xff3038,transparent:true,opacity:.95,side:THREE.DoubleSide,depthTest:false,depthWrite:false,toneMapped:false});
+const sight=new THREE.Mesh(new THREE.RingGeometry(4.4,5.5,32),sightMat);sight.renderOrder=13;
+for(const [x,y,w,h] of [[0,7,1,2],[0,-7,1,2],[7,0,2,1],[-7,0,2,1]]){const bar=new THREE.Mesh(new THREE.PlaneGeometry(w,h),sightMat);bar.position.set(x,y,0);bar.renderOrder=13;sight.add(bar);}scene.add(sight);
+function updateSight(){
+ if(health<=0){sight.visible=false;return;}sight.visible=true;jet.updateWorldMatrix(true,false);muzzle.getWorldPosition(origin);
+ if(fireHeld&&gunLockTarget&&gunSolution(gunLockTarget,origin,gunDirection,gunAimPoint)){sight.position.copy(gunAimPoint);sight.scale.setScalar(clamp(jet.position.distanceTo(gunAimPoint)/350,.7,4.8));}
+ else{aim(forward);sight.position.copy(jet.position).addScaledVector(forward,350);sight.scale.setScalar(1);}
+ sight.quaternion.copy(chase.quaternion);
+}
 
 // Procedural audio only; no third-party sound files. Audio starts on interaction.
 let audio=null,master=null,engineOsc=null,engineGain=null,soundEnabled=true;
@@ -406,27 +563,27 @@ function soundFX(kind,volume=.1){if(!audio||!master||!soundEnabled||audio.state!
  else{const o=audio.createOscillator();o.type='sine';o.frequency.value=kind==='warn'?430:180;o.connect(g);o.start();o.stop(now+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
  g.gain.setValueAtTime(volume,now);g.gain.exponentialRampToValueAtTime(.0001,now+duration);
 }
-addEventListener('pointerdown',wakeAudio,{passive:true});addEventListener('keydown',wakeAudio,{passive:true});renderer.xr.addEventListener('sessionstart',()=>{wakeAudio();paused=false;damageGrace=3;clock.getDelta();notice('VR active. Right trigger cannon; left trigger missile; left grip flares.',5);});
+addEventListener('pointerdown',wakeAudio,{passive:true});addEventListener('keydown',wakeAudio,{passive:true});renderer.xr.addEventListener('sessionstart',()=>{wakeAudio();paused=false;damageGrace=3;clock.getDelta();notice('VR active. Hold right trigger to LOCK + FIRE. Terrain contact is fatal.',5);});
 
 // The V6 chase rig stays behind and above the aircraft, without inheriting bank.
 // A world-space HUD is added because HTML panels are not visible inside WebXR.
 const chase=new THREE.Group();scene.add(chase);chase.add(camera);camera.position.set(0,0,0);
 const offset=new THREE.Vector3(0,20,55),followTarget=new THREE.Vector3(),lookTarget=new THREE.Vector3();
 let chaseYaw=0;
-function follow(dt,instant=false){let diff=jet.rotation.y-chaseYaw;diff=Math.atan2(Math.sin(diff),Math.cos(diff));chaseYaw+=instant?diff:diff*(1-Math.exp(-Math.min(dt,.05)*8));followTarget.copy(offset).applyAxisAngle(UP,chaseYaw).add(jet.position);chase.position.copy(followTarget);chase.position.y=Math.max(chase.position.y,terrainHeight(chase.position.x,chase.position.z)+18);lookTarget.set(0,-15,-105).applyAxisAngle(UP,chaseYaw).add(jet.position);chase.quaternion.setFromRotationMatrix(new THREE.Matrix4().lookAt(chase.position,lookTarget,UP));}
+function follow(dt,instant=false){let diff=jet.rotation.y-chaseYaw;diff=Math.atan2(Math.sin(diff),Math.cos(diff));chaseYaw+=instant?diff:diff*(1-Math.exp(-Math.min(dt,.05)*8));followTarget.copy(offset).applyAxisAngle(UP,chaseYaw).add(jet.position);chase.position.copy(followTarget);chase.position.y=Math.max(chase.position.y,surfaceHeight(chase.position.x,chase.position.z)+18);lookTarget.set(0,-15,-105).applyAxisAngle(UP,chaseYaw).add(jet.position);chase.quaternion.setFromRotationMatrix(new THREE.Matrix4().lookAt(chase.position,lookTarget,UP));}
 const hudCanvas=document.createElement('canvas');hudCanvas.width=1024;hudCanvas.height=256;const hudCtx=hudCanvas.getContext('2d'),hudTexture=new THREE.CanvasTexture(hudCanvas);hudTexture.colorSpace=THREE.SRGBColorSpace;
 const vrHud=new THREE.Mesh(new THREE.PlaneGeometry(24,6),new THREE.MeshBasicMaterial({map:hudTexture,transparent:true,depthTest:false,depthWrite:false,toneMapped:false}));vrHud.position.set(0,-13,-42);vrHud.renderOrder=100;vrHud.visible=false;chase.add(vrHud);
 let hudTimer=0;
-function combatText(){if(health<=0)return 'MISSION ENDED - B / R TO RESTART';if(paused)return 'PAUSED - RIGHT GRIP / P TO RESUME';if(missiles.some(m=>m.hostile&&!m.diverted))return 'INCOMING MISSILE - LEFT GRIP / F: FLARES';if(targets.some(t=>t.kind==='sam'&&t.lockTimer>0))return 'SAM TRACKING - TURN TO EVADE';if(lockedTarget)return (lockProgress>=.65?'LOCK: ':'ACQUIRING: ')+displayName(lockedTarget)+' / '+Math.round(jet.position.distanceTo(lockedTarget.group.position))+' m';return 'SEARCHING FOR GROUND TARGETS';}
+function combatText(){if(health<=0)return (deathReason||'MISSION ENDED')+' - B / R: RESTART';if(paused)return 'PAUSED - RIGHT GRIP / P TO RESUME';if(missiles.some(m=>m.hostile&&!m.diverted))return 'INCOMING MISSILE - LEFT GRIP / F: FLARES';if(targets.some(t=>t.kind==='sam'&&t.lockTimer>0))return 'SAM TRACKING - TURN TO EVADE';if(gunLockTarget)return 'FIRE LOCK: '+displayName(gunLockTarget)+' / '+Math.round(jet.position.distanceTo(gunLockTarget.group.position))+' m';if(jet.position.y-surfaceHeight(jet.position.x,jet.position.z)<22)return 'LOW ALTITUDE - PULL UP';if(lockedTarget)return (lockProgress>=.65?'READY: ':'ACQUIRING: ')+displayName(lockedTarget)+' / HOLD FIRE TO LOCK';return 'AIM NEAR A TARGET + HOLD FIRE';}
 function updateHUD(dt,force=false){hudTimer-=dt;if(!force&&hudTimer>0)return;hudTimer=.12;const h=Math.round(health),head=String(((Math.round(-jet.rotation.y*180/Math.PI)%360)+360)%360).padStart(3,'0'),text=combatText();
  ui.hp.textContent=h;ui.score.textContent=score;ui.ammo.textContent=missileAmmo;ui.flare.textContent=flareCooldown>0?Math.ceil(flareCooldown)+'s':'RDY';ui.speed.textContent=Math.round(speed);ui.alt.textContent=Math.round(jet.position.y);ui.heading.textContent=head;ui.combat.textContent=text;ui.hp.style.color=h<35?'#f3ad97':'#ace4c6';
  $('pause').textContent=paused?'RESUME [P]':'PAUSE [P]';vrHud.visible=renderer.xr.isPresenting;
- if(vrHud.visible){hudCtx.clearRect(0,0,1024,256);hudCtx.fillStyle='rgba(8,23,31,.88)';hudCtx.fillRect(0,0,1024,256);hudCtx.strokeStyle='#6d909e';hudCtx.strokeRect(2,2,1020,252);hudCtx.fillStyle='#b7d2dc';hudCtx.font='bold 23px Arial';hudCtx.fillText('AIR STRIKE / MOUNTAIN FRONT',25,35);hudCtx.font='bold 40px Arial';hudCtx.fillStyle=health<35?'#ffc1a4':'#deeee6';hudCtx.fillText('HP '+h+'     KILLS '+score+'     MSL '+missileAmmo+'     FLR '+(flareCooldown>0?Math.ceil(flareCooldown)+'s':'READY'),25,90);hudCtx.font='27px Arial';hudCtx.fillStyle='#aac8d4';hudCtx.fillText('SPEED '+Math.round(speed)+'   ALT '+Math.round(jet.position.y)+'   HDG '+head,25,134);hudCtx.font='bold 26px Arial';hudCtx.fillStyle='#f2d19a';hudCtx.fillText(text,25,179);hudCtx.font='20px Arial';hudCtx.fillStyle='#a0beca';hudCtx.fillText('R trigger: gun  /  L trigger: missile  /  L grip: flares  /  R grip: pause',25,222);hudTexture.needsUpdate=true;}
+ if(vrHud.visible){hudCtx.clearRect(0,0,1024,256);hudCtx.fillStyle='rgba(8,23,31,.88)';hudCtx.fillRect(0,0,1024,256);hudCtx.strokeStyle='#6d909e';hudCtx.strokeRect(2,2,1020,252);hudCtx.fillStyle='#b7d2dc';hudCtx.font='bold 23px Arial';hudCtx.fillText('AIR STRIKE V8 / GREEN VALLEY',25,35);hudCtx.font='bold 40px Arial';hudCtx.fillStyle=health<35?'#ffc1a4':'#deeee6';hudCtx.fillText('HP '+h+'     KILLS '+score+'     MSL '+missileAmmo+'     FLR '+(flareCooldown>0?Math.ceil(flareCooldown)+'s':'READY'),25,90);hudCtx.font='27px Arial';hudCtx.fillStyle='#aac8d4';hudCtx.fillText('SPEED '+Math.round(speed)+'   ALT '+Math.round(jet.position.y)+'   HDG '+head,25,134);hudCtx.font='bold 26px Arial';hudCtx.fillStyle='#f2d19a';hudCtx.fillText(text,25,179);hudCtx.font='20px Arial';hudCtx.fillStyle='#a0beca';hudCtx.fillText('Hold R trigger: LOCK + FIRE  /  L trigger: missile  /  L grip: flares',25,222);hudTexture.needsUpdate=true;}
 }
 const inputKeys=Object.create(null);let mouseFire=false,priorActions={missile:false,flare:false,restart:false,pause:false};
 addEventListener('keydown',e=>{if(e.target?.tagName==='INPUT'||e.target?.tagName==='TEXTAREA')return;inputKeys[e.code]=true;if(['Space','ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
 addEventListener('keyup',e=>inputKeys[e.code]=false);
-function clearInputs(){for(const k of Object.keys(inputKeys))delete inputKeys[k];mouseFire=false;}
+function clearInputs(){for(const k of Object.keys(inputKeys))delete inputKeys[k];mouseFire=false;gunLockTarget=null;fireHeld=false;}
 addEventListener('blur',clearInputs);document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInputs();if(sceneReady)paused=true;}clock.getDelta();});
 const fireBtn=$('fire');fireBtn.addEventListener('pointerdown',e=>{mouseFire=true;try{fireBtn.setPointerCapture(e.pointerId);}catch(_){}});for(const ev of ['pointerup','pointercancel','lostpointercapture'])fireBtn.addEventListener(ev,()=>mouseFire=false);
 function readInput(){let steer=Number(!!(inputKeys.KeyD||inputKeys.ArrowRight))-Number(!!(inputKeys.KeyA||inputKeys.ArrowLeft));let pitch=Number(!!(inputKeys.KeyS||inputKeys.ArrowDown))-Number(!!(inputKeys.KeyW||inputKeys.ArrowUp));let throttle=Number(!!(inputKeys.ShiftLeft||inputKeys.ShiftRight))-Number(!!(inputKeys.ControlLeft||inputKeys.ControlRight));
@@ -437,11 +594,11 @@ function readInput(){let steer=Number(!!(inputKeys.KeyD||inputKeys.ArrowRight))-
  }
  const dz=v=>Math.abs(v)<.12?0:v;return {steer:clamp(dz(steer),-1,1),pitch:clamp(dz(pitch),-1,1),throttle:clamp(dz(throttle),-1,1),trigger,missile,flare,restart,pause};
 }
-function togglePause(){if(!sceneReady||health<=0)return;paused=!paused;notice(paused?'Paused. Press P / right grip to resume.':'Flight resumed.',3);}
+function togglePause(){if(!sceneReady||health<=0)return;paused=!paused;gunLockTarget=null;fireHeld=false;notice(paused?'Paused. Press P / right grip to resume.':'Flight resumed.',3);}
 function restartMission(){
- jet.position.set(0,72,0);jet.rotation.set(0,0,0);airVisual.visible=true;speed=125;flightVelocity.set(0,0,-125);score=0;health=100;missionTime=0;paused=false;cooldown=0;flashTimer=0;flash.visible=false;damageGrace=0;missileAmmo=4;rearmTimer=0;missileCooldown=0;flareCooldown=0;enemyMissileCooldown=0;lockedTarget=null;lockProgress=0;rngState=71023;
+ jet.position.set(0,72,0);jet.rotation.set(0,0,0);airVisual.visible=true;speed=125;flightVelocity.set(0,0,-125);score=0;health=100;deathReason="";missionTime=0;paused=false;cooldown=0;flashTimer=0;flash.visible=false;damageGrace=0;missileAmmo=4;rearmTimer=0;missileCooldown=0;flareCooldown=0;enemyMissileCooldown=0;lockedTarget=null;gunLockTarget=null;fireHeld=false;lockProgress=0;rngState=71023;
  for(const collection of [shots,enemyShots,missiles]){for(const s of collection)scene.remove(s.mesh);collection.length=0;}for(let i=effects.length-1;i>=0;i--)removeEffect(i);for(const d of decoys){scene.remove(d.mesh);d.mesh.material.dispose();}decoys.length=0;
- for(const t of [...targets])removeTarget(t);spawnSerial=0;for(const b of bases){b.k=null;b.defenses=[];}for(let i=0;i<10;i++)spawnVehicle(true);updateBases();updateTerrain(true);chaseYaw=0;follow(0,true);$('missionEnd').style.display='none';notice('New mission. Cannon: right trigger. Missile: left trigger. Flares: left grip.',6);updateHUD(0,true);
+ for(const t of [...targets])removeTarget(t);spawnSerial=0;for(const b of bases){b.k=null;b.defenses=[];}for(const [zone,count] of Object.entries(VEHICLE_COUNTS))for(let i=0;i<count;i++)spawnVehicle(true,zone);updateBases();updateTerrain(true);chaseYaw=0;follow(0,true);$('missionEnd').style.display='none';notice('Hold right trigger near a target: LOCK + FIRE. Release to retarget. Avoid the ground!',6);updateHUD(0,true);
 }
 $('restart').addEventListener('click',restartMission);$('missile').addEventListener('click',launchMissile);$('flares').addEventListener('click',releaseFlares);$('pause').addEventListener('click',togglePause);$('sound').addEventListener('click',()=>{wakeAudio();soundEnabled=!soundEnabled;if(master)master.gain.value=soundEnabled?.55:0;$('sound').textContent='SOUND: '+(soundEnabled?'ON':'OFF');});
 function update(dt){dt=Math.max(0,Math.min(dt,.05));const inp=readInput();
@@ -451,30 +608,31 @@ function update(dt){dt=Math.max(0,Math.min(dt,.05));const inp=readInput();
  if(health<=0){updateEffects(dt);updateHUD(dt);if(engineGain)engineGain.gain.value=0;return;}
  missionTime+=dt;noticeTime=Math.max(0,noticeTime-dt);damageGrace=Math.max(0,damageGrace-dt);enemyMissileCooldown=Math.max(0,enemyMissileCooldown-dt);missileCooldown=Math.max(0,missileCooldown-dt);flareCooldown=Math.max(0,flareCooldown-dt);
  if(missileAmmo<4){rearmTimer-=dt;if(rearmTimer<=0){missileAmmo++;rearmTimer=missileAmmo<4?8:0;}}
- // Same V6 flight axis and banking response. Only height clearance is extended
- // to accommodate the new mountain terrain and base structures.
+ // Keep the existing auto-leveling stick response, but REMOVE automatic lift.
+ // Terrain contact is fatal even during the opening enemy-damage grace period.
+ lastFlightPosition.copy(jet.position);lastFlightQuaternion.copy(jet.quaternion);
  speed=clamp(speed+inp.throttle*52*dt,80,265);jet.rotation.y-=inp.steer*dt*.64;jet.rotation.z=THREE.MathUtils.damp(jet.rotation.z,-inp.steer*.31,4.6,dt);jet.rotation.x=THREE.MathUtils.damp(jet.rotation.x,-inp.pitch*.40,3.8,dt);
- aim(forward);flightVelocity.copy(forward).multiplyScalar(speed);jet.position.addScaledVector(flightVelocity,dt);
- const nb=nearestBase(jet.position.z);const outer=Math.max(Math.abs(jet.position.x-nb.x)-140,Math.abs(jet.position.z-nb.z)-150);const baseClear=34*(1-smooth(0,90,outer));
- jet.position.y=clamp(jet.position.y,terrainHeight(jet.position.x,jet.position.z)+26+baseClear,1500);
- updateTerrain();updateBases();updateTargets(dt);maintainTargets();updateLock(dt);
+ aim(forward);flightVelocity.copy(forward).multiplyScalar(speed);jet.position.addScaledVector(flightVelocity,dt);jet.position.y=Math.min(1500,jet.position.y);
+ const contact=aircraftTerrainContact(lastFlightPosition,jet.position,lastFlightQuaternion,jet.quaternion);
+ if(contact){jet.position.lerpVectors(lastFlightPosition,jet.position,contact.u);jet.quaternion.slerpQuaternions(lastFlightQuaternion,jet.quaternion,contact.u);destroyAircraft('TERRAIN COLLISION',contact.point);updateEffects(dt);updateHUD(dt,true);return;}
+ updateTerrain();updateBases();updateTargets(dt);maintainTargets();updateLock(dt,inp.trigger);
  cooldown=Math.max(0,cooldown-dt);if(inp.trigger)shoot();if(missilePress)launchMissile();if(flarePress)releaseFlares();flashTimer=Math.max(0,flashTimer-dt);flash.visible=flashTimer>0;
  updateShots(dt);updateMissiles(dt);updateEffects(dt);
- // The pipper follows the bore, never the camera or a previously stored heading.
- aim(forward);sight.position.copy(jet.position).addScaledVector(forward,350);sight.quaternion.copy(chase.quaternion);sight.visible=health>0;
+ // The red pipper follows the fire solution, not head movement or camera roll.
+ updateSight();
  for(const c of clouds){const p=c.userData.offset;c.position.set(p.x+Math.round((jet.position.x-p.x)/13000)*13000,p.y,p.z+Math.round((jet.position.z-p.z)/13000)*13000);}
  if(engineOsc){engineOsc.frequency.value=37+speed*.15;engineGain.gain.value=.016;}
- if(noticeTime===0)ui.notice.textContent=missileAmmo<4?'Missile reload: '+Math.ceil(rearmTimer)+'s. Keep a ground target ahead for a lock.':'Destroy convoys and disable base defenses. Keep moving to evade enemy fire.';
+ if(noticeTime===0)ui.notice.textContent=missileAmmo<4?'Missile reload: '+Math.ceil(rearmTimer)+'s. Hold FIRE near a target to lock it.':'Hold FIRE for a sticky target lock. Release to retarget. Ground and mountain contact is fatal.';
  updateHUD(dt);
 }
 const clock=new THREE.Clock();
 restartMission();
-(async()=>{for(const key of assetKeys){ui.status.textContent='Loading original '+displayNames[key]+'...';await loadOne(key);}sceneReady=true;missionTime=0;const count=Object.values(loaded).filter(Boolean).length;ui.status.textContent='ORIGINAL MODELS: '+count+'/5 LOADED';$('loading').style.display='none';notice(count===5?'All original models loaded. Vehicles are 2x V6 size. Automatic forward flight is ON.':'Loaded '+count+'/5 models. Check the asset status above.',count===5?7:999);clock.getDelta();})();
-renderer.setAnimationLoop(()=>{const dt=clock.getDelta();update(dt);follow(dt);renderer.render(scene,camera);});
+(async()=>{for(const key of assetKeys){ui.status.textContent='Loading original '+displayNames[key]+'...';await loadOne(key);}sceneReady=true;missionTime=0;const count=Object.values(loaded).filter(Boolean).length;ui.status.textContent='ORIGINAL MODELS: '+count+'/5 LOADED';$('loading').style.display='none';notice(count===5?'All original models loaded. Green valley ready. Hold FIRE to lock a target. Avoid terrain!':'Loaded '+count+'/5 models. Check the asset status above.',count===5?7:999);clock.getDelta();})();
+renderer.setAnimationLoop(()=>{const dt=clock.getDelta();update(dt);follow(dt);if(sceneReady)updateSight();renderer.render(scene,camera);});
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 // Optional inspection hooks are only exposed with ?test=1. They do not run in
 // ordinary play and do not claim that an actual headset has been tested.
-if(new URLSearchParams(location.search).get('test')==='1')window.__AIRSTRIKE_TEST__={scene,camera,renderer,jet,targets,bases,templates,shots,enemyShots,missiles,effects,decoys,restartMission,update,follow,shoot,launchMissile,releaseFlares,readInput,terrainHeight,groundMat,fitModel,batchStaticModel,hitMovingTarget,turnToward,aim,inputKeys,damageTarget,damagePlayer,spawnMissile,getState:()=>({loaded,sceneReady,health,score,speed,missionTime,missileAmmo,rearmTimer,lockProgress,lockedTarget:lockedTarget?.id,paused,flareCooldown})};
+if(new URLSearchParams(location.search).get('test')==='1')window.__AIRSTRIKE_TEST__={scene,camera,renderer,jet,targets,bases,templates,shots,enemyShots,missiles,effects,decoys,restartMission,update,follow,shoot,launchMissile,releaseFlares,readInput,terrainHeight,surfaceHeight,surfaceNormal,terrainIntersectionT,clearLine,aircraftTerrainContact,configureAircraftCollision,vehicleSpotOK,placeVehicle,choosePatrol,spawnVehicle,maintainTargets,updateTargets,updateLock,updateShots,gunSolution,validGunTarget,updateSight,sight,lockMarker,gunAimPoint,VEHICLE_COUNTS,groundMat,fitModel,batchStaticModel,hitMovingTarget,turnToward,aim,inputKeys,damageTarget,damagePlayer,spawnMissile,destroyAircraft,getAircraftProbes:()=>aircraftProbes,getState:()=>({loaded,sceneReady,health,score,speed,missionTime,missileAmmo,rearmTimer,lockProgress,lockedTarget:lockedTarget?.id,gunLockTarget:gunLockTarget?.id,fireHeld,deathReason,paused,flareCooldown})};
 
 </script>
 <!-- Original uploaded asset: general_dynamics_f-16_-_falcon.glb SHA256 167de0d54fa267da527080f3b0d9f45b740f85e7380f4b0fe144acfa43ce720d -->
