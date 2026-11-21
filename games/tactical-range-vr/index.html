@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v16-quick-start-night-breach"><title>ZEE Tactical Range VR - V16 Quick Start / Night Breach</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v17-night-spark-glow"><title>ZEE Tactical Range VR - V17 Night Spark Glow</title>
 <style>
 :root{color-scheme:dark;--gold:#f1b662;--ink:#0d202b;--teal:#9cdbd3}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0c1822;font-family:Arial,Helvetica,sans-serif;color:#ebf1ef}#view{width:100%;height:100%;display:block;touch-action:none}#loading{position:fixed;inset:0;display:grid;place-items:center;background:#10212c;z-index:20;padding:40px;text-align:center;font-size:20px}.topbar{position:fixed;z-index:4;left:30px;right:30px;top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px;pointer-events:none}.brand{font-size:17px;letter-spacing:3px;font-weight:900;text-shadow:0 2px 12px #000}.brand b{color:var(--gold)}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:600;color:#afc5ca;margin-top:8px}.actions{display:flex;gap:8px;pointer-events:auto}button,a.navbtn{border:1px solid #6a919b6b;border-radius:7px;background:#0e252fdd;color:#d9e9e7;padding:11px 14px;cursor:pointer;font:700 11px Arial;letter-spacing:1px;text-decoration:none}button:hover,a.navbtn:hover{background:#284653;border-color:#ecba76}button:disabled{opacity:.5;cursor:default}#menuCanvas{position:fixed;z-index:5;left:4vw;top:52%;transform:translateY(-50%);width:min(440px,42vw,calc((100vh - 130px)*.888889));height:auto;border-radius:16px;box-shadow:0 22px 80px #0007;outline:none;touch-action:manipulation}#menuCanvas:focus-visible{outline:2px solid var(--gold)}#menuCanvas.center-menu{left:50%;transform:translate(-50%,-50%);width:min(500px,88vw,calc((100vh - 105px)*.888889))}#hud{display:none;position:fixed;inset:90px 30px 26px;z-index:3;pointer-events:none;justify-content:space-between;align-items:flex-start}.hudcard{background:linear-gradient(120deg,#102731ee,#0a1d27b3);border:1px solid #6a9a9c55;padding:17px 23px;border-radius:12px;box-shadow:0 7px 25px #0002}.hudcard label{font-size:10px;letter-spacing:2px;color:#a6c8cb;font-weight:700}.hudcard strong{display:block;font-size:32px;color:var(--gold);font-weight:900;margin:4px 0 5px}.hudcard small{font-size:12px;color:#c0d3d3}.scorecard{text-align:right}.scorecard strong{color:#c5eee0}.bottomhud{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end}.ammo strong{font-size:27px}.mini{font:12px monospace;color:#d3e1df;margin-top:6px}.combo{font-size:15px;font-weight:800;letter-spacing:2px;color:var(--gold);text-shadow:0 2px 10px #000}.hints{font-size:10px;letter-spacing:1px;color:#afc7c9;margin-top:10px}#crosshair{display:none;position:fixed;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);pointer-events:none;z-index:3;border:1px solid #ffe9bc88;border-radius:50%;filter:drop-shadow(0 0 2px #000)}#crosshair:before,#crosshair:after{content:'';position:absolute;background:#fff0c9}#crosshair:before{width:6px;height:2px;top:8px;left:6px}#crosshair:after{width:2px;height:6px;left:8px;top:6px}#crosshair.hit{border-color:#a5ffe5;transform:translate(-50%,-50%) rotate(45deg);width:29px;height:29px;background:#9beadf33}#countdown{position:fixed;inset:0;display:grid;place-items:center;font-size:clamp(90px,14vw,190px);font-weight:900;color:#f6c882;text-shadow:0 4px 30px #071421;z-index:3;pointer-events:none}#toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);max-width:min(650px,90vw);border:1px solid #688c94;background:#0f2633f2;color:#dfefee;border-radius:10px;padding:14px 22px;font-size:14px;line-height:1.5;text-align:center;opacity:0;transition:opacity .2s;z-index:15;pointer-events:none}#toast.show{opacity:1}.credit{position:fixed;bottom:14px;left:30px;font-size:9px;letter-spacing:1.5px;color:#aec3c4;pointer-events:none;z-index:3}.not-menu{display:none}.menu-open #pause,.menu-open #reload,.menu-open #ion{display:none}.in-vr .topbar,.in-vr .credit,.in-vr #hud,.in-vr #countdown,.in-vr #toast,.in-vr #menuCanvas{display:none!important}.screenShade{position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,#07131c80,transparent 20%,transparent 70%,#07131c50);z-index:2}.in-vr .screenShade{display:none}@media(max-width:700px){.topbar{left:15px;right:15px;top:15px}.brand{font-size:12px;letter-spacing:1px}.brand small{font-size:8px}.actions{gap:4px}.actions button,.actions a{padding:9px 8px;font-size:9px}#fullscreen,.actions a{display:none}#menuCanvas{left:50%;transform:translate(-50%,-50%);width:min(450px,88vw,calc((100vh - 110px)*.888889));top:53%}#hud{inset:78px 12px 20px}.hudcard{padding:10px 14px}.hudcard strong{font-size:22px}.hints{max-width:200px;line-height:1.5}.credit{left:15px;font-size:8px}.combo{font-size:11px;letter-spacing:1px}}
 
@@ -37,10 +37,10 @@
 </style>
 </head><body class="menu-open">
 <canvas id="view" aria-label="3D shooting range"></canvas><div class="screenShade"></div>
-<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V16 / QUICK START + NIGHT BREACH</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
+<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V17 / NIGHT SPARK GLOW</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
 <canvas id="menuCanvas" width="1024" height="1152" tabindex="0" role="application" aria-label="Range menu: use mouse or arrows and Enter"></canvas>
 <div id="hud"><div class="hudcard"><label>WAVE</label><strong id="hWave">01 / 03</strong><small id="hName">Soldier Assault</small><div class="mini"><span id="hLeft">8</span> <span id="hRemainingLabel">objects remaining</span></div></div><div class="hudcard scorecard"><label>WAVE SCORE</label><strong id="hScore">0</strong><small>Accuracy <span id="hAccuracy">0.0%</span></small><div id="combatHUD" style="display:none;margin-top:12px;border-top:1px solid #6a9a9c55;padding-top:12px"><label id="hHealth">HEALTH 100 / 100</label><div id="hThreat" class="mini">WATCH THE COVER</div></div></div><div class="bottomhud"><div><div id="hCombo" class="combo">BUILD YOUR STREAK</div><div class="hints">A / D LEAN / S DUCK / R RELOAD / E COLLECT / Q ION</div></div><div class="hudcard ammo"><label>TAUROS PISTOL</label><strong id="hAmmo">12 / 12</strong><small>Auto reload when empty</small></div></div></div>
-<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V16 / STATIONARY VR</div><div id="loading">LOADING YOUR RANGE...</div>
+<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V17 / STATIONARY VR</div><div id="loading">LOADING YOUR RANGE...</div>
 
 <section id="introGate" role="dialog" aria-modal="true" aria-label="ZEE Tactical Range game intro"><div class="introShell"><div class="introHead"><h1>ZEE TACTICAL RANGE</h1><span>YOUR INTRO / 10 SECONDS</span></div><video id="introVideo" playsinline preload="metadata" aria-label="Uploaded ZEE Tactical Range intro video"></video><div class="introActions"><button id="introPlay">PLAY INTRO WITH SOUND</button><button id="introMute">SOUND ON</button><button id="introSkip">SKIP TO GAME</button></div><p id="introMessage">Play your intro, or skip straight to difficulty, level and lighting. Replay is in Game Setup.</p></div></section>
 <script>
@@ -169,7 +169,19 @@ void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*a
  precision highp float;in vec3 vP,vN;in vec2 vUV;in vec4 vC,vS;uniform sampler2D uTex,uShadow;uniform vec4 uMat,uTint;uniform vec3 uEye;uniform float uShadowOn;uniform vec4 uFlash[4];uniform float uEmergency,uRoomLight,uNight;uniform vec3 uTorchOrigin,uTorchDirection;uniform vec4 uEnemyLamp[4],uEnemyAim[4];out vec4 outColor;
  float shadow(){vec3 p=vS.xyz/vS.w*.5+.5;if(vS.w<=0.||p.x<0.||p.x>1.||p.y<0.||p.y>1.||p.z>1.)return 1.;float sum=0.;for(int x=0;x<2;x++)for(int y=0;y<2;y++){float d=texture(uShadow,p.xy+(vec2(float(x),float(y))-.5)/1024.).r;sum+=p.z-.00018<d?1.:.035;}return sum*.25;}
  vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
- void main(){vec4 t=texture(uTex,vUV)*vC*uTint;float a=t.a*uMat.z;if(a<.02)discard;if(uMat.x>1.5){outColor=vec4(t.rgb*min(uMat.x-1.,1.6),a);return;}vec3 n=normalize(vN);if(!gl_FrontFacing)n=-n;vec3 base=pow(max(t.rgb,vec3(.001)),vec3(2.2));vec3 tl=vP-uTorchOrigin;float td=max(length(tl),.001);vec3 toward=-tl/td;float cone=smoothstep(.936,.984,dot(tl/td,uTorchDirection));float sh=mix(1.,shadow(),uShadowOn);float room=pow(clamp(uRoomLight,0.,1.),1.1);vec3 illum=vec3(.70,.79,.88)*mix(.045,.078,n.y*.5+.5);vec3 ceiling=normalize(vec3(-.45,1.,.32));float roomShadow=uRoomLight>=.75?mix(.48,1.,sh):1.;illum+=room*(vec3(.84,.88,.88)*(.36+.28*(n.y*.5+.5))+vec3(1.,.96,.87)*max(dot(n,ceiling),0.)*1.22*roomShadow);float beam=cone*5.7*(1.-smoothstep(.45,.90,uRoomLight))/(1.+td*.055+td*td*.009)*sh;illum+=vec3(1.,.94,.81)*beam*max(dot(n,toward),.08);vec3 view=normalize(uEye-vP);float sp=pow(max(dot(n,normalize(toward+view)),0.),mix(88.,8.,uMat.y))*(1.-uMat.y)*beam*.34;
+ void main(){vec4 t=texture(uTex,vUV)*vC*uTint;float a=t.a*uMat.z;
+ // V17: soft, additive, depth-tested spark billboards. Existing materials use mode zero.
+ if(uMat.w>.5){
+   vec2 q=vUV*2.-1.;float r2=dot(q,q),core=exp(-r2*130.);
+   float inner=exp(-r2*26.),halo=exp(-r2*5.5)*(1.-smoothstep(.68,1.,sqrt(r2)));
+   float energy=.22*halo+.70*inner+.95*core;
+   if(uMat.w>1.5){float tip=smoothstep(-.95,.75,q.y);core=exp(-q.x*q.x*130.)*tip;
+     energy=(.22*exp(-q.x*q.x*8.)+.73*exp(-q.x*q.x*65.))*pow(max(0.,1.-q.y*q.y),.65)*(.16+.84*tip);}
+   a*=energy;if(a<.0015)discard;
+   vec3 warm=mix(vec3(1.,.26,.035),t.rgb,.72);
+   outColor=vec4(mix(warm,vec3(1.,.98,.87),core),min(a,.96));return;
+ }
+ if(a<.02)discard;if(uMat.x>1.5){outColor=vec4(t.rgb*min(uMat.x-1.,1.6),a);return;}vec3 n=normalize(vN);if(!gl_FrontFacing)n=-n;vec3 base=pow(max(t.rgb,vec3(.001)),vec3(2.2));vec3 tl=vP-uTorchOrigin;float td=max(length(tl),.001);vec3 toward=-tl/td;float cone=smoothstep(.936,.984,dot(tl/td,uTorchDirection));float sh=mix(1.,shadow(),uShadowOn);float room=pow(clamp(uRoomLight,0.,1.),1.1);vec3 illum=vec3(.70,.79,.88)*mix(.045,.078,n.y*.5+.5);vec3 ceiling=normalize(vec3(-.45,1.,.32));float roomShadow=uRoomLight>=.75?mix(.48,1.,sh):1.;illum+=room*(vec3(.84,.88,.88)*(.36+.28*(n.y*.5+.5))+vec3(1.,.96,.87)*max(dot(n,ceiling),0.)*1.22*roomShadow);float beam=cone*5.7*(1.-smoothstep(.45,.90,uRoomLight))/(1.+td*.055+td*td*.009)*sh;illum+=vec3(1.,.94,.81)*beam*max(dot(n,toward),.08);vec3 view=normalize(uEye-vP);float sp=pow(max(dot(n,normalize(toward+view)),0.),mix(88.,8.,uMat.y))*(1.-uMat.y)*beam*.34;
  for(int i=0;i<4;i++){if(uEnemyLamp[i].w>0.){vec3 el=vP-uEnemyLamp[i].xyz;float ed=max(length(el),.001);float ec=smoothstep(.87,.985,dot(el/ed,uEnemyAim[i].xyz));illum+=vec3(.88,.91,.78)*uEnemyLamp[i].w*(.12+.88*ec)*max(dot(n,-el/ed),.06)/(1.+ed*ed*.7);}}
  for(int i=0;i<4;i++){if(uFlash[i].w>0.){vec3 fl=uFlash[i].xyz-vP;float fd=length(fl);illum+=vec3(1.,.72,.38)*max(dot(n,normalize(fl)),0.)*uFlash[i].w*4.0/(1.+fd*fd*4.);}}
  
@@ -200,7 +212,7 @@ void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*a
  deleteMesh(m){this.gl.deleteBuffer(m.buffer);this.gl.deleteVertexArray(m.vao);this.geoCount--}
  renderShadow(items){if(!this.shadowDirty)return;const gl=this.gl;gl.bindFramebuffer(gl.FRAMEBUFFER,this.shadowFBO);gl.viewport(0,0,1024,1024);gl.clear(gl.DEPTH_BUFFER_BIT);gl.useProgram(this.depthProgram);gl.disable(gl.BLEND);gl.depthMask(true);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(2,3);for(const it of items){if(!it.cast)continue;gl.uniformMatrix4fv(this.depthLoc,false,M.mul(this.lightVP,it.model));gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count)}gl.disable(gl.POLYGON_OFFSET_FILL);gl.bindVertexArray(null);this.shadowDirty=false}
  begin(fbo,width,height){const gl=this.gl;gl.bindFramebuffer(gl.FRAMEBUFFER,fbo);gl.viewport(0,0,width,height);gl.depthMask(true);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);this.calls=0;this.triangles=0}
- view(vp,eye,viewport,items){const gl=this.gl,u=this.uniforms;gl.viewport(...viewport);gl.useProgram(this.program);gl.uniformMatrix4fv(u.VP,false,vp);gl.uniformMatrix4fv(u.Light,false,this.lightVP);gl.uniform3fv(u.Eye,eye);gl.uniform1f(u.Emergency,this.emergency||0);gl.uniform1f(u.Night,this.night||0);gl.uniform1f(u.RoomLight,this.roomLight===undefined?1:this.roomLight);gl.uniform3fv(u.TorchOrigin,this.torchOrigin||eye);gl.uniform3fv(u.TorchDirection,this.torchDirection||[0,0,-1]);gl.uniform4fv(u['EnemyLamp[0]'],this.enemyLamps||new Float32Array(16));gl.uniform4fv(u['EnemyAim[0]'],this.enemyAims||new Float32Array(16));gl.uniform1i(u.Tex,0);gl.uniform1i(u.Shadow,1);gl.uniform1i(u.Bones,2);gl.uniform4fv(u['Flash[0]'],this.flashes||new Float32Array(16));gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.shadow);gl.activeTexture(gl.TEXTURE0);let prevTex=null,blend=null;for(const it of items){if(it.visible===false||it.mesh.count===0)continue;gl.uniform1i(u.Skin,it.skinTex?1:0);if(it.skinTex){gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,it.skinTex);gl.activeTexture(gl.TEXTURE0);}const mat=it.mat,transparent=mat.transparent||it.alpha<1;if(blend!==transparent){blend=transparent;if(blend){gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false)}else{gl.disable(gl.BLEND);gl.depthMask(true)}}if(mat.tex!==prevTex){gl.bindTexture(gl.TEXTURE_2D,(mat.tex||this.white).id);prevTex=mat.tex}gl.uniformMatrix4fv(u.Model,false,it.model);const inv=M.inv(it.model);gl.uniformMatrix3fv(u.Normal,false,new Float32Array([inv[0],inv[4],inv[8],inv[1],inv[5],inv[9],inv[2],inv[6],inv[10]]));gl.uniform4f(u.Mat,mat.emit||0,mat.rough===undefined?.8:mat.rough,it.alpha===undefined?1:it.alpha,0);gl.uniform4fv(u.Tint,it.tint||mat.color||[1,1,1,1]);gl.uniform1f(u.ShadowOn,mat.shadow===false?0:1);gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count);this.calls++;this.triangles+=it.mesh.count/3}gl.depthMask(true);gl.bindVertexArray(null)}
+ view(vp,eye,viewport,items){const gl=this.gl,u=this.uniforms;gl.viewport(...viewport);gl.useProgram(this.program);gl.uniformMatrix4fv(u.VP,false,vp);gl.uniformMatrix4fv(u.Light,false,this.lightVP);gl.uniform3fv(u.Eye,eye);gl.uniform1f(u.Emergency,this.emergency||0);gl.uniform1f(u.Night,this.night||0);gl.uniform1f(u.RoomLight,this.roomLight===undefined?1:this.roomLight);gl.uniform3fv(u.TorchOrigin,this.torchOrigin||eye);gl.uniform3fv(u.TorchDirection,this.torchDirection||[0,0,-1]);gl.uniform4fv(u['EnemyLamp[0]'],this.enemyLamps||new Float32Array(16));gl.uniform4fv(u['EnemyAim[0]'],this.enemyAims||new Float32Array(16));gl.uniform1i(u.Tex,0);gl.uniform1i(u.Shadow,1);gl.uniform1i(u.Bones,2);gl.uniform4fv(u['Flash[0]'],this.flashes||new Float32Array(16));gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.shadow);gl.activeTexture(gl.TEXTURE0);let prevTex=null,blend=null;for(const it of items){if(it.visible===false||it.mesh.count===0)continue;gl.uniform1i(u.Skin,it.skinTex?1:0);if(it.skinTex){gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,it.skinTex);gl.activeTexture(gl.TEXTURE0);}const mat=it.mat,transparent=mat.transparent||it.alpha<1,blendMode=mat.additive?2:transparent?1:0;if(blend!==blendMode){blend=blendMode;if(blend){gl.enable(gl.BLEND);if(blend===2)gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ZERO,gl.ONE);else gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false)}else{gl.disable(gl.BLEND);gl.depthMask(true)}}if(mat.tex!==prevTex){gl.bindTexture(gl.TEXTURE_2D,(mat.tex||this.white).id);prevTex=mat.tex}gl.uniformMatrix4fv(u.Model,false,it.model);const inv=M.inv(it.model);gl.uniformMatrix3fv(u.Normal,false,new Float32Array([inv[0],inv[4],inv[8],inv[1],inv[5],inv[9],inv[2],inv[6],inv[10]]));gl.uniform4f(u.Mat,mat.emit||0,mat.rough===undefined?.8:mat.rough,it.alpha===undefined?1:it.alpha,mat.sparkMode||0);gl.uniform4fv(u.Tint,it.tint||mat.color||[1,1,1,1]);gl.uniform1f(u.ShadowOn,mat.shadow===false?0:1);gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count);this.calls++;this.triangles+=it.mesh.count/3}gl.depthMask(true);gl.disable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.bindVertexArray(null)}
 }
 
 /* Procedural room, textures, targets and prop models. No remote assets. */
@@ -523,7 +535,7 @@ function drawMenu(){
  const button=(label,x,y,bw,bh,fn,style='normal',sz=28)=>{const id=uiButtons.length,hot=uiHover===id;c.fillStyle=style==='primary'?(hot?'#fff0c2':L.accent):hot?'#3a5367':'#213746';roundRect(c,x,y,bw,bh,13);c.fill();c.strokeStyle=hot?'#d9ebdc':'#4a6270';c.lineWidth=2;c.stroke();c.textAlign='center';text(label,x+bw/2,y+bh*.63,sz,style==='primary'?'#14232e':UI_COL.white,800);c.textAlign='left';uiButtons.push({x,y,w:bw,h:bh,fn,label});};
  const setting=(label,value,x,y,fn)=>{const id=uiButtons.length,hot=uiHover===id;c.fillStyle=hot?'#365365':'#203745';roundRect(c,x,y,438,86,12);c.fill();text(label.toUpperCase(),x+22,y+29,20,UI_COL.muted,700);text(value,x+22,y+64,28,UI_COL.white,700);text('>',x+400,y+56,25,L.accent);uiButtons.push({x,y,w:438,h:86,fn,label:label+': '+value});};
  const wrapped=(s,x,y,max,size=26,col=UI_COL.muted)=>{const words=s.split(' ');let row='';c.font=`500 ${size}px Arial`;for(const word of words){if(c.measureText(row+word).width>max){text(row,x,y,size,col);row='';y+=size*1.38;}row+=word+' ';}if(row)text(row,x,y,size,col);return y;};
- text('ZEE / TACTICAL RANGE VR',62,65,23,L.accent,800);text('V16',900,65,24,UI_COL.muted,700);
+ text('ZEE / TACTICAL RANGE VR',62,65,23,L.accent,800);text('V17',900,65,24,UI_COL.muted,700);
  if((phase==='lobby'||phase==='paused')&&menuPage==='av'){
   text('LIGHT + SOUND',58,169,64,UI_COL.white,900);text('Choose the room lighting. Keep the combat cues clear.',62,225,26,UI_COL.muted);line(266);
   text('ROOM BRIGHTNESS: '+settings.brightness+'% / '+lightingName(settings.brightness),62,313,27,L.accent,800);
@@ -1589,7 +1601,8 @@ function renderSoldierSplashes(items){
 }
 
 function renderBreakEffects(items){
- const debris=new Geometry(),sparks=new Geometry();for(const p of particles){const fade=clamp((p.life-p.age)*3,0,1),scale=p.scale.map(v=>v*fade),transform=M.trs(p.pos,p.angle,scale);(p.glowing?sparks:debris).append(shapes[p.shape||'box']||shapes.box,transform,p.color);}
+ appendNightSparkGlow(items);
+ const debris=new Geometry(),sparks=new Geometry();for(const p of particles){if(p.sparkBurst||(nightSparkStrength()>0&&sparkEligible(p)))continue;const fade=clamp((p.life-p.age)*3,0,1),scale=p.scale.map(v=>v*fade),transform=M.trs(p.pos,p.angle,scale);(p.glowing?sparks:debris).append(shapes[p.shape||'box']||shapes.box,transform,p.color);}
  R.updateMesh(debrisMesh,debris);R.updateMesh(sparkMesh,sparks);items.push({mesh:debrisMesh,model:M.identity(),mat:A.mats.plain},{mesh:sparkMesh,model:M.identity(),mat:A.mats.glow});
  for(const p of smokePuffs){const t=p.age/p.life,size=p.size*(.5+t*1.4),yaw=Math.atan2(lastHead[0]-p.pos[0],lastHead[2]-p.pos[2]);items.push(meshItem('plane',M.trs(p.pos,[0,yaw,p.roll],[size,size,1]),'smoke',null,Math.sin(PI*t)*(p.dust?.56:.35)));}
  for(const d of world.doors){if(civilians.some(t=>t.state==='live'&&t.route&&(t.route.entry===d.id||t.route.exit===d.id)))items.push(meshItem('box',M.trs(d.lamp,[0,0,0],[.13,.055,.02]),'glow','#a5bc8f',.64+.20*Math.sin(clockTime*5)));}
@@ -1845,7 +1858,7 @@ const oldDrawMenu=drawMenu;drawMenu=function(){
  const line=y=>{c.fillStyle='#344c50';c.fillRect(58,y,908,1);};
  const button=(label,x,y,w,h,fn,primary=false,sz=27)=>{const id=uiButtons.length,hot=id===uiHover;c.fillStyle=primary?(hot?'#eee0b1':'#cbbb8d'):(hot?'#35505a':'#20373e');roundRect(c,x,y,w,h,9);c.fill();c.strokeStyle=hot?'#d7e8d2':'#526669';c.stroke();c.textAlign='center';text(label,x+w/2,y+h*.63,sz,primary?'#12232a':'#dbe8e3',800,w-25);c.textAlign='left';uiButtons.push({x,y,w,h,fn,label});};
  const cp=readOperationCheckpoint();
- text('ZEE / TACTICAL RANGE VR',58,61,22,'#cbbb8d',800);text('V16',905,61,23,'#9fb9b8');
+ text('ZEE / TACTICAL RANGE VR',58,61,22,'#cbbb8d',800);text('V17',905,61,23,'#9fb9b8');
  if(phase==='lobby'&&menuPage==='main'){
   text('OPERATION',54,161,78,'#edf0e7',900);text('GUARDIAN',54,248,91,'#cbbb8d',900);text('Every shot matters. Every person matters.',60,302,30,'#adcbc6',500);line(336);
   text('SIX MISSIONS. ONE FINAL CONFRONTATION.',60,383,26,'#cbbb8d',800);
@@ -2087,6 +2100,66 @@ const V16Board=drawBoard;drawBoard=function(){V16Board();if(!isNightArena()||isO
  const c=boardCanvas.getContext('2d');c.fillStyle='#102029';c.fillRect(0,0,1024,48);c.fillStyle='#a5d0c9';c.font='700 24px monospace';c.fillText('NIGHT BREACH / GUARDS + AIR + WARDEN',28,34);R.updateTexture(boardTexture);
 };
 
+
+/* V17 / NIGHT SPARK GLOW. Appearance-only, no scoring, hitbox or AI changes.
+   Bounded, shared world-space meshes are projected by the normal per-eye VP.
+   Keep V16 preference, record and campaign-checkpoint keys unchanged. */
+const sparkGlowMesh=R.mesh(new Geometry(),true),sparkTrailMesh=R.mesh(new Geometry(),true),sparkFloorMesh=R.mesh(new Geometry(),true);
+const sparkGlowMat={tex:R.white,emit:2,transparent:true,additive:true,sparkMode:1,shadow:false};
+const sparkTrailMat={...sparkGlowMat,sparkMode:2};
+let sparkGlowAudit={strength:0,eligible:0,halos:0,trails:0,floorGlints:0,vertices:0,batches:0};
+function nightSparkStrength(){
+ const b=activeBrightness(),base=isNightArena()?.5+.5*(1-b):clamp((.72-b)/.72,0,1);
+ return base*(settings.reducedAtmosphere?.55:1);
+}
+function sparkEligible(p){return p.glowing&&!p.blood&&!p.casing&&p.color[0]>.55&&p.color[1]>.25;}
+function glowQuad(g,p,right,up,col){
+ g.quad(V.sub(V.sub(p,right),up),V.add(V.sub(p,up),right),V.add(V.add(p,right),up),V.add(V.sub(p,right),up),[0,0,1],col);
+}
+function appendNightSparkGlow(items){
+ const strength=nightSparkStrength(),budget=settings.reducedAtmosphere?56:settings.quality==='high'?192:128;
+ const glow=new Geometry(),trails=new Geometry(),floor=new Geometry();let count=0,trailCount=0,glints=0,eligible=0;
+ if(strength>0&&!introActive){
+  const right=V.norm([headWorld[0],headWorld[1],headWorld[2]]),up=V.norm([headWorld[4],headWorld[5],headWorld[6]]);
+  for(let i=particles.length-1;i>=0;i--){
+   const p=particles[i];if(!sparkEligible(p))continue;eligible++;
+   if(count>=budget)continue;
+   const t=clamp(p.age/p.life,0,1),dist=Math.hypot(...V.sub(p.pos,lastHead));
+   const proximity=clamp((dist-.45)/.65,0,1),fade=(1-smooth((t-.5)/.5))*proximity;
+   if(fade<.004)continue;
+   // A warm halo surrounds a tiny white-hot center. Cool and shrink as it fades.
+   const size=p.sparkBurst?.52:clamp(.115+Math.max(...p.scale)*.85,.13,.24);
+   const radius=size*(1-.24*t)*.5,color=[1,lerp(.87,.40,t),lerp(.55,.10,t),fade*strength*(p.sparkBurst?.8:1)];
+   glowQuad(glow,p.pos,V.mul(right,radius),V.mul(up,radius),color);count++;
+   if(!p.sparkBurst&&!settings.reducedAtmosphere){
+    const vx=V.dot(p.vel,right),vy=V.dot(p.vel,up),speed=Math.hypot(vx,vy);
+    if(speed>.38){
+     const axis=V.norm(V.add(V.mul(right,vx),V.mul(up,vy))),side=V.norm(V.add(V.mul(right,-vy),V.mul(up,vx)));
+     const len=clamp(speed*.06,.025,.26)*Math.min(1,p.age/.045),width=clamp(radius*.17,.009,.022);
+     if(len>.012){glowQuad(trails,V.sub(p.pos,V.mul(axis,len*.5)),V.mul(side,width),V.mul(axis,len*.5),[1,color[1],color[2],color[3]*.78]);trailCount++;}
+    }
+    if(p.pos[1]<.30&&p.pos[1]>=.02&&glints<(settings.quality==='high'?32:18)){
+     const a=(1-p.pos[1]/.30)*color[3]*.22,r=radius*1.3;
+     glowQuad(floor,[p.pos[0],.029,p.pos[2]],[r,0,0],[0,0,-r],[1,.57,.20,a]);glints++;
+    }
+   }
+  }
+ }
+ for(const [mesh,g,mat]of [[sparkGlowMesh,glow,sparkGlowMat],[sparkTrailMesh,trails,sparkTrailMat],[sparkFloorMesh,floor,sparkGlowMat]]){
+  if(g.a.length||mesh.count)R.updateMesh(mesh,g);
+  if(mesh.count)items.push({mesh,model:M.identity(),mat,cast:false});
+ }
+ sparkGlowAudit={strength,eligible,halos:count,trails:trailCount,floorGlints:glints,vertices:(count+trailCount+glints)*6,batches:[glow,trails,floor].filter(g=>g.a.length).length,budget};
+}
+const V17SurfaceImpact=surfaceImpact;
+surfaceImpact=function(point,object,dir,enemy=false){
+ V17SurfaceImpact(point,object,dir,enemy);
+ if(nightSparkStrength()<=0||!['metal','steel'].includes(object?.material))return;
+ // Short impact glint only on metal; all existing particles and decals are retained.
+ const normal=surfaceNormal(object,point,dir),p=emitParticle(V.add(point,V.mul(normal,.035)),[0,0,0],.02,'#ffe2a3',.18,true,'box',0);
+ p.sparkBurst=true;
+};
+
 // Friendly canvas controls: visible selections, direct level cards, no arrow cycling.
 const V16LegacyMenu=drawMenu;
 function drawFriendlyMenu(){
@@ -2102,7 +2175,7 @@ function drawFriendlyMenu(){
  };
  const section=(n,label,y)=>{text(n,60,y,25,'#94cfc8',900);text(label,112,y,27,'#c6d9db',800);};
  const wrap=(str,x,y,width=900,size=27)=>{c.font='500 '+size+'px Arial';let lineText='';for(const word of str.split(' ')){if(c.measureText(lineText+word).width>width){text(lineText,x,y,size,'#b4c9ce',500);lineText='';y+=size*1.38;}lineText+=word+' ';}if(lineText)text(lineText,x,y,size,'#b4c9ce',500);return y;};
- text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V16',900,58,23,'#abc1c8');
+ text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V17',900,58,23,'#abc1c8');
  if(introActive){
   text('WELCOME TO THE RANGE',58,148,52);text('Your uploaded game intro / 10 seconds',60,199,27,'#acc7cc',500);
   c.fillStyle='#03090c';roundRect(c,56,238,912,513,10);c.fill();
@@ -2198,15 +2271,25 @@ window.addEventListener('keydown',e=>{
  const bx=b.x+b.w/2,by=b.y+b.h/2,dx=e.code==='ArrowLeft'?-1:e.code==='ArrowRight'?1:0,dy=e.code==='ArrowUp'?-1:e.code==='ArrowDown'?1:0;
  let best=-1,bestValue=Infinity;uiButtons.forEach((v,i)=>{if(i===uiHover)return;const x=v.x+v.w/2-bx,y=v.y+v.h/2-by,along=x*dx+y*dy,across=Math.abs(x*dy-y*dx);if(along<3)return;const score=along+across*2.1;if(score<bestValue){best=i;bestValue=score;}});if(best>=0)uiHover=best;drawMenu();
 },true);
-function v16Snapshot(){return {build:'V16 Quick Start / Night Breach',intro:{active:introActive,state:introState,error:introError,time:introVideo.currentTime,duration:introVideo.duration,paused:introVideo.paused,muted:introVideo.muted,source:INTRO_SOURCE},home:homeChoice(),difficulty:HOME_DIFFICULTY[settings.speed],menuPage,night:{active:isNightArena(),renderUniform:R.night,spots:nightSpots.length,mist:settings.reducedAtmosphere?0:nightMist.length,motes:settings.reducedAtmosphere?0:settings.quality==='high'?96:56,age:nightAge},singleMission:!!run.singleMission,selectionBounds:uiButtons.map(({x,y,w,h,label,selected})=>({x,y,w,h,label,selected}))};}
+function v16Snapshot(){return {build:'V17 Night Spark Glow',intro:{active:introActive,state:introState,error:introError,time:introVideo.currentTime,duration:introVideo.duration,paused:introVideo.paused,muted:introVideo.muted,source:INTRO_SOURCE},home:homeChoice(),difficulty:HOME_DIFFICULTY[settings.speed],menuPage,night:{active:isNightArena(),renderUniform:R.night,spots:nightSpots.length,mist:settings.reducedAtmosphere?0:nightMist.length,motes:settings.reducedAtmosphere?0:settings.quality==='high'?96:56,age:nightAge},singleMission:!!run.singleMission,selectionBounds:uiButtons.map(({x,y,w,h,label,selected})=>({x,y,w,h,label,selected}))};}
 settings.level=homeChoice().level;waves=makeWaves(settings.level);wave=0;
 replaceWorld(newRoomSeed(),settings.level,0);saveSettings();
 if(introActive){prepareIntroVideo();syncIntroControls();}
 
 
-demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V16 / QUICK START + NIGHT BREACH';requestAnimationFrame(desktopFrame);
+demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V17 / NIGHT SPARK GLOW';requestAnimationFrame(desktopFrame);
 // Opt-in diagnostics, absent from the normal player interface.
 if(new URLSearchParams(location.search).get('qa')==='1')window.__rangeQA={
+
+ v17(){return {...sparkGlowAudit,build:'V17 Night Spark Glow',brightness:activeBrightness(),night:isNightArena(),particles:particles.filter(sparkEligible).map(p=>({pos:p.pos.slice(),vel:p.vel.slice(),age:p.age,life:p.life,burst:!!p.sparkBurst})),gpu:{depthTest:gl.isEnabled(gl.DEPTH_TEST),depthWrite:gl.getParameter(gl.DEPTH_WRITEMASK),blend:gl.isEnabled(gl.BLEND),blendSrc:gl.getParameter(gl.BLEND_SRC_RGB),blendDst:gl.getParameter(gl.BLEND_DST_RGB)}};},
+ sparkTest(options={}){const n=options.count||1;for(let i=0;i<n;i++){const p=emitParticle(options.pos||[0,1.65,4],(options.vel||[1.5,1.6,0]).slice(),options.size||[.012,.016,.07],options.color||'#ffe0a0',options.life||.8,true,'box',options.gravity===undefined?4:options.gravity);p.age=options.age||0;p.sparkBurst=!!options.burst;p.blood=!!options.blood;p.casing=!!options.casing;}},
+ sparkMaterialImpact(point=[0,1.65,4],kind='metal'){const m=M.trs(V.sub(point,[0,0,.5]));surfaceImpact(point,{material:kind,model:m,inv:M.inv(m)},[0,0,-1],false);},
+ sparkProbeScene(hidden=false){
+  const mat={tex:R.white,emit:2,shadow:false,color:[.018,.024,.032,1]};
+  const wall=meshItem('box',M.trs([0,1.7,2],[0,0,0],[3,3,.2]),mat);
+  const items=[wall];appendNightSparkGlow(items);R.begin(null,viewCanvas.width,viewCanvas.height);R.view(desktopVP,lastHead,[0,0,viewCanvas.width,viewCanvas.height],items);gl.finish();return gl.getError();
+ },
+
  v16:()=>v16Snapshot(),damageNow(){damageGrace=0;damagePlayer();},nightEntrance(){targets=[];enemyShots=[];clearDrones();nextSpawn=999;droneNext=999;civilians=[];civilianNext=999;stats.presented=waves[wave].count;stats.destroyed=waves[wave].count;stats.dronesPresented=waves[wave].droneCount;stats.dronesDestroyed=waves[wave].droneCount;bossStage='guards';updateBossEncounter(.001);return this.entranceInfo();},home:()=>{finishIntro();lobby();},choose:chooseHomeLevel,difficulty:setHomeDifficulty,playSelection:playHomeSelection,skipIntro:finishIntro,replayIntro:openIntro,playIntro:playIntro,toggleIntroAudio:()=>{introVideo.muted=!introVideo.muted;syncIntroControls();},setIntroTime:n=>{introVideo.currentTime=n;},introVideo:()=>introVideo,menuSetup:()=>{menuPage='settings';refreshMenu();},missionSelect:launchSingleMission,
  guardian(){return guardianSnapshot();},
  operationStart(index=0,mode='practice'){settings.mode=mode;launchOperation(false);if(index){prepareOperationMission(index);}return guardianSnapshot();},
