@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v17-night-spark-glow"><title>ZEE Tactical Range VR - V17 Night Spark Glow</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v18-pillar-hall"><title>ZEE Tactical Range VR - V18 Pillar Hall</title>
 <style>
 :root{color-scheme:dark;--gold:#f1b662;--ink:#0d202b;--teal:#9cdbd3}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0c1822;font-family:Arial,Helvetica,sans-serif;color:#ebf1ef}#view{width:100%;height:100%;display:block;touch-action:none}#loading{position:fixed;inset:0;display:grid;place-items:center;background:#10212c;z-index:20;padding:40px;text-align:center;font-size:20px}.topbar{position:fixed;z-index:4;left:30px;right:30px;top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px;pointer-events:none}.brand{font-size:17px;letter-spacing:3px;font-weight:900;text-shadow:0 2px 12px #000}.brand b{color:var(--gold)}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:600;color:#afc5ca;margin-top:8px}.actions{display:flex;gap:8px;pointer-events:auto}button,a.navbtn{border:1px solid #6a919b6b;border-radius:7px;background:#0e252fdd;color:#d9e9e7;padding:11px 14px;cursor:pointer;font:700 11px Arial;letter-spacing:1px;text-decoration:none}button:hover,a.navbtn:hover{background:#284653;border-color:#ecba76}button:disabled{opacity:.5;cursor:default}#menuCanvas{position:fixed;z-index:5;left:4vw;top:52%;transform:translateY(-50%);width:min(440px,42vw,calc((100vh - 130px)*.888889));height:auto;border-radius:16px;box-shadow:0 22px 80px #0007;outline:none;touch-action:manipulation}#menuCanvas:focus-visible{outline:2px solid var(--gold)}#menuCanvas.center-menu{left:50%;transform:translate(-50%,-50%);width:min(500px,88vw,calc((100vh - 105px)*.888889))}#hud{display:none;position:fixed;inset:90px 30px 26px;z-index:3;pointer-events:none;justify-content:space-between;align-items:flex-start}.hudcard{background:linear-gradient(120deg,#102731ee,#0a1d27b3);border:1px solid #6a9a9c55;padding:17px 23px;border-radius:12px;box-shadow:0 7px 25px #0002}.hudcard label{font-size:10px;letter-spacing:2px;color:#a6c8cb;font-weight:700}.hudcard strong{display:block;font-size:32px;color:var(--gold);font-weight:900;margin:4px 0 5px}.hudcard small{font-size:12px;color:#c0d3d3}.scorecard{text-align:right}.scorecard strong{color:#c5eee0}.bottomhud{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end}.ammo strong{font-size:27px}.mini{font:12px monospace;color:#d3e1df;margin-top:6px}.combo{font-size:15px;font-weight:800;letter-spacing:2px;color:var(--gold);text-shadow:0 2px 10px #000}.hints{font-size:10px;letter-spacing:1px;color:#afc7c9;margin-top:10px}#crosshair{display:none;position:fixed;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);pointer-events:none;z-index:3;border:1px solid #ffe9bc88;border-radius:50%;filter:drop-shadow(0 0 2px #000)}#crosshair:before,#crosshair:after{content:'';position:absolute;background:#fff0c9}#crosshair:before{width:6px;height:2px;top:8px;left:6px}#crosshair:after{width:2px;height:6px;left:8px;top:6px}#crosshair.hit{border-color:#a5ffe5;transform:translate(-50%,-50%) rotate(45deg);width:29px;height:29px;background:#9beadf33}#countdown{position:fixed;inset:0;display:grid;place-items:center;font-size:clamp(90px,14vw,190px);font-weight:900;color:#f6c882;text-shadow:0 4px 30px #071421;z-index:3;pointer-events:none}#toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);max-width:min(650px,90vw);border:1px solid #688c94;background:#0f2633f2;color:#dfefee;border-radius:10px;padding:14px 22px;font-size:14px;line-height:1.5;text-align:center;opacity:0;transition:opacity .2s;z-index:15;pointer-events:none}#toast.show{opacity:1}.credit{position:fixed;bottom:14px;left:30px;font-size:9px;letter-spacing:1.5px;color:#aec3c4;pointer-events:none;z-index:3}.not-menu{display:none}.menu-open #pause,.menu-open #reload,.menu-open #ion{display:none}.in-vr .topbar,.in-vr .credit,.in-vr #hud,.in-vr #countdown,.in-vr #toast,.in-vr #menuCanvas{display:none!important}.screenShade{position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,#07131c80,transparent 20%,transparent 70%,#07131c50);z-index:2}.in-vr .screenShade{display:none}@media(max-width:700px){.topbar{left:15px;right:15px;top:15px}.brand{font-size:12px;letter-spacing:1px}.brand small{font-size:8px}.actions{gap:4px}.actions button,.actions a{padding:9px 8px;font-size:9px}#fullscreen,.actions a{display:none}#menuCanvas{left:50%;transform:translate(-50%,-50%);width:min(450px,88vw,calc((100vh - 110px)*.888889));top:53%}#hud{inset:78px 12px 20px}.hudcard{padding:10px 14px}.hudcard strong{font-size:22px}.hints{max-width:200px;line-height:1.5}.credit{left:15px;font-size:8px}.combo{font-size:11px;letter-spacing:1px}}
 
@@ -37,10 +37,10 @@
 </style>
 </head><body class="menu-open">
 <canvas id="view" aria-label="3D shooting range"></canvas><div class="screenShade"></div>
-<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V17 / NIGHT SPARK GLOW</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
+<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V18 / PILLAR HALL</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
 <canvas id="menuCanvas" width="1024" height="1152" tabindex="0" role="application" aria-label="Range menu: use mouse or arrows and Enter"></canvas>
 <div id="hud"><div class="hudcard"><label>WAVE</label><strong id="hWave">01 / 03</strong><small id="hName">Soldier Assault</small><div class="mini"><span id="hLeft">8</span> <span id="hRemainingLabel">objects remaining</span></div></div><div class="hudcard scorecard"><label>WAVE SCORE</label><strong id="hScore">0</strong><small>Accuracy <span id="hAccuracy">0.0%</span></small><div id="combatHUD" style="display:none;margin-top:12px;border-top:1px solid #6a9a9c55;padding-top:12px"><label id="hHealth">HEALTH 100 / 100</label><div id="hThreat" class="mini">WATCH THE COVER</div></div></div><div class="bottomhud"><div><div id="hCombo" class="combo">BUILD YOUR STREAK</div><div class="hints">A / D LEAN / S DUCK / R RELOAD / E COLLECT / Q ION</div></div><div class="hudcard ammo"><label>TAUROS PISTOL</label><strong id="hAmmo">12 / 12</strong><small>Auto reload when empty</small></div></div></div>
-<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V17 / STATIONARY VR</div><div id="loading">LOADING YOUR RANGE...</div>
+<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V18 / STATIONARY VR</div><div id="loading">LOADING YOUR RANGE...</div>
 
 <section id="introGate" role="dialog" aria-modal="true" aria-label="ZEE Tactical Range game intro"><div class="introShell"><div class="introHead"><h1>ZEE TACTICAL RANGE</h1><span>YOUR INTRO / 10 SECONDS</span></div><video id="introVideo" playsinline preload="metadata" aria-label="Uploaded ZEE Tactical Range intro video"></video><div class="introActions"><button id="introPlay">PLAY INTRO WITH SOUND</button><button id="introMute">SOUND ON</button><button id="introSkip">SKIP TO GAME</button></div><p id="introMessage">Play your intro, or skip straight to difficulty, level and lighting. Replay is in Game Setup.</p></div></section>
 <script>
@@ -144,7 +144,8 @@ const LEVELS=[
  {id:'dodge-survival-v14-crossfire-transit',name:'Dodge Survival',short:'DODGE SURVIVAL',objective:'survive',type:'combat',accent:'#b5c1bc',secondary:'#bab49f',wall:'#aeafa9',floor:'#9a9f9c',tag:'READ THE SHOT / LEAN / SURVIVE',hint:'Survive 30 / 40 / 50 seconds. Soldiers reposition and drones attack in waves 2 + 3. Lean or duck after the aim warning. Protect civilians from every direction.',colors:['#adb7ad','#c0b89b'],exposure:30},
  {id:'elimination-rush-v14-crossfire-transit',name:'Elimination Rush',short:'ELIMINATION RUSH',objective:'quota',type:'combat',accent:'#c8b39a',secondary:'#acb5a4',wall:'#b2ada2',floor:'#a29d91',tag:'BEAT THE CLOCK / IDENTIFY FIRST',hint:'60 seconds: defeat 12 / 18 / 24 soldiers and survive. Drones in waves 2 + 3 give bonus points, not soldier-quota credit. Civilians use front, rear and side doors. Identify before firing.',colors:['#c8b39a','#adb5a0'],exposure:30},
  {id:'warden-hunt-v12',name:'Warden Hunt',short:'WARDEN HUNT',objective:'boss',type:'combat',accent:'#c6b895',secondary:'#a6b6b6',wall:'#a9aba5',floor:'#9b9d94',tag:'COLLECT / WAIT / STRIKE',hint:'Defeat guards and collect amber ION rounds: E / off-hand trigger. Load one: Q / off-hand grip. One ION hit in the OPEN chest core defeats the 1.5x Warden.',colors:['#b6b4a1','#8f9b92'],exposure:30},
- {id:'night-breach-v16',name:'Night Breach',short:'NIGHT BREACH',objective:'boss',type:'combat',accent:'#91c8c5',secondary:'#89a8ad',wall:'#727e7d',floor:'#65716f',tag:'SMOKE / SPOTLIGHTS / WARDEN',hint:'Clear 12 guards and 2 drones, collect ION, then face the Warden. Cinematic atmosphere inspired by your intro. Your lighting choice always applies.',colors:['#8a9e9c','#a8aaa0'],exposure:30}
+ {id:'night-breach-v16',name:'Night Breach',short:'NIGHT BREACH',objective:'boss',type:'combat',accent:'#91c8c5',secondary:'#89a8ad',wall:'#727e7d',floor:'#65716f',tag:'SMOKE / SPOTLIGHTS / WARDEN',hint:'Clear 12 guards and 2 drones, collect ION, then face the Warden. Cinematic atmosphere inspired by your intro. Your lighting choice always applies.',colors:['#8a9e9c','#a8aaa0'],exposure:30},
+ {id:'pillar-hall-v18',name:'Pillar Hall',short:'PILLAR HALL',objective:'boss',type:'combat',accent:'#a6c5c4',secondary:'#a5ada3',wall:'#7f8b87',floor:'#76817c',tag:'TALL COLUMNS / THREE SETUPS / WARDEN',hint:'Three changing layouts in a tall-column hall. Clear 10 / 14 / 18 guards and 0 / 1 / 2 drones. The Warden enters after the third wave. Your lighting choice always applies.',colors:['#8a9e9c','#a8aaa0'],exposure:30}
 ];
 const COMBAT_ROOMS=[
  {name:'Freight Depot',wall:'#c0b9aa',floor:'#b8b4a7',accent:'#cbbb98',secondary:'#aab3a1',style:'freight'},
@@ -166,7 +167,7 @@ uniform mat4 uModel,uVP,uLight;uniform mat3 uNormal;uniform bool uSkin;uniform h
 mat4 bone(float idx){int y=int(idx+.5);return mat4(texelFetch(uBones,ivec2(0,y),0),texelFetch(uBones,ivec2(1,y),0),texelFetch(uBones,ivec2(2,y),0),texelFetch(uBones,ivec2(3,y),0));}
 void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*aW.x+bone(aJ.y)*aW.y+bone(aJ.z)*aW.z+bone(aJ.w)*aW.w;pos=skin*pos;normal=mat3(skin)*normal;}vec4 p=uModel*pos;vP=p.xyz;vN=normalize(uNormal*normal);vUV=aUV;vC=aC;vS=uLight*p;gl_Position=uVP*p;}`;
  const fs=`#version 300 es
- precision highp float;in vec3 vP,vN;in vec2 vUV;in vec4 vC,vS;uniform sampler2D uTex,uShadow;uniform vec4 uMat,uTint;uniform vec3 uEye;uniform float uShadowOn;uniform vec4 uFlash[4];uniform float uEmergency,uRoomLight,uNight;uniform vec3 uTorchOrigin,uTorchDirection;uniform vec4 uEnemyLamp[4],uEnemyAim[4];out vec4 outColor;
+ precision highp float;in vec3 vP,vN;in vec2 vUV;in vec4 vC,vS;uniform sampler2D uTex,uShadow;uniform vec4 uMat,uTint;uniform vec3 uEye;uniform float uShadowOn;uniform vec4 uFlash[4];uniform vec4 uElectric[2];uniform float uEmergency,uRoomLight,uNight;uniform vec3 uTorchOrigin,uTorchDirection;uniform vec4 uEnemyLamp[4],uEnemyAim[4];out vec4 outColor;
  float shadow(){vec3 p=vS.xyz/vS.w*.5+.5;if(vS.w<=0.||p.x<0.||p.x>1.||p.y<0.||p.y>1.||p.z>1.)return 1.;float sum=0.;for(int x=0;x<2;x++)for(int y=0;y<2;y++){float d=texture(uShadow,p.xy+(vec2(float(x),float(y))-.5)/1024.).r;sum+=p.z-.00018<d?1.:.035;}return sum*.25;}
  vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
  void main(){vec4 t=texture(uTex,vUV)*vC*uTint;float a=t.a*uMat.z;
@@ -185,6 +186,7 @@ void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*a
  for(int i=0;i<4;i++){if(uEnemyLamp[i].w>0.){vec3 el=vP-uEnemyLamp[i].xyz;float ed=max(length(el),.001);float ec=smoothstep(.87,.985,dot(el/ed,uEnemyAim[i].xyz));illum+=vec3(.88,.91,.78)*uEnemyLamp[i].w*(.12+.88*ec)*max(dot(n,-el/ed),.06)/(1.+ed*ed*.7);}}
  for(int i=0;i<4;i++){if(uFlash[i].w>0.){vec3 fl=uFlash[i].xyz-vP;float fd=length(fl);illum+=vec3(1.,.72,.38)*max(dot(n,normalize(fl)),0.)*uFlash[i].w*4.0/(1.+fd*fd*4.);}}
  
+ for(int i=0;i<2;i++){if(uElectric[i].w>0.){vec3 el=uElectric[i].xyz-vP;float ed=length(el);illum+=vec3(.52,.75,1.)*uElectric[i].w*max(dot(n,normalize(el)),.02)/(1.+ed*ed*8.);}}
  // Low-cost fixed ceiling spots and damp-floor glints, not ray-traced reflections.
  if(uNight>.01){for(int i=0;i<6;i++){
    float sx=(i%2==0)?-5.0:5.0;float sz=-2.0-float(i/2)*7.8;
@@ -200,7 +202,7 @@ void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*a
  }}
  vec3 col=base*(illum+uMat.x)+vec3(sp);col=pow(aces(col),vec3(1./2.2));float fog=1.-exp(-length(uEye-vP)*(.007+.010*uNight));vec3 fogColor=mix(vec3(.027,.035,.043),vec3(.21,.24,.25),uRoomLight);fogColor=mix(fogColor,vec3(.075,.12,.13),uNight*.40);col=mix(col,fogColor,fog);outColor=vec4(col,a);}`;
 
- this.program=this.programOf(vs,fs);this.uniforms={};for(const k of ['Model','VP','Light','Normal','Tex','Shadow','Mat','Tint','Eye','ShadowOn','Skin','Bones','Flash[0]','Emergency','RoomLight','Night','TorchOrigin','TorchDirection','EnemyLamp[0]','EnemyAim[0]'])this.uniforms[k]=gl.getUniformLocation(this.program,'u'+k);
+ this.program=this.programOf(vs,fs);this.uniforms={};for(const k of ['Model','VP','Light','Normal','Tex','Shadow','Mat','Tint','Eye','ShadowOn','Skin','Bones','Flash[0]','Electric[0]','Emergency','RoomLight','Night','TorchOrigin','TorchDirection','EnemyLamp[0]','EnemyAim[0]'])this.uniforms[k]=gl.getUniformLocation(this.program,'u'+k);
  this.depthProgram=this.programOf(`#version 300 es\nlayout(location=0) in vec3 aP;uniform mat4 uMVP;void main(){gl_Position=uMVP*vec4(aP,1.);}`,`#version 300 es\nprecision mediump float;out vec4 color;void main(){color=vec4(1.);}`);this.depthLoc=gl.getUniformLocation(this.depthProgram,'uMVP');
  this.white=this.texture(canvasTexture(2,c=>{c.fillStyle='white';c.fillRect(0,0,2,2)}));this.shadow=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,this.shadow);gl.texImage2D(gl.TEXTURE_2D,0,gl.DEPTH_COMPONENT24,1024,1024,0,gl.DEPTH_COMPONENT,gl.UNSIGNED_INT,null);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);this.shadowFBO=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,this.shadowFBO);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.TEXTURE_2D,this.shadow,0);gl.drawBuffers([gl.NONE]);gl.readBuffer(gl.NONE);if(gl.checkFramebufferStatus(gl.FRAMEBUFFER)!==gl.FRAMEBUFFER_COMPLETE)throw Error('Shadow framebuffer is incomplete.');gl.bindFramebuffer(gl.FRAMEBUFFER,null);this.lightVP=M.mul(M.ortho(-21,21,-21,21,.1,65),M.look([-14,24,8],[0,0,-8]));gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.CULL_FACE);gl.clearColor(.018,.024,.030,1);
  }
@@ -212,7 +214,7 @@ void main(){vec4 pos=vec4(aP,1.);vec3 normal=aN;if(uSkin){mat4 skin=bone(aJ.x)*a
  deleteMesh(m){this.gl.deleteBuffer(m.buffer);this.gl.deleteVertexArray(m.vao);this.geoCount--}
  renderShadow(items){if(!this.shadowDirty)return;const gl=this.gl;gl.bindFramebuffer(gl.FRAMEBUFFER,this.shadowFBO);gl.viewport(0,0,1024,1024);gl.clear(gl.DEPTH_BUFFER_BIT);gl.useProgram(this.depthProgram);gl.disable(gl.BLEND);gl.depthMask(true);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(2,3);for(const it of items){if(!it.cast)continue;gl.uniformMatrix4fv(this.depthLoc,false,M.mul(this.lightVP,it.model));gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count)}gl.disable(gl.POLYGON_OFFSET_FILL);gl.bindVertexArray(null);this.shadowDirty=false}
  begin(fbo,width,height){const gl=this.gl;gl.bindFramebuffer(gl.FRAMEBUFFER,fbo);gl.viewport(0,0,width,height);gl.depthMask(true);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);this.calls=0;this.triangles=0}
- view(vp,eye,viewport,items){const gl=this.gl,u=this.uniforms;gl.viewport(...viewport);gl.useProgram(this.program);gl.uniformMatrix4fv(u.VP,false,vp);gl.uniformMatrix4fv(u.Light,false,this.lightVP);gl.uniform3fv(u.Eye,eye);gl.uniform1f(u.Emergency,this.emergency||0);gl.uniform1f(u.Night,this.night||0);gl.uniform1f(u.RoomLight,this.roomLight===undefined?1:this.roomLight);gl.uniform3fv(u.TorchOrigin,this.torchOrigin||eye);gl.uniform3fv(u.TorchDirection,this.torchDirection||[0,0,-1]);gl.uniform4fv(u['EnemyLamp[0]'],this.enemyLamps||new Float32Array(16));gl.uniform4fv(u['EnemyAim[0]'],this.enemyAims||new Float32Array(16));gl.uniform1i(u.Tex,0);gl.uniform1i(u.Shadow,1);gl.uniform1i(u.Bones,2);gl.uniform4fv(u['Flash[0]'],this.flashes||new Float32Array(16));gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.shadow);gl.activeTexture(gl.TEXTURE0);let prevTex=null,blend=null;for(const it of items){if(it.visible===false||it.mesh.count===0)continue;gl.uniform1i(u.Skin,it.skinTex?1:0);if(it.skinTex){gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,it.skinTex);gl.activeTexture(gl.TEXTURE0);}const mat=it.mat,transparent=mat.transparent||it.alpha<1,blendMode=mat.additive?2:transparent?1:0;if(blend!==blendMode){blend=blendMode;if(blend){gl.enable(gl.BLEND);if(blend===2)gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ZERO,gl.ONE);else gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false)}else{gl.disable(gl.BLEND);gl.depthMask(true)}}if(mat.tex!==prevTex){gl.bindTexture(gl.TEXTURE_2D,(mat.tex||this.white).id);prevTex=mat.tex}gl.uniformMatrix4fv(u.Model,false,it.model);const inv=M.inv(it.model);gl.uniformMatrix3fv(u.Normal,false,new Float32Array([inv[0],inv[4],inv[8],inv[1],inv[5],inv[9],inv[2],inv[6],inv[10]]));gl.uniform4f(u.Mat,mat.emit||0,mat.rough===undefined?.8:mat.rough,it.alpha===undefined?1:it.alpha,mat.sparkMode||0);gl.uniform4fv(u.Tint,it.tint||mat.color||[1,1,1,1]);gl.uniform1f(u.ShadowOn,mat.shadow===false?0:1);gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count);this.calls++;this.triangles+=it.mesh.count/3}gl.depthMask(true);gl.disable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.bindVertexArray(null)}
+ view(vp,eye,viewport,items){const gl=this.gl,u=this.uniforms;gl.viewport(...viewport);gl.useProgram(this.program);gl.uniformMatrix4fv(u.VP,false,vp);gl.uniformMatrix4fv(u.Light,false,this.lightVP);gl.uniform3fv(u.Eye,eye);gl.uniform1f(u.Emergency,this.emergency||0);gl.uniform1f(u.Night,this.night||0);gl.uniform1f(u.RoomLight,this.roomLight===undefined?1:this.roomLight);gl.uniform3fv(u.TorchOrigin,this.torchOrigin||eye);gl.uniform3fv(u.TorchDirection,this.torchDirection||[0,0,-1]);gl.uniform4fv(u['EnemyLamp[0]'],this.enemyLamps||new Float32Array(16));gl.uniform4fv(u['EnemyAim[0]'],this.enemyAims||new Float32Array(16));gl.uniform1i(u.Tex,0);gl.uniform1i(u.Shadow,1);gl.uniform1i(u.Bones,2);gl.uniform4fv(u['Flash[0]'],this.flashes||new Float32Array(16));gl.uniform4fv(u['Electric[0]'],this.electricLights||new Float32Array(8));gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.shadow);gl.activeTexture(gl.TEXTURE0);let prevTex=null,blend=null;for(const it of items){if(it.visible===false||it.mesh.count===0)continue;gl.uniform1i(u.Skin,it.skinTex?1:0);if(it.skinTex){gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,it.skinTex);gl.activeTexture(gl.TEXTURE0);}const mat=it.mat,transparent=mat.transparent||it.alpha<1,blendMode=mat.additive?2:transparent?1:0;if(blend!==blendMode){blend=blendMode;if(blend){gl.enable(gl.BLEND);if(blend===2)gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ZERO,gl.ONE);else gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false)}else{gl.disable(gl.BLEND);gl.depthMask(true)}}if(mat.tex!==prevTex){gl.bindTexture(gl.TEXTURE_2D,(mat.tex||this.white).id);prevTex=mat.tex}gl.uniformMatrix4fv(u.Model,false,it.model);const inv=M.inv(it.model);gl.uniformMatrix3fv(u.Normal,false,new Float32Array([inv[0],inv[4],inv[8],inv[1],inv[5],inv[9],inv[2],inv[6],inv[10]]));gl.uniform4f(u.Mat,mat.emit||0,mat.rough===undefined?.8:mat.rough,it.alpha===undefined?1:it.alpha,mat.sparkMode||0);gl.uniform4fv(u.Tint,it.tint||mat.color||[1,1,1,1]);gl.uniform1f(u.ShadowOn,mat.shadow===false?0:1);gl.bindVertexArray(it.mesh.vao);gl.drawArrays(gl.TRIANGLES,0,it.mesh.count);this.calls++;this.triangles+=it.mesh.count/3}gl.depthMask(true);gl.disable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.bindVertexArray(null)}
 }
 
 /* Procedural room, textures, targets and prop models. No remote assets. */
@@ -260,8 +262,55 @@ class WorldBuilder{
  }
  finish(){const items=[];for(const [mat,groups]of this.batches)for(const [name,g]of Object.entries(groups))if(g.a.length)items.push({mesh:this.R.mesh(g),model:M.identity(),mat,cast:name==='cast'});return {items,colliders:this.colliders,stations:this.stations}}
 }
+
+/* V18: deterministic room templates + seeded placement. Clear center aisle,
+   all six door apertures and the player's bay are reserved. */
+function v18CoverPlan(seed,level,stage,bossRoom){
+ const rand=seeded((seed^0x183a54d)>>>0),j=v=>(rand()-.5)*v;
+ const templates=[
+  {name:'Staggered Bays',x:[-4.75,-1.65,1.65,4.75],front:[-3.35,-1.15,-2.55,-4.15],back:[-8.7,-11.5,-8.45,-10.9]},
+  {name:'Deep Crossfire',x:[-4.40,-1.40,1.40,4.40],front:[-1.8,-4.25,-3.9,-1.7],back:[-12.05,-8.65,-10.9,-12.25]},
+  {name:'Broken Chevron',x:[-4.90,-1.85,1.85,4.90],front:[-4.15,-2.8,-1.15,-3.20],back:[-8.4,-12.3,-9.85,-11.1]}
+ ];
+ const index=((seed+level+stage)%3+3)%3,t=templates[index],stations=[];
+ for(let row=0;row<2;row++)for(let col=0;col<4;col++){
+  const x=(bossRoom?[-4.65,-2.60,2.60,4.65][col]:t.x[col])+j(bossRoom?.22:.35);
+  const z=bossRoom&&row===0?-5.8+(t.front[col]+2.8)*.40+j(.30):(row?t.back:t.front)[col]+j(.65);
+  // Tall side-peek stacks stay in the rear row. Front transit alcoves remain clear.
+  const rise=bossRoom||row===0||col===1||col===2||rand()<.55;
+  stations.push({x,z,rise,side:col<2?1:-1,w:rise?1.48+rand()*.24:1.36,h:rise?.91+rand()*.13:2.22+rand()*.18,materialRoll:rand()});
+ }
+ return {name:t.name,index,stations};
+}
+function v18AddColumns(b,seed,stage){
+ const r=seeded(seed^0x18c011),columns=[];
+ const sites=[[-5.95,-5.30],[5.95,-5.30],[-6.70,-12.65],[6.70,-12.65],[-5.85,-18.65],[5.85,-18.65],[-3.15,-16.15],[3.15,-16.15]];
+ for(const [i,site]of sites.entries()){
+  const x=site[0]+(r()-.5)*.16,z=site[1]+(r()-.5)*.28,w=i<6?.92:.82,h=7.62;
+  b.box([x,h/2,z],[w,h,w],'concrete',i%2?'#858d85':'#8e958c',[0,0,0],true,true);
+  b.box([x,.22,z],[w+.28,.44,w+.28],'steel','#68726d',[0,0,0],true,true);
+  b.box([x,.54,z],[w+.12,.20,w+.12],'metal','#808b82',[0,0,0],true,true);
+  b.box([x,7.47,z],[w+.34,.36,w+.34],'concrete','#929b91',[0,0,0],true,true);
+  for(const sx of [-1,1])for(const sz of [-1,1]){
+   b.add('cylinder',[x+sx*(w*.40),.46,z+sz*(w*.40)],[.07,.04,.07],'metal','#9a9c88');
+  }
+  // Narrow steel wear strips are real impact surfaces, not luminous paint.
+  for(const side of [-1,1])b.box([x+side*(w/2+.018),1.16,z],[.038,1.16,w*.65],'steel','#626e6b',[0,0,0],true,true);
+  b.box([x,2.60,z+w/2+.018],[w*.44,.105,.025],'plain','#b8b092');
+  columns.push({x,z,width:w,height:h});
+ }
+ for(const z of [-5.30,-12.65,-18.65]){
+  b.box([0,7.72,z],[14.2,.23,.45],'steel','#586762',[0,0,0],true);
+  for(const x of [-4.3,0,4.3])b.box([x,7.48,z],[.70,.06,.18],'glow','#b2c3bd');
+ }
+ // Dark service conduit and inset floor expansion joints accent the long hall.
+ for(const x of [-7.8,7.8])b.box([x,6.2,-11.5],[.12,.12,18],'metal','#5d726e');
+ for(const x of [-3.8,3.8])b.box([x,.013,-8.5],[.026,.008,22],'plain','#59665f');
+ return columns;
+}
+
 function buildWorld(R,A,seed=173,level=0,stage=0){
- const b=new WorldBuilder(R,A),ran=seeded(seed),j=v=>(ran()-.5)*v,range=(a,z)=>a+ran()*(z-a),L={...LEVELS[level],...combatRoom(level,stage)};
+ const b=new WorldBuilder(R,A),ran=seeded(seed),j=v=>(ran()-.5)*v,range=(a,z)=>a+ran()*(z-a),L={...LEVELS[level],...combatRoom(level,stage)},layoutPlan=v18CoverPlan(seed,level,stage,L.objective==='boss');
  const floor=new Geometry().append(shapes.plane);for(let i=0;i<floor.a.length;i+=12){floor.a[i+6]*=11;floor.a[i+7]*=16;}
  const floorItem={mesh:R.mesh(floor),model:M.trs([0,0,-5],[-PI/2,0,0],[22,34,1]),mat:A.mats.floor,tint:hex(L.floor),cast:false};
  // V14: actual front/rear apertures, not door artwork on a solid collider.
@@ -297,15 +346,15 @@ function buildWorld(R,A,seed=173,level=0,stage=0){
  }
  for(const x of [-9,-4.5,0,4.5,9])for(let z=-20;z<-3;z+=3.2)b.box([x,.012,z],[.035,.01,1.4],'plain','#9e9f8e');
  b.box([0,.016,5.7],[20,.018,.09],'plain','#b0a17c');
- if(level!==4)b.sign(L.name.toUpperCase(),LEVELS[level].short+' / WAVE '+(stage+1),[0,6.2,-21.79],[11.5,1.7],L.accent);
+ if(level!==4&&level!==5)b.sign(L.name.toUpperCase(),LEVELS[level].short+' / WAVE '+(stage+1),[0,6.2,-21.79],[11.5,1.7],L.accent);
  for(const x of [-9,9])b.sign('ZEE','TRAINING FACILITY',[x,4.1,-21.72],[1.8,1.3],L.secondary);
  const palette=['#c5b69c','#b5a48b','#b8b2a4','#9f9b86'];
  // Cover styles vary by station and room. Muted timber, masonry and plain concrete.
  for(let row=0;row<2;row++)for(let col=0;col<4;col++){
-  const x=L.objective==='boss'?[-4.8,-3.15,3.15,4.8][col]+j(.10):[-4.15,-1.38,1.38,4.15][col]+j(.34)+(row?j(.24):0),z=(L.objective==='boss'&&!row&&(col===0||col===3)?-3.5+j(.3):(row?-6.05:-.65)+j(.85)),rise=L.objective==='boss'||(col+row+(seed%2))%2===0,side=col<2?1:-1;
-  const st={id:b.stations.length,x,z,y:0,type:rise?'rise':'peek',side,hiddenX:x+side*1.43};b.stations.push(st);
-  const cx=rise?x:st.hiddenX,h=rise?range(.93,1.04):range(2.23,2.42),w=rise?range(1.65,1.82):1.36,cz=z+.90;
-  const kind=(L.style==='concrete'||L.style==='utility')?((col+row)%3?'wall':'wood'):(L.style==='outpost'?(col%2?'wall':'wood'):((col+row+seed)%3===0?'wall':'wood'));
+  const plan=layoutPlan.stations[row*4+col],{x,z,rise,side,w,h}=plan;
+  const st={id:b.stations.length,x,z,y:0,type:rise?'rise':'peek',side,hiddenX:rise?x:x+side*1.43,layoutSlot:row*4+col};b.stations.push(st);
+  const cx=rise?x:st.hiddenX,cz=z+.90;
+  const kind=plan.materialRoll<(L.style==='concrete'||L.style==='utility'||level===5?.62:.44)?'wall':'wood';
   st.coverMaterial=kind;
   if(kind==='wall'){
    const mat=(col+row)%2?'masonry':'concrete';
@@ -320,7 +369,7 @@ function buildWorld(R,A,seed=173,level=0,stage=0){
  }
  // Reserve both service alcoves and the entire front crossing. All stored cargo is behind them.
  for(const sign of [-1,1])for(let row=0;row<3;row++){
-  const x=sign*range(8.7,9.7),z=-6-row*5.4+j(1.4),w=range(1.2,1.8),h=range(.9,1.55),d=range(1.1,1.9),r=j(.24);
+  const x=sign*(level===5?range(9.9,10.15):range(8.7,9.7)),z=-6-row*5.4+j(1.4),w=level===5?range(.78,1.0):range(1.2,1.8),h=range(.9,1.55),d=level===5?range(.8,1.1):range(1.1,1.9),r=level===5?j(.06):j(.24);
   b.crate(x,0,z,w,h,d,r,false,palette[row%4],row);
   if(ran()>.35)b.crate(x+j(.12),h,z+j(.1),w*.86,range(.7,1.2),d*.87,j(.10),row===1&&L.style==='cargo',palette[(row+1)%4],row+1);
  }
@@ -394,7 +443,8 @@ function buildWorld(R,A,seed=173,level=0,stage=0){
  b.box([0,.75,7.4],[3.6,.2,.06],'wood','#b1a18a');
  for(const x of [-1.5,1.5])b.box([x,.39,7],[.12,.78,.56],'metal','#686f63');
  b.box([-.9,.865,7],[.85,.035,.47],'dark');b.sign('ZEE','NIGHTFALL WARDEN',[.65,.88,7],[.7,.32],L.accent,[-PI/2,0,0]);
- const world=b.finish();world.items.unshift(floorItem);world.seed=seed;world.level=level;world.stage=stage;world.theme=L.name;world.layout=(seed>>>0).toString(16).slice(-6).toUpperCase();world.doors=doors;
+ const columns=level===5?v18AddColumns(b,seed,stage):[];
+ const world=b.finish();world.columns=columns;world.layoutVariant=layoutPlan.name;world.layoutIndex=layoutPlan.index;world.items.unshift(floorItem);world.seed=seed;world.level=level;world.stage=stage;world.theme=L.name;world.layout=(seed>>>0).toString(16).slice(-6).toUpperCase();world.doors=doors;
  world.routePoints=[doors[0].hidden,doors[0].approach,doors[0].crossing,doors[1].crossing,doors[1].approach,doors[1].hidden].map(p=>[...p]);
  if(L.objective==='boss')createBossDoor(world);
  return world;
@@ -589,7 +639,7 @@ function drawMenu(){
  R.updateTexture(uiTexture);uiCanvas.setAttribute('aria-label',phase+' menu. '+uiButtons.map(b=>b.label).join('. '));uiCanvas.style.display=(!xrSession&&['lobby','paused','results'].includes(phase))?'block':'none';document.body.classList.toggle('menu-open',['lobby','paused','results'].includes(phase));uiCanvas.classList.toggle('center-menu',phase!=='lobby');
 }
 function drawBoard(){const c=boardCanvas.getContext('2d'),L=LEVELS[phase==='lobby'?settings.level:waves[wave].level];c.fillStyle='#102330';c.fillRect(0,0,1024,160);c.strokeStyle=L.accent;c.lineWidth=4;c.strokeRect(3,3,1018,154);c.fillStyle=L.accent;c.font='700 24px monospace';c.fillText(phase==='lobby'?'ZEE / NIGHTFALL WARDEN':`LEVEL ${waves[wave].level+1} / WAVE ${waves[wave].stage+1} OF 3`,30,38);c.font='900 42px Arial';c.fillStyle='#f0f5ee';c.fillText(phase==='paused'?'PAUSED':phase==='results'?(stats.defeated?'TRY AGAIN':'WAVE COMPLETE'):L.short,30,94);c.font='bold 22px monospace';c.fillStyle='#b7dedb';c.fillText(phase==='lobby'?'MOVE / IDENTIFY / PROTECT / SURVIVE':(L.type==='combat'?`DOWN ${stats.destroyed}   HP ${combatHealth}   ${waves[wave].limit?Math.ceil(combatRemaining())+"s LEFT":"DODGED "+stats.dodged}`:`CLEARED ${stats.destroyed}   ESCAPED ${stats.escaped}   ACC ${accuracy(stats)}%`),30,139);c.textAlign='right';c.fillStyle=L.accent;c.font='900 57px monospace';c.fillText(String(stats.score).padStart(5,'0'),990,78);c.font='bold 21px monospace';c.fillText('WAVE SCORE',990,119);c.textAlign='left';R.updateTexture(boardTexture)}
-function updateHUD(){document.getElementById('ion').textContent=ionLoaded?'ION LOADED':'ION '+ionRounds+' / Q';document.getElementById('ion').style.display=currentLevel().objective==='boss'&&phase==='playing'?'':'none';const active=phase==='playing'||phase==='countdown',cfg=waves[wave];hud.style.display=active&&!xrSession?'flex':'none';document.getElementById('hWave').textContent=`${cfg.stage+1} / 3`;document.getElementById('hName').textContent=LEVELS[cfg.level].name;document.getElementById('hScore').textContent=stats.score.toLocaleString();document.getElementById('hAccuracy').textContent=accuracy(stats)+'%';document.getElementById('hLeft').textContent=String(Math.max(0,cfg.count-stats.destroyed-stats.escaped));document.getElementById('hAmmo').textContent=reloadLeft>0?'RELOADING':ionLoaded?'ION LOADED':run.mode==='practice'?'UNLIMITED':`${ammo} / 12`;document.getElementById('hCombo').textContent=streak>=3?`STREAK ${streak} / x${combo().toFixed(2)}`:cfg.level===0||cfg.level===3?'5 HITS = NEARBY BURST':'BUILD YOUR STREAK';document.getElementById('reload').disabled=reloadLeft>0||phase!=='playing'||run.mode==='practice';const combat=LEVELS[cfg.level].type==='combat';document.getElementById('combatHUD').style.display=combat?'block':'none';document.getElementById('hRemainingLabel').textContent=combat?'enemies remaining':'objects remaining';document.getElementById('hHealth').textContent=run.mode==='practice'?'PRACTICE / PROTECT CIVILIANS':'HEALTH '+combatHealth+' / 100';document.getElementById('hHealth').style.color=damageFlash>0?'#ff996e':'#c4e6b7';document.getElementById('hThreat').textContent=damageFlash>0?(run.mode==='practice'?'TRAINING HIT':'HIT / -20 HEALTH'):combatStatus();if(combat)document.getElementById('hCombo').textContent=combatObjective();document.getElementById('hRemainingLabel').textContent=combat?(cfg.objective==='boss'?(bossStage==='guards'?'guards remaining':bossStage==='warning'?'boss arriving':bossStage==='down'?'boss defeated':'armor hits remaining'):cfg.objective==='eliminate'?'soldiers remaining':cfg.objective==='quota'?'kills still needed':'seconds to survive'):'objects remaining';if(combat)document.getElementById('hLeft').textContent=String(cfg.objective==='boss'&&bossStage!=='guards'?(bossStage==='down'?stats.bossKills:boss&&boss.state==='live'?boss.hp:0):cfg.objective==='survive'?Math.ceil(combatRemaining()):Math.max(0,(cfg.objective==='quota'?cfg.quota:cfg.count)-stats.destroyed));}
+function updateHUD(){document.getElementById('ion').textContent=ionLoaded?'ION LOADED':'ION '+ionRounds+' / Q';document.getElementById('ion').style.display=waves[wave].objective==='boss'&&phase==='playing'?'':'none';const active=phase==='playing'||phase==='countdown',cfg=waves[wave];hud.style.display=active&&!xrSession?'flex':'none';document.getElementById('hWave').textContent=`${cfg.stage+1} / 3`;document.getElementById('hName').textContent=LEVELS[cfg.level].name;document.getElementById('hScore').textContent=stats.score.toLocaleString();document.getElementById('hAccuracy').textContent=accuracy(stats)+'%';document.getElementById('hLeft').textContent=String(Math.max(0,cfg.count-stats.destroyed-stats.escaped));document.getElementById('hAmmo').textContent=reloadLeft>0?'RELOADING':ionLoaded?'ION LOADED':run.mode==='practice'?'UNLIMITED':`${ammo} / 12`;document.getElementById('hCombo').textContent=streak>=3?`STREAK ${streak} / x${combo().toFixed(2)}`:cfg.level===0||cfg.level===3?'5 HITS = NEARBY BURST':'BUILD YOUR STREAK';document.getElementById('reload').disabled=reloadLeft>0||phase!=='playing'||run.mode==='practice';const combat=LEVELS[cfg.level].type==='combat';document.getElementById('combatHUD').style.display=combat?'block':'none';document.getElementById('hRemainingLabel').textContent=combat?'enemies remaining':'objects remaining';document.getElementById('hHealth').textContent=run.mode==='practice'?'PRACTICE / PROTECT CIVILIANS':'HEALTH '+combatHealth+' / 100';document.getElementById('hHealth').style.color=damageFlash>0?'#ff996e':'#c4e6b7';document.getElementById('hThreat').textContent=damageFlash>0?(run.mode==='practice'?'TRAINING HIT':'HIT / -20 HEALTH'):combatStatus();if(combat)document.getElementById('hCombo').textContent=combatObjective();document.getElementById('hRemainingLabel').textContent=combat?(cfg.objective==='boss'?(bossStage==='guards'?'guards remaining':bossStage==='warning'?'boss arriving':bossStage==='down'?'boss defeated':'armor hits remaining'):cfg.objective==='eliminate'?'soldiers remaining':cfg.objective==='quota'?'kills still needed':'seconds to survive'):'objects remaining';if(combat)document.getElementById('hLeft').textContent=String(cfg.objective==='boss'&&bossStage!=='guards'?(bossStage==='down'?stats.bossKills:boss&&boss.state==='live'?boss.hp:0):cfg.objective==='survive'?Math.ceil(combatRemaining()):Math.max(0,(cfg.objective==='quota'?cfg.quota:cfg.count)-stats.destroyed));}
 
 function drawAmmo(){const c=ammoCanvas.getContext('2d');c.clearRect(0,0,256,96);c.fillStyle='rgba(6,19,26,.92)';roundRect(c,0,0,256,96,12);c.fill();c.fillStyle=reloadLeft>0?'#e9aa5a':ammo>3||run.mode==='practice'?'#a3ede0':'#ef9c70';c.font='900 49px monospace';c.textAlign='center';c.fillText(reloadLeft>0?'LOADING':run.mode==='practice'?'UNLIMITED':String(ammo).padStart(2,'0')+' / 12',128,55);c.font='bold 20px Arial';c.fillStyle='#a7bfc5';c.fillText(reloadLeft>0?'RELOADING...':'ZEE / TAUROS',128,83);R.updateTexture(ammoTexture)}
 function refreshMenu(){uiHover=-1;if(['lobby','results','paused'].includes(phase))drawMenu()}
@@ -697,7 +747,7 @@ function defeatSoldier(t,point,precision){
  // A defeated soldier cannot fire again. Already-launched projectiles keep their fixed paths.
  t.aiState='down';stats.destroyed++;stats.hits++;stats.precise+=precision?1:0;streak++;stats.bestStreak=Math.max(stats.bestStreak,streak);stats.reactions.push(Math.max(.03,t.exposure));
  const pts=Math.round((150+(precision?40:0)+Math.max(0,60-Math.round(t.exposure*15)))*combo());stats.score+=pts;popup(point,'+'+pts,precision?'PRECISION / ENEMY DOWN':'ENEMY DOWN','#c9efac');soundAt('knockdown',point);
- if(currentLevel().objective==='boss'&&stats.destroyed%3===0)dropIon(point);
+ if(waves[wave].objective==='boss'&&stats.destroyed%3===0)dropIon(point);
  soldierHitSplash(t,point);
  for(let i=0;i<3;i++)emitParticle(point,[rnd(-.5,.5),rnd(.2,1.1),rnd(.1,.7)],[.012,.012,.04],'#ffe0a5',.25,true);return pts;
 }
@@ -790,7 +840,7 @@ function updateCombat(dt){
 function combatStatus(){
  if(phase==='countdown')return 'GET READY';if(phase==='paused')return 'PAUSED';if(phase==='results')return stats.defeated?'RETRY THE CHALLENGE':'CHALLENGE COMPLETE';
  if(boss&&boss.state==='live'){if(boss.coreOpen)return ionLoaded?'CORE OPEN / AIM FOR THE AMBER CENTER':'CORE OPEN / Q OR OFF-HAND GRIP LOADS ION';if(boss.bossPhase==='arrive')return 'WARDEN ARRIVING / PROTECT CIVILIANS';if(boss.lockPoint)return 'BOSS AIM LOCK / LEAN OR DUCK';return 'CHEST ARMORED / WAIT FOR OPEN CORE';}
- if(currentLevel().objective==='boss'&&supplyDrops.length)return 'AMBER SUPPLY / E OR OFF-HAND TRIGGER';
+ if(waves[wave].objective==='boss'&&supplyDrops.length)return 'AMBER SUPPLY / E OR OFF-HAND TRIGGER';
  const active=targets.filter(t=>t.state==='live'&&t.shown&&t.aiState==='engage');
  if(enemyShots.length)return civilians.length?'INCOMING / CIVILIAN CROSSING':'INCOMING / LEAN OR DUCK';
  if(active.some(t=>t.lockPoint))return 'AIM LOCKED / MOVE NOW';
@@ -920,7 +970,7 @@ function civilianObstacles(){
  // Human clearance, not invisible bullet blockers. Keep the real player bay free.
  const safety=(p,size)=>{const m=M.trs(p,[0,0,0],size);boxes.push({inv:M.inv(m),sx:size[0],sz:size[2]});};
  safety([0,1,9],[2.9,2,3.2]);
- if(world.level===3)safety([0,1,-10.45],[2.85,2,28.1]);
+ if(world.level>=3)safety([0,1,-10.45],[2.85,2,28.1]);
  return world.civilianBoxes=boxes;
 }
 
@@ -1155,7 +1205,7 @@ function renderBossDoor(items){
  }
  const c=d.target>0?'#a9ac84':'#694f39';for(const x of [-1.98,1.98])items.push(meshItem('box',M.trs([x,3.56,-21.71],[0,0,0],[.07,.45,.035]),'glow',c));
 }
-function bossEntranceActive(){return bossEntryClock>=0&&bossEntryClock<20&&bossStage!=='down'&&currentLevel().objective==='boss';}
+function bossEntranceActive(){return bossEntryClock>=0&&bossEntryClock<20&&bossStage!=='down'&&waves[wave].objective==='boss';}
 
 function deathDuration(t){return t.isBoss?BOSS_DEATH.duration:actorFor(t).asset.clips.death.duration;}
 function deathFade(t){return 1-clamp((t.fx-deathDuration(t)-.5)/.55,0,1);}
@@ -1223,7 +1273,7 @@ function updateBoss(t,dt){
  t.station.x=t.position[0];t.station.z=t.position[2];t.model=combatModel(t);ensureSoldierPose(t);
 }
 function updateBossEncounter(dt){
- if(phase!=='playing'||currentLevel().objective!=='boss')return;const cfg=waves[wave];
+ if(phase!=='playing'||waves[wave].objective!=='boss')return;const cfg=waves[wave];
  updateBossDoor(dt);if(bossEntryClock>=0)bossEntryClock+=dt;
  if(bossStage==='guards'&&stats.destroyed>=cfg.count&&!targets.length&&stats.dronesDestroyed>=cfg.droneCount&&!drones.length&&!enemyShots.length){bossStage='warning';bossWait=2.6;bossEntryClock=0;if(world.bossDoor)world.bossDoor.target=1;nextSpawn=999;sound('bossArrival');soundAt('metalHit',[0,2,-21.9]);popup([0,2.35,2.2],'WARDEN INBOUND','COLLECT ION / PROTECT CIVILIANS','#d2c399');}
  if(bossStage==='warning'){bossWait-=dt;if(bossWait<=0)spawnBoss();}
@@ -1239,7 +1289,7 @@ function hitBoss(t,point,special,weak){
 }
 function supplyPosition(t){return V.add(t.pos,[0,Math.sin(t.age*2.5+t.id)*.035,0]);}
 function dropIon(point){
- if(currentLevel().objective!=='boss'||supplyDrops.length>=5)return;const toward=V.norm(V.sub(playerEye(),point)),p=V.add(point,V.mul(toward,.22));p[1]=clamp(p[1],1,2.05);
+ if(waves[wave].objective!=='boss'||supplyDrops.length>=5)return;const toward=V.norm(V.sub(playerEye(),point)),p=V.add(point,V.mul(toward,.22));p[1]=clamp(p[1],1,2.05);
  if(!canSee(playerEye(),p))p.splice(0,3,...V.add(point,V.mul(toward,.24)));
  supplyDrops.push({id:++supplySerial,pos:p,age:0});sound('ionPickup');toast('ION supply dropped. Aim at the amber capsule: E, or off-hand trigger in VR.');
 }
@@ -1248,12 +1298,12 @@ function supplyRay(o,d,exact=false){
  for(const t of supplyDrops){const p=supplyPosition(t),dist=raySphere(o,d,p,.235);if(dist!==null&&dist<occlusion-.015&&(!result||dist<result.distance))result={drop:t,distance:dist,point:V.add(o,V.mul(d,dist))};}return result;
 }
 function tryCollectSupply(o,d,source=null){
- if(phase!=='playing'||currentLevel().objective!=='boss')return false;const h=supplyRay(o,d,true);if(!h)return false;
+ if(phase!=='playing'||waves[wave].objective!=='boss')return false;const h=supplyRay(o,d,true);if(!h)return false;
  if(ionRounds>=3){toast('ION reserve full (3). Extra capsules stay available.');return false;}
  supplyDrops=supplyDrops.filter(t=>t!==h.drop);ionRounds++;stats.ionCollected++;sound('ionPickup');haptic(source,.25,30);popup(h.drop.pos,'ION +1','Q / OFF-HAND GRIP TO LOAD','#dfcc99');drawCombatHUD();updateHUD();return true;
 }
 function toggleIon(){
- if(phase!=='playing'||currentLevel().objective!=='boss')return false;
+ if(phase!=='playing'||waves[wave].objective!=='boss')return false;
  if(reloadLeft>0){toast('Finish reloading before loading an ION round.');return false;}
  if(!ionLoaded&&ionRounds===0){toast('Collect an amber capsule first. Normal rounds can also defeat the Warden.');return false;}
  ionLoaded=!ionLoaded;sound('ionLoad');toast(ionLoaded?'ION loaded. Aim at the OPEN amber chest core.':'Normal ammunition selected.');drawCombatHUD();updateHUD();return true;
@@ -1447,7 +1497,7 @@ function newRun(tour=false){audio.unlock();run={mode:settings.mode,speed:setting
 
 function startWave(index,reshuffle=false){
  wave=clamp(index,0,waves.length-1);history=history.slice(0,wave);const cfg=waves[wave],key='wave'+wave;
- if(reshuffle||!levelSeeds[key]){let seed=newRoomSeed();if(seed===world.seed)seed=(seed%2147483645)+1;levelSeeds[key]=seed;}
+ if(reshuffle||!levelSeeds[key]){let seed=newRoomSeed();const desired=world.layoutIndex===undefined?((seed+cfg.level+cfg.stage)%3):(world.layoutIndex+1+(reshuffle&&Math.random()<.5?1:0))%3;for(let i=0;i<4&&((seed+cfg.level+cfg.stage)%3)!==desired;i++)seed=(seed%2147483645)+1;if(seed===world.seed)seed=(seed+3)%2147483645;levelSeeds[key]=seed;}
  if(world.level!==cfg.level||world.seed!==levelSeeds[key]||world.stage!==cfg.stage)replaceWorld(levelSeeds[key],cfg.level,cfg.stage);
  targets=[];stats=emptyStats();combatHealth=100;combatLastStation=-1;stationUse={};fireGate=0;damageGrace=0;combatRoomTime=0;lastTimeCue=11;quotaAnnounced=false;shotSerial=0;
  streak=0;ammo=12;reloadLeft=0;cooldown=0;nextSpawn=.25;countLeft=3;countNumber=3;goLeft=0;desktopLean=0;desktopDuck=0;dodgeKeys.clear();clearEffects();phase='countdown';sound('count');drawCountdown('3');uiCanvas.style.display='none';document.body.classList.remove('menu-open');updateHUD();drawAmmo();drawBoard();drawCombatHUD();crosshair.style.display=xrSession?'none':'block';
@@ -1469,7 +1519,7 @@ function spawnTarget(){return spawnCombatSoldier();}
 
 function raySphere(o,d,c,r){const p=V.sub(o,c),a=V.dot(d,d),b=V.dot(p,d),c0=V.dot(p,p)-r*r,disc=b*b-a*c0;if(disc<0)return null;const q=Math.sqrt(disc),t=(-b-q)/a;return t>=0?t:(-b+q)/a>=0?(-b+q)/a:null;}
 function rayTarget(o,d,t){return rayCombat(o,d,t);}
-function emitParticle(pos,vel,size,color,life=1.4,glowing=false,shape='box',gravity=5.5,shiny=false){const cap=settings.quality==='high'?480:320;if(particles.length>=cap)particles.shift();const p={pos:[...pos],vel,scale:Array.isArray(size)?size:[size,size,size],color:hex(color),age:0,life,angle:[rnd(-3,3),rnd(-3,3),rnd(-3,3)],spin:[rnd(-7,7),rnd(-7,7),rnd(-7,7)],glowing,shape,gravity,shiny};particles.push(p);return p;}
+function emitParticle(pos,vel,size,color,life=1.4,glowing=false,shape='box',gravity=5.5,shiny=false){const cap=settings.reducedAtmosphere?320:settings.quality==='high'?800:560;if(particles.length>=cap)particles.shift();const p={pos:[...pos],vel,scale:Array.isArray(size)?size:[size,size,size],color:hex(color),age:0,life,angle:[rnd(-3,3),rnd(-3,3),rnd(-3,3)],spin:[rnd(-7,7),rnd(-7,7),rnd(-7,7)],glowing,shape,gravity,shiny};particles.push(p);return p;}
 function celebration(){}
 function destroyTarget(t,p,precision=false,special=false,weak=false){return t.isBoss?hitBoss(t,p,special,weak):defeatSoldier(t,p,precision);}
 function fire(o,d,source=null){
@@ -1543,17 +1593,29 @@ function segment(a,b,r){const up=V.norm(V.sub(b,a)),len=Math.hypot(...V.sub(b,a)
 function meshItem(shape,model,mat,tint=null,alpha=1){return {mesh:A.meshes[shape],model,mat:typeof mat==='string'?A.mats[mat]:mat,tint:tint?hex(tint):undefined,alpha}}
 function addTarget(items,t){addCombatSoldier(items,t);}
 function emitSmoke(pos,dir,size=.30,dust=false){
- const cap=settings.quality==='high'?28:16;if(smokePuffs.length>=cap)smokePuffs.shift();
- smokePuffs.push({pos:[...pos],vel:V.add(V.mul(dir,dust?.11:.25),[rnd(-.04,.04),dust?.16:.26,0]),age:0,life:dust?.62:.48,size,dust,roll:rnd(0,TAU)});
+ const reduced=settings.reducedAtmosphere,cap=reduced?12:settings.quality==='high'?54:36;
+ const count=dust?1:reduced?1:3,forward=V.norm(dir);
+ for(let i=0;i<count;i++){
+  if(smokePuffs.length>=cap)smokePuffs.shift();
+  const origin=V.add(pos,V.mul(forward,dust?0:.045+i*.055));
+  smokePuffs.push({pos:origin,vel:V.add(V.mul(forward,dust?.11:.46+i*.14),[rnd(-.08,.08),dust?.16:.30+i*.035,0]),age:0,life:dust?.68:.68+i*.14,size:dust?size:Math.max(.24,size*1.25)*(1+i*.15),dust,roll:rnd(0,TAU),seed:rnd(0,TAU),muzzle:!dust});
+ }
+}
+function v18Billboard(pos,size,roll=0,elongation=1){
+ const right=V.norm([headWorld[0],headWorld[1],headWorld[2]]),up=V.norm([headWorld[4],headWorld[5],headWorld[6]]),c=Math.cos(roll),s=Math.sin(roll);
+ const x=V.mul(V.add(V.mul(right,c),V.mul(up,s)),size),y=V.mul(V.add(V.mul(up,c),V.mul(right,-s)),size*elongation),z=V.norm(V.cross(right,up));
+ return new Float32Array([...x,0,...y,0,...z,0,...pos,1]);
 }
 function addMuzzleFlash(items,weapon,strength=1,scale=1,seed=0){
- const muzzle=M.point(weapon,GUN_MUZZLE),size=(.115+.035*strength)*scale,roll=seed*2.399+clockTime*33;
- items.push(meshItem('sphere',M.trs(muzzle,[0,0,0],[size*.40,size*.40,size*.53]),'glow','#fff2cc',clamp(strength*1.8,0,1)));
- const yaw=Math.atan2(lastHead[0]-muzzle[0],lastHead[2]-muzzle[2]);
- items.push(meshItem('plane',M.trs(muzzle,[0,yaw,roll],[size*2.6,size*2.6,1]),'muzzle',null,clamp(strength*1.9,0,1)));
- // A second short axial lobe gives the flash depth when viewed from an angle.
- const p=V.add(muzzle,V.mul(V.norm(M.dir(weapon,[0,0,-1])),size*.45));
- items.push(meshItem('plane',M.trs(p,[0,yaw,roll+1.5],[size*1.5,size*1.9,1]),'muzzle',null,clamp(strength,0,1)));
+ const reduced=settings.reducedAtmosphere,k=clamp(strength,0,1),muzzle=M.point(weapon,GUN_MUZZLE),forward=V.norm(M.dir(weapon,[0,0,-1]));
+ const size=(.19+.065*k)*scale*(reduced?.72:1),roll=seed*2.399;const p=V.add(muzzle,V.mul(forward,.035*scale));
+ items.push(meshItem('sphere',M.trs(p,[0,0,0],[size*.30,size*.30,size*.42]),'glow','#fff3c7',clamp(k*2.0,0,1)));
+ items.push(meshItem('plane',v18Billboard(p,size*2.40,roll),v18MuzzleMat,null,clamp(k*1.8,0,1)));
+ if(!reduced){
+  items.push(meshItem('plane',v18Billboard(p,size*3.1),sparkGlowMat,'#ffd094',k*.52));
+  const tip=V.add(p,V.mul(forward,size*.47));
+  items.push(meshItem('plane',v18Billboard(tip,size*1.4,roll+1.7,1.2),v18MuzzleMat,null,k*.60));
+ }
 }
 function surfaceNormal(object,point,direction){
  if(!object||object.material==='floor')return [0,1,0];const p=M.point(object.inv,point),errors=p.map(v=>Math.abs(Math.abs(v)-.5)),axis=errors.indexOf(Math.min(...errors)),n=[0,0,0];n[axis]=p[axis]>=0?1:-1;const inv=object.inv;
@@ -1604,7 +1666,7 @@ function renderBreakEffects(items){
  appendNightSparkGlow(items);
  const debris=new Geometry(),sparks=new Geometry();for(const p of particles){if(p.sparkBurst||(nightSparkStrength()>0&&sparkEligible(p)))continue;const fade=clamp((p.life-p.age)*3,0,1),scale=p.scale.map(v=>v*fade),transform=M.trs(p.pos,p.angle,scale);(p.glowing?sparks:debris).append(shapes[p.shape||'box']||shapes.box,transform,p.color);}
  R.updateMesh(debrisMesh,debris);R.updateMesh(sparkMesh,sparks);items.push({mesh:debrisMesh,model:M.identity(),mat:A.mats.plain},{mesh:sparkMesh,model:M.identity(),mat:A.mats.glow});
- for(const p of smokePuffs){const t=p.age/p.life,size=p.size*(.5+t*1.4),yaw=Math.atan2(lastHead[0]-p.pos[0],lastHead[2]-p.pos[2]);items.push(meshItem('plane',M.trs(p.pos,[0,yaw,p.roll],[size,size,1]),'smoke',null,Math.sin(PI*t)*(p.dust?.56:.35)));}
+ appendV18Smoke(items);
  for(const d of world.doors){if(civilians.some(t=>t.state==='live'&&t.route&&(t.route.entry===d.id||t.route.exit===d.id)))items.push(meshItem('box',M.trs(d.lamp,[0,0,0],[.13,.055,.02]),'glow','#a5bc8f',.64+.20*Math.sin(clockTime*5)));}
 }
 
@@ -1920,6 +1982,7 @@ const HOME_LEVELS=Object.freeze([
  {id:'rush',level:2,title:'Elimination Rush',sub:'Beat the clock / 3 waves',info:'Reach the soldier quota before time runs out. Stay alive.'},
  {id:'warden',level:3,title:'Warden Hunt',sub:'Guards, ION rounds, boss',info:'Collect ION ammunition. Hit the Warden\'s open chest core.'},
  {id:'night',level:4,title:'Night Breach',sub:'NEW / cinematic showdown',info:'12 guards + 2 drones, then the Warden. Choose Dark for the film look.'},
+ {id:'pillars',level:5,title:'Pillar Hall',sub:'NEW / 3 rooms + final boss',info:'Tall pillars, reshuffled walls, 3 waves, then the Warden finale.'},
  {id:'guardian',level:0,title:'Guardian Campaign',sub:'Six missions / final boss',info:'A complete six-mission operation. Saved progress is in Game Setup.'}
 ]);
 const HOME_DIFFICULTY=['Easy','Normal','Hard'];
@@ -1994,6 +2057,7 @@ function playHomeSelection(){
 const V16OriginalMakeWaves=makeWaves;
 makeWaves=function(level=0,tour=false){
  if(tour)return [0,1,2,3].flatMap(i=>V16OriginalMakeWaves(i,false));
+ if(level===5)return V16OriginalMakeWaves(3,false).map((c,i)=>({...c,level:5,stage:i,name:'Pillar Hall',objective:i===2?'boss':'eliminate',count:[10,14,18][i],droneCount:[0,1,2][i],droneMax:i===2?2:1,max:[2,2,3][i],bossHP:60}));
  if(level!==4)return V16OriginalMakeWaves(level,false);
  const cfg={...V16OriginalMakeWaves(3,false)[1],level:4,stage:0,name:'Night Breach',count:12,droneCount:2,droneMax:1,max:2,aim:1.65,fireInterval:1.8,interval:.95,bossHP:48};
  return [cfg];
@@ -2021,6 +2085,7 @@ resumeOperation=function(){const cp=readOperationCheckpoint();if(!cp||cp.next>=6
 // and all six civilian doorways stay exactly as generated by the V15 engine.
 const V16CombatRoom=combatRoom;
 combatRoom=function(level,stage=0){
+ if(level===5&&guardianBuildRoom===null)return {name:'Pillar Hall / Industrial Atrium',wall:'#7c8985',floor:'#76817b',accent:'#a2c5c2',secondary:'#a7aca1',style:'columns'};
  if(level===4&&guardianBuildRoom===null)return {name:'Night Breach / Spotlight Hall',wall:'#6b7a7a',floor:'#737b78',accent:'#9bb9b7',secondary:'#a4aaa0',style:'night'};
  return V16CombatRoom(level,stage);
 };
@@ -2033,22 +2098,22 @@ const nightSignTexture=R.texture(canvasTexture(1536,(c,w,h)=>{
 },330));
 const nightSignMat={tex:nightSignTexture,emit:2.05,transparent:true,shadow:false};
 const nightBeamGeo=new Geometry();
-{const layers=[[0,0],[.08,.015],[.45,.023],[.90,.014],[1,0]],n=18;
+{const layers=[[0,0],[.08,.045],[.45,.060],[.90,.030],[1,0]],n=18;
  for(let k=0;k<layers.length-1;k++)for(let j=0;j<n;j++){
   const [u,a]=layers[k],[v,b]=layers[k+1],p=(t,f)=>[Math.cos(t)*(.10+f*1.9),-f*6.9,Math.sin(t)*(.10+f*1.9)],x=j/n*TAU,y=(j+1)/n*TAU;
   const pts=[p(x,u),p(y,u),p(y,v),p(x,v)],normal=[0,1,0];
   for(const [i,alpha]of [[0,a],[1,a],[2,b],[0,a],[2,b],[3,b]])nightBeamGeo.vertex(pts[i],normal,[0,0],[.60,.82,.87,alpha]);
  }}
 const nightBeamMesh=R.mesh(nightBeamGeo),nightDustMesh=R.mesh(new Geometry(),true);
-const nightBeamMat={tex:R.white,emit:2,transparent:true,shadow:false};
+const nightBeamMat={tex:R.white,emit:2,transparent:true,additive:true,shadow:false};
 const nightDustMat={tex:R.white,emit:2,transparent:true,shadow:false};
 const nRand=seeded(160162),nightMotes=Array.from({length:96},()=>({p:[(nRand()-.5)*17,.25+nRand()*6,-20+nRand()*24],phase:nRand()*TAU,size:.007+nRand()*.011}));
 const nightMist=Array.from({length:10},(_,i)=>({p:[(nRand()-.5)*16,.30+nRand()*.55,-17+nRand()*19],phase:nRand()*TAU,size:3+nRand()*2}));
 let nightAge=0,nightFxTimer=0,nightSignature='';
-function isNightArena(){return world.level===4;}
+function isNightArena(){return world.level===4||world.level===5;}
 const V16BuildWorld=buildWorld;
 buildWorld=function(renderer,assets,seed=173,level=0,stage=0){
- const w=V16BuildWorld(renderer,assets,seed,level,stage);if(level!==4)return w;
+ const w=V16BuildWorld(renderer,assets,seed,level,stage);if(level!==4&&level!==5)return w;
  const b=new WorldBuilder(renderer,assets);
  for(const [x,y,z]of nightSpots){b.box([x,y+.22,z],[.62,.16,.62],'steel','#4e5f62');b.add('cylinder',[x,y+.05,z],[.38,.15,.38],'metal','#637476');b.add('cylinder',[x,y-.03,z],[.30,.025,.30],'glow','#8daeb3');}
  // A backlit sign above the existing rear status board. All service doors remain open.
@@ -2059,7 +2124,7 @@ buildWorld=function(renderer,assets,seed=173,level=0,stage=0){
 function addNightEffects(items){
  R.night=isNightArena()?1:0;if(!isNightArena())return;
  const detailed=!settings.reducedAtmosphere,lit=1-.65*activeBrightness();
- items.push(meshItem('plane',M.trs([0,6.2,-21.58],[0,0,0],[11,2.36,1]),nightSignMat,null,.80));
+ items.push(meshItem('plane',M.trs([0,6.2,-21.58],[0,0,0],[11,2.36,1]),world.level===5?v18HallSignMat:nightSignMat,null,.80));
  for(const p of nightSpots){
   if(detailed)items.push({mesh:nightBeamMesh,model:M.trans(...p),mat:nightBeamMat,alpha:lit,cast:false});
   const foot=[p[0],.013,p[2]];items.push(meshItem('plane',M.trs(foot,[-PI/2,0,0],[3.8,3.8,1]),A.mats.glare,'#a7cbd2',.12*lit));
@@ -2095,13 +2160,13 @@ surfaceImpact=function(point,object,dir,enemy=false){V16Impact(point,object,dir,
  if(!isNightArena()||settings.reducedAtmosphere||!['steel','metal'].includes(object?.material))return;
  const n=enemy?4:(settings.quality==='high'?18:10);for(let i=0;i<n;i++)emitParticle(point,[rnd(-2.3,2.3),rnd(.8,3.2),rnd(-1.4,1.4)],[.008,rnd(.025,.07),.008],'#ffd7a2',rnd(.16,.45),true,'box',4);
 };
-const V16HUD=updateHUD;updateHUD=function(){V16HUD();if(isNightArena()&&!isOperation())document.getElementById('hWave').textContent='1 / 1';};
-const V16Board=drawBoard;drawBoard=function(){V16Board();if(!isNightArena()||isOperation())return;
+const V16HUD=updateHUD;updateHUD=function(){V16HUD();if(world.level===4&&!isOperation())document.getElementById('hWave').textContent='1 / 1';};
+const V16Board=drawBoard;drawBoard=function(){V16Board();if(world.level!==4||isOperation())return;
  const c=boardCanvas.getContext('2d');c.fillStyle='#102029';c.fillRect(0,0,1024,48);c.fillStyle='#a5d0c9';c.font='700 24px monospace';c.fillText('NIGHT BREACH / GUARDS + AIR + WARDEN',28,34);R.updateTexture(boardTexture);
 };
 
 
-/* V17 / NIGHT SPARK GLOW. Appearance-only, no scoring, hitbox or AI changes.
+/* V18 / PILLAR HALL. Appearance-only, no scoring, hitbox or AI changes.
    Bounded, shared world-space meshes are projected by the normal per-eye VP.
    Keep V16 preference, record and campaign-checkpoint keys unchanged. */
 const sparkGlowMesh=R.mesh(new Geometry(),true),sparkTrailMesh=R.mesh(new Geometry(),true),sparkFloorMesh=R.mesh(new Geometry(),true);
@@ -2117,7 +2182,7 @@ function glowQuad(g,p,right,up,col){
  g.quad(V.sub(V.sub(p,right),up),V.add(V.sub(p,up),right),V.add(V.add(p,right),up),V.add(V.sub(p,right),up),[0,0,1],col);
 }
 function appendNightSparkGlow(items){
- const strength=nightSparkStrength(),budget=settings.reducedAtmosphere?56:settings.quality==='high'?192:128;
+ const strength=nightSparkStrength(),budget=settings.reducedAtmosphere?72:settings.quality==='high'?320:224;
  const glow=new Geometry(),trails=new Geometry(),floor=new Geometry();let count=0,trailCount=0,glints=0,eligible=0;
  if(strength>0&&!introActive){
   const right=V.norm([headWorld[0],headWorld[1],headWorld[2]]),up=V.norm([headWorld[4],headWorld[5],headWorld[6]]);
@@ -2128,17 +2193,17 @@ function appendNightSparkGlow(items){
    const proximity=clamp((dist-.45)/.65,0,1),fade=(1-smooth((t-.5)/.5))*proximity;
    if(fade<.004)continue;
    // A warm halo surrounds a tiny white-hot center. Cool and shrink as it fades.
-   const size=p.sparkBurst?.52:clamp(.115+Math.max(...p.scale)*.85,.13,.24);
+   const size=p.sparkBurst?.78:clamp(.18+Math.max(...p.scale)*1.45,.23,.42);
    const radius=size*(1-.24*t)*.5,color=[1,lerp(.87,.40,t),lerp(.55,.10,t),fade*strength*(p.sparkBurst?.8:1)];
    glowQuad(glow,p.pos,V.mul(right,radius),V.mul(up,radius),color);count++;
    if(!p.sparkBurst&&!settings.reducedAtmosphere){
     const vx=V.dot(p.vel,right),vy=V.dot(p.vel,up),speed=Math.hypot(vx,vy);
     if(speed>.38){
      const axis=V.norm(V.add(V.mul(right,vx),V.mul(up,vy))),side=V.norm(V.add(V.mul(right,-vy),V.mul(up,vx)));
-     const len=clamp(speed*.06,.025,.26)*Math.min(1,p.age/.045),width=clamp(radius*.17,.009,.022);
+     const len=clamp(speed*.085,.04,.43)*Math.min(1,p.age/.045),width=clamp(radius*.19,.014,.034);
      if(len>.012){glowQuad(trails,V.sub(p.pos,V.mul(axis,len*.5)),V.mul(side,width),V.mul(axis,len*.5),[1,color[1],color[2],color[3]*.78]);trailCount++;}
     }
-    if(p.pos[1]<.30&&p.pos[1]>=.02&&glints<(settings.quality==='high'?32:18)){
+    if(p.pos[1]<.30&&p.pos[1]>=.02&&glints<(settings.quality==='high'?48:28)){
      const a=(1-p.pos[1]/.30)*color[3]*.22,r=radius*1.3;
      glowQuad(floor,[p.pos[0],.029,p.pos[2]],[r,0,0],[0,0,-r],[1,.57,.20,a]);glints++;
     }
@@ -2160,6 +2225,193 @@ surfaceImpact=function(point,object,dir,enemy=false){
  p.sparkBurst=true;
 };
 
+
+/* V18 / PILLAR HALL. More visible local effects, never full-screen bloom.
+   Effects are world-space, depth-tested and shared by both eye projections. */
+const v18MuzzleMat={tex:R.texture(canvasTexture(256,(g,w,h)=>{
+ g.translate(w/2,h/2);g.globalCompositeOperation='lighter';
+ const rand=seeded(18181);
+ for(let k=0;k<7;k++){
+  const a=k/7*TAU+rand()*.3,len=68+rand()*53,width=7+rand()*9;
+  g.save();g.rotate(a);const col=g.createLinearGradient(0,0,len,0);col.addColorStop(0,'rgba(255,252,213,1)');col.addColorStop(.28,'rgba(255,222,140,.95)');col.addColorStop(.65,'rgba(255,148,45,.7)');col.addColorStop(1,'rgba(255,96,8,0)');
+  g.fillStyle=col;g.beginPath();g.moveTo(-8,0);g.quadraticCurveTo(len*.30,-width,len,0);g.quadraticCurveTo(len*.28,width,-8,0);g.fill();g.restore();
+ }
+ const core=g.createRadialGradient(0,0,2,0,0,43);core.addColorStop(0,'rgba(255,255,239,1)');core.addColorStop(.25,'rgba(255,245,187,1)');core.addColorStop(.65,'rgba(255,176,69,.72)');core.addColorStop(1,'rgba(255,130,25,0)');g.fillStyle=core;g.fillRect(-48,-48,96,96);
+})),emit:2.35,transparent:true,additive:true,shadow:false};
+const v18SmokeTexture=R.texture(canvasTexture(256,(g,w,h)=>{
+ const rand=seeded(18189);g.clearRect(0,0,w,h);
+ for(let i=0;i<27;i++){
+  const angle=rand()*TAU,d=rand()*61,x=128+Math.cos(angle)*d,y=128+Math.sin(angle)*d*.8,r=21+rand()*33;
+  const grad=g.createRadialGradient(x,y,0,x,y,r);grad.addColorStop(0,'rgba(215,220,216,.11)');grad.addColorStop(.5,'rgba(188,202,199,.07)');grad.addColorStop(1,'rgba(174,191,189,0)');g.fillStyle=grad;g.fillRect(x-r,y-r,r*2,r*2);
+ }
+ // A soft mask removes texture edges and leaves a broken, wispy silhouette.
+ g.globalCompositeOperation='destination-in';const mask=g.createRadialGradient(128,128,48,128,128,118);mask.addColorStop(0,'rgba(255,255,255,1)');mask.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=mask;g.fillRect(0,0,w,h);
+}));
+const v18SmokeMat={tex:v18SmokeTexture,emit:.33,rough:1,transparent:true,shadow:false};
+const v18SmokeMesh=R.mesh(new Geometry(),true),v18DustMesh=R.mesh(new Geometry(),true);
+let v18SmokeAudit={puffs:0,muzzle:0,dust:0,batches:0};
+function appendV18Smoke(items){
+ const g=new Geometry(),dust=new Geometry(),right=V.norm([headWorld[0],headWorld[1],headWorld[2]]),up=V.norm([headWorld[4],headWorld[5],headWorld[6]]);
+ const ordered=smokePuffs.slice().sort((a,b)=>Math.hypot(...V.sub(b.pos,lastHead))-Math.hypot(...V.sub(a.pos,lastHead)));
+ for(const p of ordered){
+  const t=clamp(p.age/p.life,0,1),angle=p.roll+p.age*(p.dust?.20:.48),size=p.size*(p.dust?.5+t*1.4:.46+t*1.7);
+  const rx=V.mul(V.add(V.mul(right,Math.cos(angle)),V.mul(up,Math.sin(angle))),size*.5),uy=V.mul(V.add(V.mul(up,Math.cos(angle)),V.mul(right,-Math.sin(angle))),size*(p.dust?.5:.67));
+  const pos=V.add(p.pos,V.mul(right,p.dust?0:Math.sin(p.age*5+p.seed)*.035*t));
+  const prox=clamp((Math.hypot(...V.sub(pos,lastHead))-.12)/.20,0,1),fade=Math.sin(PI*Math.pow(t,.7))*(1-.30*t)*prox;
+  const alpha=fade*(p.dust?.53:.88),c=p.dust?[.82,.83,.77,alpha]:[.84,.90,.88,alpha];
+  glowQuad(p.dust?dust:g,pos,rx,uy,c);
+ }
+ let batches=0;for(const [mesh,geo,mat]of [[v18SmokeMesh,g,v18SmokeMat],[v18DustMesh,dust,A.mats.smoke]]){
+  if(geo.a.length||mesh.count)R.updateMesh(mesh,geo);if(mesh.count){items.push({mesh,model:M.identity(),mat,cast:false});batches++;}
+ }
+ v18SmokeAudit={puffs:ordered.length,muzzle:ordered.filter(p=>!p.dust).length,dust:ordered.filter(p=>p.dust).length,batches};
+}
+const v18HallSignMat={...nightSignMat,tex:R.texture(canvasTexture(1536,(g,w,h)=>{
+ g.clearRect(0,0,w,h);g.strokeStyle='#84b3ad';g.lineWidth=4;g.shadowColor='#8bc6bc';g.shadowBlur=10;g.strokeRect(26,32,w-52,h-64);g.textAlign='center';g.font='italic 900 105px Arial';g.fillStyle='#c2e0d5';g.fillText('ZEE TACTICAL RANGE',w/2,171);g.font='700 38px Arial';g.fillStyle='#9bbfba';g.fillText('P I L L A R   H A L L',w/2,255);
+},330))};
+const V18PreviousImpact=surfaceImpact;
+surfaceImpact=function(point,object,dir,enemy=false){
+ V18PreviousImpact(point,object,dir,enemy);if(!object)return;
+ const metal=['metal','steel'].includes(object.material),stone=['concrete','masonry','floor'].includes(object.material);
+ if(!metal)return; // Wooden and masonry fragments are not made incandescent.
+ const reduced=settings.reducedAtmosphere,n=Math.round((reduced?10:settings.quality==='high'?64:44)*(enemy?.52:1));
+ const normal=surfaceNormal(object,point,dir),origin=V.add(point,V.mul(normal,.045));
+ const right=V.norm(V.cross(Math.abs(normal[1])>.98?[1,0,0]:[0,1,0],normal)),up=V.cross(normal,right);
+ for(let i=0;i<n;i++){
+  const v=V.add(V.mul(normal,rnd(1.5,4.6)),V.add(V.mul(right,rnd(-3.4,3.4)),V.add(V.mul(up,rnd(-2.5,3.6)),[0,.70,0])));
+  const p=emitParticle(origin,v,[rnd(.013,.025),rnd(.018,.035),rnd(.09,.18)],i%4?'#ffcf86':'#fff0c3',rnd(.60,1.25),true,'box',5.6);p.shower=true;
+ }
+};
+// Changed room layouts get separate records; old scores and checkpoint data are not erased.
+const V18OldRecordId=recordId;recordId=function(){return V18OldRecordId()+':layout-v18';};
+
+
+/* V18 scene atmosphere: six overhead lights, pooled vent smoke and occasional
+   local electrical faults. Never changes damage, scoring, aim, or real cover.
+   Existing Reduced atmosphere lowers density and event frequency. */
+const v18SceneSmokeMesh=R.mesh(new Geometry(),true),v18ArcMesh=R.mesh(new Geometry(),true),v18ArcHaloMesh=R.mesh(new Geometry(),true);
+const v18ArcMat={tex:R.white,emit:2.5,transparent:true,additive:true,shadow:false};
+const v18SceneSmokeMat={tex:v18SmokeTexture,emit:.5,rough:1,transparent:true,shadow:false};
+let v18SceneAudit={smoke:0,arcs:0,bursts:0,batches:0},v18SceneQuiet=false;
+function v18ScenePlan(seed,columns){
+ const r=seeded(seed^0x18e1ec),fixtures=[];
+ if(columns.length){
+  for(const [i,c]of columns.entries())fixtures.push({id:i,p:[c.x,3.5+r()*.75,c.z+c.width/2+.12],normal:[0,0,1],vent:[c.x+(c.x<0?-.42:.42),.35,c.z+.68]});
+ }else{
+  for(const x of [-10.78,10.78])for(const z of [-4.7,-12.8,-18.4])fixtures.push({id:fixtures.length,p:[x,3.5+r()*.9,z],normal:[x<0?1:-1,0,0],vent:[x+(x<0?.48:-.48),.35,z]});
+ }
+ // Randomized fault order and timing; no repeated adjacent source by design.
+ return {fixtures,rng:seeded(seed^0x18fa017),time:0,next:1.8+r()*2,last:-1,arcs:[],smoke:[],smokeNext:0,bursts:0,history:[],seed};
+}
+function v18SmokeSpawn(scene,fixture,initial=false){
+ const r=scene.rng,cap=settings.reducedAtmosphere?6:settings.quality==='high'?28:20;
+ if(scene.smoke.length>=cap)return;
+ const pos=fixture.vent.slice(),life=4.2+r()*2.4,age=initial?r()*life*.85:0;
+ const vel=[fixture.normal[0]*.16+(r()-.5)*.08,.15+r()*.12,fixture.normal[2]*.14+(r()-.5)*.10];
+ scene.smoke.push({p:pos.map((v,k)=>v+vel[k]*age),vel,life,age,size:.64+r()*.45,roll:r()*TAU,phase:r()*TAU});
+}
+const V18SceneBuildWorld=buildWorld;
+buildWorld=function(renderer,assets,seed=173,level=0,stage=0){
+ const w=V18SceneBuildWorld(renderer,assets,seed,level,stage),b=new WorldBuilder(renderer,assets);
+ w.scene=v18ScenePlan(seed,w.columns||[]);
+ if(level!==4&&level!==5)for(const [x,y,z]of nightSpots){
+  b.box([x,y+.22,z],[.62,.16,.62],'steel','#4e5f62');b.add('cylinder',[x,y+.05,z],[.38,.15,.38],'metal','#637476');b.add('cylinder',[x,y-.03,z],[.30,.025,.30],'glow','#8daeb3');
+ }
+ for(const f of w.scene.fixtures){
+  const n=f.normal,rot=[0,Math.atan2(n[0],n[2]),0],back=V.sub(f.p,V.mul(n,.03));
+  b.box(back,[.36,.44,.16],'steel','#515e60',rot,true,true);
+  const plate=V.add(back,V.mul(n,.087));b.box(plate,[.27,.32,.014],'dark','#253033',rot);
+  for(const k of [-1,1]){const off=M.dir(M.trs([0,0,0],rot),[k*.09,0,.105]);b.add('sphere',V.add(back,off),[.036,.036,.036],'metal','#c4bbaa');}
+  b.box(V.add(back,[0,.55,0]),[.055,.69,.055],'metal','#606b6b');
+  // A vent grate sits beneath the damaged junction box on the same support.
+  const vent=V.add([f.p[0],.31,f.p[2]],V.mul(n,.01));
+  b.box(vent,[.42,.28,.035],'dark','#303c3d',rot);
+  for(let k=0;k<4;k++)b.box(V.add(vent,[0,-.09+k*.06,0]),[.34,.018,.049],'metal','#687777',rot);
+ }
+ const extra=b.finish();w.items.push(...extra.items);w.colliders.push(...extra.colliders);
+ for(let i=0;i<(settings.reducedAtmosphere?4:14);i++)v18SmokeSpawn(w.scene,w.scene.fixtures[i%w.scene.fixtures.length],true);
+ return w;
+};
+function v18ArcSound(pos){
+ if(!settings.sound||!settings.ambience||!audio.ctx||audio.ctx.state!=='running')return;
+ if(!audio.buffers.electricArc){
+  const c=audio.ctx,sr=c.sampleRate,b=c.createBuffer(1,Math.ceil(sr*.29),sr),a=b.getChannelData(0),r=seeded(180442);
+  let low=0;for(let i=0;i<a.length;i++){const t=i/sr,n=r()*2-1;low=.8*low+.2*n;const pulses=.10+.90*Math.pow(Math.max(0,Math.sin(t*TAU*39)),10);a[i]=((n-low)*.58*pulses+Math.sin(TAU*940*t)*.035)*Math.exp(-t*11)*Math.min(1,t/.004);}
+  audio.buffers.electricArc=b;
+ }
+ audio.sample('electricArc',.15,pos,0,.94+Math.random()*.12);
+}
+function v18TriggerFault(index=null){
+ const s=world.scene;if(!s||s.arcs.length>=2||introActive)return false;
+ const r=s.rng;if(index===null){index=Math.floor(r()*s.fixtures.length);if(index===s.last)index=(index+1+Math.floor(r()*(s.fixtures.length-1)))%s.fixtures.length;}
+ const f=s.fixtures[index%s.fixtures.length],normal=f.normal,axis=V.norm(V.cross([0,1,0],normal));s.last=index;
+ const origin=V.add(f.p,V.mul(normal,.10)),path=[],len=.32;
+ for(let i=0;i<7;i++)path.push(V.add(V.add(origin,V.mul(axis,(i/6-.5)*len)),[0,i===0||i===6?0:(r()-.5)*.12,0]));
+ s.arcs.push({p:origin,path,age:0,life:settings.reducedAtmosphere?.22:.38,fixture:index});s.bursts++;s.history.push(index);if(s.history.length>20)s.history.shift();
+ const ambientCount=particles.filter(p=>p.ambientElectric).length,max=settings.reducedAtmosphere?24:96;
+ const n=Math.max(0,Math.min(settings.reducedAtmosphere?12:settings.quality==='high'?46:32,max-ambientCount));
+ // Reserve most of the particle pool for the player's own impacts.
+ const totalCap=settings.reducedAtmosphere?320:settings.quality==='high'?800:560;
+ for(let i=0;i<n&&particles.length<totalCap-140;i++){
+  const vel=V.add(V.mul(normal,.7+r()*1.8),V.add(V.mul(axis,(r()-.5)*3.4),[0,-.15+r()*2.4,0]));
+  const p=emitParticle(origin,vel,[.014+r()*.01,.023,.07+r()*.09],i%5?'#ffcf80':'#fff0be',.62+r()*.75,true,'box',4.8);p.ambientElectric=true;
+ }
+ v18ArcSound(origin);return true;
+}
+function v18SceneStep(dt){
+ const s=world.scene;if(!s||introActive||phase==='paused')return;
+ s.time+=dt;
+ for(let i=s.arcs.length-1;i>=0;i--)if((s.arcs[i].age+=dt)>=s.arcs[i].life)s.arcs.splice(i,1);
+ for(let i=s.smoke.length-1;i>=0;i--){const p=s.smoke[i];p.age+=dt;if(p.age>=p.life){s.smoke.splice(i,1);continue;}for(let k=0;k<3;k++)p.p[k]+=p.vel[k]*dt;}
+ s.smokeNext-=dt;
+ if(s.smokeNext<=0&&!v18SceneQuiet){
+  s.smokeNext=settings.reducedAtmosphere?1.35:.40;
+  const f=s.fixtures[Math.floor(s.rng()*s.fixtures.length)];v18SmokeSpawn(s,f);
+ }
+ if(phase==='playing'&&!v18SceneQuiet){
+  s.next-=dt;if(s.next<=0){v18TriggerFault();s.next=(isNightArena()?1.5:2.8)+s.rng()*(isNightArena()?2.2:3.1);if(settings.reducedAtmosphere)s.next*=2.1;}
+ }
+}
+function appendV18Scene(items){
+ const s=world.scene;R.electricLights=new Float32Array(8);if(!s)return;
+ const detailed=!settings.reducedAtmosphere,lit=1-.65*activeBrightness();
+ // Original arenas also gain a restrained, choice-respecting layer of spots.
+ if(!isNightArena()){
+  R.night=.28;
+  for(const p of nightSpots){
+   if(detailed)items.push({mesh:nightBeamMesh,model:M.trans(...p),mat:nightBeamMat,alpha:lit*.55,cast:false});
+   items.push(meshItem('plane',M.trs([p[0],.018,p[2]],[-PI/2,0,0],[3.8,3.8,1]),A.mats.glare,'#9ebec6',.08*lit));
+  }
+ }
+ const smoke=new Geometry(),arcs=new Geometry(),halos=new Geometry();
+ const right=V.norm([headWorld[0],headWorld[1],headWorld[2]]),up=V.norm([headWorld[4],headWorld[5],headWorld[6]]);
+ const sorted=s.smoke.slice(0,settings.reducedAtmosphere?6:28).sort((a,b)=>Math.hypot(...V.sub(b.p,lastHead))-Math.hypot(...V.sub(a.p,lastHead)));
+ for(const p of sorted){
+  const t=p.age/p.life,size=p.size*(.75+t*2.5),angle=p.roll+s.time*.07;
+  const x=V.mul(V.add(V.mul(right,Math.cos(angle)),V.mul(up,Math.sin(angle))),size*.5),y=V.mul(V.add(V.mul(up,Math.cos(angle)),V.mul(right,-Math.sin(angle))),size*.72);
+  const pos=V.add(p.p,[Math.sin(p.phase+p.age*1.1)*.12,0,Math.cos(p.phase+p.age*.6)*.08]);
+  const near=clamp((Math.hypot(...V.sub(pos,lastHead))-.65)/1.5,0,1),alpha=Math.sin(PI*t)*.78*near*(detailed?1:.55);
+  glowQuad(smoke,pos,x,y,[.75,.86,.87,alpha]);
+ }
+ for(const [idx,a]of s.arcs.entries()){
+  const fade=Math.sin(PI*clamp(a.age/a.life,0,1))*.9;
+  if(canSee(lastHead,a.p))R.electricLights.set([...a.p,fade*2.0],idx*4);
+  for(let i=1;i<a.path.length;i++){
+   const from=a.path[i-1],to=a.path[i],vec=V.sub(to,from),axis=V.mul(vec,.5),side=V.mul(V.norm(V.cross(vec,V.sub(lastHead,a.p))),.006);
+   glowQuad(arcs,V.mul(V.add(from,to),.5),side,axis,[.70,.90,1,fade]);
+   glowQuad(arcs,V.mul(V.add(from,to),.5),V.mul(side,3.0),axis,[.26,.58,1,fade*.24]);
+  }
+  glowQuad(halos,a.p,V.mul(right,.23),V.mul(up,.23),[.56,.83,1,fade*.42]);
+ }
+ let batches=0;for(const [mesh,geo,mat]of [[v18SceneSmokeMesh,smoke,v18SceneSmokeMat],[v18ArcMesh,arcs,v18ArcMat],[v18ArcHaloMesh,halos,{tex:A.mats.glare.tex,emit:2.15,transparent:true,additive:true,shadow:false}]]){
+  if(geo.a.length||mesh.count)R.updateMesh(mesh,geo);if(mesh.count){items.push({mesh,model:M.identity(),mat,cast:false});batches++;}
+ }
+ v18SceneAudit={smoke:sorted.length,arcs:s.arcs.length,bursts:s.bursts,batches,fixtures:s.fixtures.length,time:s.time,history:s.history.slice(),electricParticles:particles.filter(p=>p.ambientElectric).length,lights:Array.from(R.electricLights)};
+}
+const V18SceneTick=tick;tick=function(dt,elapsedDt=dt){V18SceneTick(dt,elapsedDt);v18SceneStep(dt);};
+const V18SceneNight=addNightEffects;addNightEffects=function(items){V18SceneNight(items);if(!introActive)appendV18Scene(items);};
+const V18SceneClear=clearEffects;clearEffects=function(){V18SceneClear();if(world?.scene){const s=world.scene;s.arcs.length=0;s.history.length=0;s.bursts=0;s.next=1.8+s.rng()*2;R.electricLights=new Float32Array(8);}};
+
 // Friendly canvas controls: visible selections, direct level cards, no arrow cycling.
 const V16LegacyMenu=drawMenu;
 function drawFriendlyMenu(){
@@ -2175,7 +2427,7 @@ function drawFriendlyMenu(){
  };
  const section=(n,label,y)=>{text(n,60,y,25,'#94cfc8',900);text(label,112,y,27,'#c6d9db',800);};
  const wrap=(str,x,y,width=900,size=27)=>{c.font='500 '+size+'px Arial';let lineText='';for(const word of str.split(' ')){if(c.measureText(lineText+word).width>width){text(lineText,x,y,size,'#b4c9ce',500);lineText='';y+=size*1.38;}lineText+=word+' ';}if(lineText)text(lineText,x,y,size,'#b4c9ce',500);return y;};
- text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V17',900,58,23,'#abc1c8');
+ text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V18',900,58,23,'#abc1c8');
  if(introActive){
   text('WELCOME TO THE RANGE',58,148,52);text('Your uploaded game intro / 10 seconds',60,199,27,'#acc7cc',500);
   c.fillStyle='#03090c';roundRect(c,56,238,912,513,10);c.fill();
@@ -2189,10 +2441,11 @@ function drawFriendlyMenu(){
   text('LET\'S PLAY.',56,137,65,'#edf5ee',900);text('Pick your challenge. Make it yours.',60,180,28,'#afc7cd',500);
   section('01','DIFFICULTY',229);
   HOME_DIFFICULTY.forEach((n,i)=>button(n.toUpperCase(),60+i*307,250,290,82,()=>setHomeDifficulty(i),settings.speed===i,'',32));
-  text(['More time to react. Slower enemy attacks.','Balanced movement and reaction time.','Faster enemies. Shorter warning windows.'][settings.speed],64,370,25,'#b7cdd0',500);
-  section('02','CHOOSE YOUR LEVEL',415);
-  HOME_LEVELS.forEach((v,i)=>button(v.title,60+(i%2)*464,439+Math.floor(i/2)*103,440,90,()=>chooseHomeLevel(v.id),settings.homeChoice===v.id,v.sub,30));
-  text(homeChoice().info,64,773,23,'#b7cdd0',500,895);
+  text(['More time to react. Slower enemy attacks.','Balanced movement and reaction time.','Faster enemies. Shorter warning windows.'][settings.speed],64,355,25,'#b7cdd0',500);
+  section('02','CHOOSE YOUR LEVEL',392);
+  HOME_LEVELS.filter(v=>v.id!=='guardian').forEach((v,i)=>button(v.title,60+(i%2)*464,411+Math.floor(i/2)*96,440,86,()=>chooseHomeLevel(v.id),settings.homeChoice===v.id,v.sub,29));
+  button('GUARDIAN CAMPAIGN / 6 MISSIONS',60,699,904,55,()=>chooseHomeLevel('guardian'),settings.homeChoice==='guardian','',26);
+  text(homeChoice().info,64,787,23,'#b7cdd0',500,895);
   section('03','LIGHTING',826);
   [['FULL LIGHT',100],['DIM LIGHT',30],['DARK',0]].forEach(([name,val],i)=>button(name,60+i*307,847,290,73,()=>setRoomBrightness(val),settings.brightness===val,'',27));
   button('PLAY  /  '+homeChoice().title.toUpperCase(),60,949,904,87,playHomeSelection,true,'',32);
@@ -2206,7 +2459,7 @@ function drawFriendlyMenu(){
   b('Player stance',settings.seated?'Seated / raised view':'Standing / natural height',60,374,()=>{settings.seated=!settings.seated;saveSettings();if(xrSession)needRecenter=true;refreshMenu();});
   b('Aim laser',settings.laser?'On':'Off',524,374,()=>toggle('laser'));
   b('Effects quality',settings.quality==='balanced'?'Balanced':'High',60,481,()=>cycle('quality',['balanced','high']));
-  b('Night atmosphere',settings.reducedAtmosphere?'Reduced haze + dust':'Full beams, haze + dust',524,481,()=>toggle('reducedAtmosphere'));
+  b('Scene atmosphere',settings.reducedAtmosphere?'Reduced smoke + sparks':'Spotlights / smoke / sparks',524,481,()=>toggle('reducedAtmosphere'));
   b('Next mission equipment',OP_KITS[settings.kit].name,60,588,()=>cycle('kit',['vest','loader','battery']));
   b('Intro on launch',settings.introOnStart?'On / always skippable':'Off / replay still available',524,588,()=>toggle('introOnStart'));
   button('MUSIC + SOUND',60,703,440,73,()=>{menuPage='sound16';refreshMenu();});
@@ -2277,9 +2530,22 @@ replaceWorld(newRoomSeed(),settings.level,0);saveSettings();
 if(introActive){prepareIntroVideo();syncIntroControls();}
 
 
-demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V17 / NIGHT SPARK GLOW';requestAnimationFrame(desktopFrame);
+demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V18 / PILLAR HALL';requestAnimationFrame(desktopFrame);
 // Opt-in diagnostics, absent from the normal player interface.
 if(new URLSearchParams(location.search).get('qa')==='1')window.__rangeQA={
+ sceneV18(){return {...v18SceneAudit,scene:world.scene?{seed:world.scene.seed,next:world.scene.next,smoke:world.scene.smoke.map(p=>({p:p.p.slice(),age:p.age,life:p.life})),fixtures:world.scene.fixtures.map(f=>({p:f.p,normal:f.normal}))}:null};},
+ sceneQuiet(on=true){v18SceneQuiet=on;},
+ sceneFault(i=null){return v18TriggerFault(i);},
+
+
+ v18(){return {version:18,room:{seed:world.seed,level:world.level,stage:world.stage,theme:world.theme,layout:world.layoutVariant,index:world.layoutIndex,columns:world.columns||[],stations:world.stations.map(st=>({...st,visible:combatStationVisible(st)}))},waves:waves.map(w=>({...w})),smoke:{...v18SmokeAudit,particles:smokePuffs.map(p=>({pos:p.pos.slice(),age:p.age,life:p.life,dust:p.dust,size:p.size}))},spark:{...sparkGlowAudit,showers:particles.filter(p=>p.shower).length},caps:{particles:settings.reducedAtmosphere?320:settings.quality==='high'?800:560,smoke:settings.reducedAtmosphere?12:settings.quality==='high'?54:36},record:recordId()};},
+ roomAudit(seed,level=5,stage=0){this.home();settings.level=level;settings.homeChoice=HOME_LEVELS.find(l=>l.level===level&&l.id!=='guardian')?.id||'assault';replaceWorld(seed,level,stage);waves=makeWaves(level);wave=0;refreshMenu();return this.v18();},
+ smokeTest(pos=[.3,1.15,7.9],dir=[0,0,-1]){emitSmoke(pos,dir,.24,false);},
+ flashTest(){flashLeft=.055;gunKick=0;},
+ clearV18(){this.clearParticles();},
+ civilDebug(id='FL'){const d=world.doors.find(d=>d.id===id);return {door:d,landingClear:civilianPointClear(d.landing),pathClear:d.path.slice(1).map((p,i)=>civilianSegmentClear(d.path[i],p)),exits:world.doors.filter(e=>e!==d).map(e=>({id:e.id,clear:civilianPointClear(e.landing),path:civilianPath(d.landing,e.landing)})),near:civilianGrid().nodes.filter(n=>Math.hypot(n.p[0]-d.landing[0],n.p[2]-d.landing[2])<1.15).map(n=>({p:n.p,ok:n.ok,connect:civilianSegmentClear(d.landing,n.p)})),lost:gl.isContextLost()};},
+ currentBossAfterGuards(){targets=[];enemyShots=[];clearDrones();nextSpawn=999;droneNext=999;civilians=[];civilianNext=999;stats.presented=waves[wave].count;stats.destroyed=waves[wave].count;stats.dronesPresented=waves[wave].droneCount;stats.dronesDestroyed=waves[wave].droneCount;bossStage='guards';updateBossEncounter(.001);return this.entranceInfo();},
+
 
  v17(){return {...sparkGlowAudit,build:'V17 Night Spark Glow',brightness:activeBrightness(),night:isNightArena(),particles:particles.filter(sparkEligible).map(p=>({pos:p.pos.slice(),vel:p.vel.slice(),age:p.age,life:p.life,burst:!!p.sparkBurst})),gpu:{depthTest:gl.isEnabled(gl.DEPTH_TEST),depthWrite:gl.getParameter(gl.DEPTH_WRITEMASK),blend:gl.isEnabled(gl.BLEND),blendSrc:gl.getParameter(gl.BLEND_SRC_RGB),blendDst:gl.getParameter(gl.BLEND_DST_RGB)}};},
  sparkTest(options={}){const n=options.count||1;for(let i=0;i<n;i++){const p=emitParticle(options.pos||[0,1.65,4],(options.vel||[1.5,1.6,0]).slice(),options.size||[.012,.016,.07],options.color||'#ffe0a0',options.life||.8,true,'box',options.gravity===undefined?4:options.gravity);p.age=options.age||0;p.sparkBurst=!!options.burst;p.blood=!!options.blood;p.casing=!!options.casing;}},
