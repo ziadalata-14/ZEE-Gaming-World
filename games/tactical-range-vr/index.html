@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v19-pillar-advance"><title>ZEE Tactical Range VR - V19 Pillar Advance</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10202a"><meta name="zee-game-build" content="tactical-range-v19-1-fast-crossfire"><title>ZEE Tactical Range VR - V19.1 Fast Crossfire</title>
 <style>
 :root{color-scheme:dark;--gold:#f1b662;--ink:#0d202b;--teal:#9cdbd3}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0c1822;font-family:Arial,Helvetica,sans-serif;color:#ebf1ef}#view{width:100%;height:100%;display:block;touch-action:none}#loading{position:fixed;inset:0;display:grid;place-items:center;background:#10212c;z-index:20;padding:40px;text-align:center;font-size:20px}.topbar{position:fixed;z-index:4;left:30px;right:30px;top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px;pointer-events:none}.brand{font-size:17px;letter-spacing:3px;font-weight:900;text-shadow:0 2px 12px #000}.brand b{color:var(--gold)}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:600;color:#afc5ca;margin-top:8px}.actions{display:flex;gap:8px;pointer-events:auto}button,a.navbtn{border:1px solid #6a919b6b;border-radius:7px;background:#0e252fdd;color:#d9e9e7;padding:11px 14px;cursor:pointer;font:700 11px Arial;letter-spacing:1px;text-decoration:none}button:hover,a.navbtn:hover{background:#284653;border-color:#ecba76}button:disabled{opacity:.5;cursor:default}#menuCanvas{position:fixed;z-index:5;left:4vw;top:52%;transform:translateY(-50%);width:min(440px,42vw,calc((100vh - 130px)*.888889));height:auto;border-radius:16px;box-shadow:0 22px 80px #0007;outline:none;touch-action:manipulation}#menuCanvas:focus-visible{outline:2px solid var(--gold)}#menuCanvas.center-menu{left:50%;transform:translate(-50%,-50%);width:min(500px,88vw,calc((100vh - 105px)*.888889))}#hud{display:none;position:fixed;inset:90px 30px 26px;z-index:3;pointer-events:none;justify-content:space-between;align-items:flex-start}.hudcard{background:linear-gradient(120deg,#102731ee,#0a1d27b3);border:1px solid #6a9a9c55;padding:17px 23px;border-radius:12px;box-shadow:0 7px 25px #0002}.hudcard label{font-size:10px;letter-spacing:2px;color:#a6c8cb;font-weight:700}.hudcard strong{display:block;font-size:32px;color:var(--gold);font-weight:900;margin:4px 0 5px}.hudcard small{font-size:12px;color:#c0d3d3}.scorecard{text-align:right}.scorecard strong{color:#c5eee0}.bottomhud{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end}.ammo strong{font-size:27px}.mini{font:12px monospace;color:#d3e1df;margin-top:6px}.combo{font-size:15px;font-weight:800;letter-spacing:2px;color:var(--gold);text-shadow:0 2px 10px #000}.hints{font-size:10px;letter-spacing:1px;color:#afc7c9;margin-top:10px}#crosshair{display:none;position:fixed;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);pointer-events:none;z-index:3;border:1px solid #ffe9bc88;border-radius:50%;filter:drop-shadow(0 0 2px #000)}#crosshair:before,#crosshair:after{content:'';position:absolute;background:#fff0c9}#crosshair:before{width:6px;height:2px;top:8px;left:6px}#crosshair:after{width:2px;height:6px;left:8px;top:6px}#crosshair.hit{border-color:#a5ffe5;transform:translate(-50%,-50%) rotate(45deg);width:29px;height:29px;background:#9beadf33}#countdown{position:fixed;inset:0;display:grid;place-items:center;font-size:clamp(90px,14vw,190px);font-weight:900;color:#f6c882;text-shadow:0 4px 30px #071421;z-index:3;pointer-events:none}#toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);max-width:min(650px,90vw);border:1px solid #688c94;background:#0f2633f2;color:#dfefee;border-radius:10px;padding:14px 22px;font-size:14px;line-height:1.5;text-align:center;opacity:0;transition:opacity .2s;z-index:15;pointer-events:none}#toast.show{opacity:1}.credit{position:fixed;bottom:14px;left:30px;font-size:9px;letter-spacing:1.5px;color:#aec3c4;pointer-events:none;z-index:3}.not-menu{display:none}.menu-open #pause,.menu-open #reload,.menu-open #ion{display:none}.in-vr .topbar,.in-vr .credit,.in-vr #hud,.in-vr #countdown,.in-vr #toast,.in-vr #menuCanvas{display:none!important}.screenShade{position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,#07131c80,transparent 20%,transparent 70%,#07131c50);z-index:2}.in-vr .screenShade{display:none}@media(max-width:700px){.topbar{left:15px;right:15px;top:15px}.brand{font-size:12px;letter-spacing:1px}.brand small{font-size:8px}.actions{gap:4px}.actions button,.actions a{padding:9px 8px;font-size:9px}#fullscreen,.actions a{display:none}#menuCanvas{left:50%;transform:translate(-50%,-50%);width:min(450px,88vw,calc((100vh - 110px)*.888889));top:53%}#hud{inset:78px 12px 20px}.hudcard{padding:10px 14px}.hudcard strong{font-size:22px}.hints{max-width:200px;line-height:1.5}.credit{left:15px;font-size:8px}.combo{font-size:11px;letter-spacing:1px}}
 
@@ -40,10 +40,10 @@
 </style>
 </head><body class="menu-open">
 <canvas id="view" aria-label="3D shooting range"></canvas><div class="screenShade"></div>
-<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V19 / PILLAR ADVANCE</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
+<header class="topbar"><div class="brand"><b>ZEE</b> / TACTICAL RANGE<small id="build">V19.1 / FAST CROSSFIRE</small></div><nav class="actions"><a class="navbtn" href="../../">GAME LIBRARY</a><button id="fullscreen">FULLSCREEN</button><button id="reload">RELOAD / R</button><button id="focus" style="display:none">FOCUS / F</button><button id="ion">ION / Q</button><button id="pause">PAUSE / ESC</button><button id="vr">ENTER VR</button></nav></header>
 <canvas id="menuCanvas" width="1024" height="1152" tabindex="0" role="application" aria-label="Range menu: use mouse or arrows and Enter"></canvas>
 <div id="hud"><div class="hudcard"><label>WAVE</label><strong id="hWave">01 / 03</strong><small id="hName">Soldier Assault</small><div class="mini"><span id="hLeft">8</span> <span id="hRemainingLabel">objects remaining</span></div></div><div class="hudcard scorecard"><label>WAVE SCORE</label><strong id="hScore">0</strong><small>Accuracy <span id="hAccuracy">0.0%</span></small><div id="combatHUD" style="display:none;margin-top:12px;border-top:1px solid #6a9a9c55;padding-top:12px"><label id="hHealth">HEALTH 100 / 100</label><div id="hThreat" class="mini">WATCH THE COVER</div></div></div><div class="bottomhud"><div><div id="hCombo" class="combo">BUILD YOUR STREAK</div><div class="hints">A / D LEAN / S DUCK / R RELOAD / E COLLECT / Q ION</div></div><div class="hudcard ammo"><label>TAUROS PISTOL</label><strong id="hAmmo">12 / 12</strong><small>Auto reload when empty</small></div></div></div>
-<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V19 / RANGE + PILLAR ADVANCE</div><div id="loading">LOADING YOUR RANGE...</div>
+<div id="opStrip" role="status" aria-live="polite"></div><div id="crosshair"></div><div id="countdown"></div><div id="toast" role="status" aria-live="polite"></div><div class="credit">ZEE TACTICAL RANGE / V19.1 / FAST CROSSFIRE</div><div id="loading">LOADING YOUR RANGE...</div>
 
 <section id="introGate" role="dialog" aria-modal="true" aria-label="ZEE Tactical Range game intro"><div class="introShell"><div class="introHead"><h1>ZEE TACTICAL RANGE</h1><span>YOUR INTRO / 10 SECONDS</span></div><video id="introVideo" playsinline preload="metadata" aria-label="Uploaded ZEE Tactical Range intro video"></video><div class="introActions"><button id="introPlay">PLAY INTRO WITH SOUND</button><button id="introMute">SOUND ON</button><button id="introSkip">SKIP TO GAME</button></div><p id="introMessage">Play your intro, or skip straight to difficulty, level and lighting. Replay is in Game Setup.</p></div></section>
 <script>
@@ -149,7 +149,7 @@ const LEVELS=[
  {id:'warden-hunt-v12',name:'Warden Hunt',short:'WARDEN HUNT',objective:'boss',type:'combat',accent:'#c6b895',secondary:'#a6b6b6',wall:'#a9aba5',floor:'#9b9d94',tag:'COLLECT / WAIT / STRIKE',hint:'Defeat guards and collect amber ION rounds: E / off-hand trigger. Load one: Q / off-hand grip. One ION hit in the OPEN chest core defeats the 1.5x Warden.',colors:['#b6b4a1','#8f9b92'],exposure:30},
  {id:'night-breach-v16',name:'Night Breach',short:'NIGHT BREACH',objective:'boss',type:'combat',accent:'#91c8c5',secondary:'#89a8ad',wall:'#727e7d',floor:'#65716f',tag:'SMOKE / SPOTLIGHTS / WARDEN',hint:'Clear 12 guards and 2 drones, collect ION, then face the Warden. Cinematic atmosphere inspired by your intro. Your lighting choice always applies.',colors:['#8a9e9c','#a8aaa0'],exposure:30},
  {id:'pillar-hall-v18',name:'Pillar Hall',short:'PILLAR HALL',objective:'boss',type:'combat',accent:'#a6c5c4',secondary:'#a5ada3',wall:'#7f8b87',floor:'#76817c',tag:'TALL COLUMNS / THREE SETUPS / WARDEN',hint:'Three changing layouts in a tall-column hall. Clear 10 / 14 / 18 guards and 0 / 1 / 2 drones. The Warden enters after the third wave. Your lighting choice always applies.',colors:['#8a9e9c','#a8aaa0'],exposure:30},
- {id:'pillar-advance-v19',name:'Pillar Advance',short:'PILLAR ADVANCE',objective:'boss',type:'combat',accent:'#acc8bd',secondary:'#a5b6a6',wall:'#929e91',floor:'#99a491',tag:'HOLD FORWARD / PROXIMITY AMBUSH / WARDEN',hint:'A 66-metre hallway. Hold W or your off-hand thumbstick forward to move. Stop at six pillar ambushes, protect civilians, then defeat the Warden. Existing levels stay stationary.',colors:['#a8b7ac','#bbb9a2'],exposure:30}
+ {id:'pillar-advance-v19',name:'Pillar Advance',short:'PILLAR ADVANCE',objective:'boss',type:'combat',accent:'#acc8bd',secondary:'#a5b6a6',wall:'#929e91',floor:'#99a491',tag:'FAST MOVE / FRONT + REAR CONTACTS / WARDEN',hint:'A 66-metre hallway with fast, free movement. Off-hand stick / WASD: forward, back and strafe. No ambush stops. Soldiers can fire from behind. Clear all contacts for the Warden. Other levels stay stationary.',colors:['#a8b7ac','#bbb9a2'],exposure:30}
 
 ];
 const COMBAT_ROOMS=[
@@ -1441,7 +1441,7 @@ const protectedLabels={};for(const role of ['doctor','worker']){const canvas=can
  c.fillStyle='#8df0bb';c.font='900 30px Arial';c.fillText('DO NOT SHOOT',w/2,101);
 },144);protectedLabels[role]={tex:R.texture(canvas),emit:2,transparent:true,shadow:false};}
 const settingsKey='zee.tactical.range.v16.settings',bestKey='zee.tactical.range.v15.best';
-let settings={level:0,speed:1,mode:'arcade',hand:'right',seated:false,sound:true,ambience:true,music:true,musicVolume:.35,quality:'balanced',laser:true,lighting:'FULL LIGHT',brightness:100,homeChoice:'assault',introOnStart:true,reducedAtmosphere:false,kit:'vest'};
+let settings={level:0,speed:1,mode:'arcade',hand:'right',seated:false,sound:true,ambience:true,music:true,musicVolume:.35,quality:'balanced',laser:true,lighting:'FULL LIGHT',brightness:100,homeChoice:'assault',introOnStart:true,reducedAtmosphere:false,kit:'vest',travelSpeed:'fast'};
 try{const saved=localStorage.getItem(settingsKey),v13=localStorage.getItem('zee.tactical.range.v15.settings')||localStorage.getItem('zee.tactical.range.v14.settings')||localStorage.getItem('zee.tactical.range.v13.settings'),prior=localStorage.getItem('zee.tactical.range.v12.settings')||localStorage.getItem('zee.tactical.range.v11.settings')||localStorage.getItem('zee.tactical.range.v10.settings'),st=JSON.parse(saved||v13||prior||'{}');for(const k of Object.keys(settings))if(typeof st[k]===typeof settings[k]){if(!saved&&!v13&&['lighting','brightness','music','musicVolume'].includes(k))continue;settings[k]=st[k];}if(!saved&&!v13&&typeof st.music==='boolean')settings.ambience=st.music;}catch(e){}
 
 settings.level=clamp(Math.round(settings.level),0,LEVELS.length-1);settings.speed=clamp(Math.round(settings.speed),0,2);if(!['arcade','practice'].includes(settings.mode))settings.mode='arcade';if(!['right','left'].includes(settings.hand))settings.hand='right';if(!['balanced','high'].includes(settings.quality))settings.quality='balanced';settings.brightness=Number.isFinite(settings.brightness)?clamp(Math.round(settings.brightness/5)*5,0,100):100;settings.lighting=lightingName(settings.brightness);settings.musicVolume=Number.isFinite(settings.musicVolume)?clamp(settings.musicVolume,0,1):.35;
@@ -1677,7 +1677,7 @@ function renderBreakEffects(items){
  for(const d of world.doors){if(civilians.some(t=>t.state==='live'&&t.route&&(t.route.entry===d.id||t.route.exit===d.id)))items.push(meshItem('box',M.trs(d.lamp,[0,0,0],[.13,.055,.02]),'glow','#a5bc8f',.64+.20*Math.sin(clockTime*5)));}
 }
 
-function desktopCamera(){const eye=qaHeadOverride||[desktopLean,1.7-desktopDuck,advance19.active?advance19.z:9],m=M.trs(eye,[pitch,yaw,0]);headWorld=m;lastHead=[...eye];desktopVP=M.mul(M.perspective(65*PI/180,viewCanvas.width/viewCanvas.height,.04,80),M.inv(m));desktopInvVP=M.inv(desktopVP);return m;}
+function desktopCamera(){const eye=qaHeadOverride||[(advance19.active?(advance19.x||0):0)+desktopLean,1.7-desktopDuck,advance19.active?advance19.z:9],m=M.trs(eye,[pitch,yaw,0]);headWorld=m;lastHead=[...eye];desktopVP=M.mul(M.perspective(65*PI/180,viewCanvas.width/viewCanvas.height,.04,80),M.inv(m));desktopInvVP=M.inv(desktopVP);return m;}
 function updateDesktopDodge(dt){
  if(xrSession)return;const active=phase==='playing'||phase==='countdown';
  const lean=active?((dodgeKeys.has('KeyD')?1:0)-(dodgeKeys.has('KeyA')?1:0))*.58:0,duck=active&&dodgeKeys.has('KeyS')?.57:0;
@@ -1700,13 +1700,13 @@ function renderItems(){soldierRenderCursor=0;for(const a of Object.values(charac
  // Draw opaque objects first, transparent items back-to-front for each view.
  const opaque=items.filter(i=>!i.mat.transparent&&!(i.alpha<1)),transparent=items.filter(i=>i.mat.transparent||i.alpha<1);transparent.sort((a,b)=>Math.hypot(b.model[12]-lastHead[0],b.model[13]-lastHead[1],b.model[14]-lastHead[2])-Math.hypot(a.model[12]-lastHead[0],a.model[13]-lastHead[1],a.model[14]-lastHead[2]));return opaque.concat(transparent);}
 function resize(){const ratio=Math.min(devicePixelRatio||1,settings.quality==='high'?1.7:1.35);const w=Math.round(innerWidth*ratio),h=Math.round(innerHeight*ratio);if(viewCanvas.width!==w||viewCanvas.height!==h){viewCanvas.width=w;viewCanvas.height=h;}}
-function recenterXR(pose){const m=pose.transform.matrix,forward=V.norm([-m[8],0,-m[10]]),angle=Math.atan2(-forward[0],-forward[2]),position=pose.transform.position,dy=(!xrUsesFloor||settings.seated)?1.7-position.y:0;xrRig=M.mul(M.trans(0,dy,advance19.active?advance19.z:9),M.mul(M.ry(-angle),M.trans(-position.x,0,-position.z)));needRecenter=false;headWorld=M.mul(xrRig,m);lastHead=[headWorld[12],headWorld[13],headWorld[14]];placeMenu();}
+function recenterXR(pose){const m=pose.transform.matrix,forward=V.norm([-m[8],0,-m[10]]),angle=Math.atan2(-forward[0],-forward[2]),position=pose.transform.position,dy=(!xrUsesFloor||settings.seated)?1.7-position.y:0;xrRig=M.mul(M.trans(advance19.active?(advance19.x||0):0,dy,advance19.active?advance19.z:9),M.mul(M.ry(-angle),M.trans(-position.x,0,-position.z)));needRecenter=false;headWorld=M.mul(xrRig,m);lastHead=[headWorld[12],headWorld[13],headWorld[14]];placeMenu();}
 async function enterVR(){audio.unlock();if(enteringVR||xrSession)return;if(!window.isSecureContext){toast('VR needs HTTPS. Open the published GitHub Pages game in Quest Browser.');return}if(!navigator.xr){toast('VR is unavailable in this browser. Open this game in Quest Browser, then Enter VR.');return}enteringVR=true;if(phase==='playing'||phase==='countdown')pause();let session=null;try{
  // requestSession is deliberately the first awaited call, preserving user activation.
  session=await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor','bounded-floor']});await gl.makeXRCompatible();const layer=new XRWebGLLayer(session,gl,{alpha:false,antialias:true,depth:true,framebufferScaleFactor:settings.quality==='balanced'?.85:1});session.updateRenderState({baseLayer:layer,depthNear:.04,depthFar:80});try{layer.fixedFoveation=settings.quality==='balanced'?.6:.35}catch(e){}
  let ref;try{ref=await session.requestReferenceSpace('local-floor');xrUsesFloor=true}catch(e){ref=await session.requestReferenceSpace('local');xrUsesFloor=false}
  xrSession=session;xrRef=ref;xrLayer=layer;needRecenter=true;controllers.clear();buttonStates=new WeakMap();lastTime=0;document.body.classList.add('in-vr');uiCanvas.style.display='none';hud.style.display='none';crosshair.style.display='none';countdownElement.textContent='';
- session.addEventListener('end',()=>{xrSession=null;xrRef=null;xrLayer=null;controllers.clear();lastTime=0;document.body.classList.remove('in-vr');if(phase==='playing'||phase==='countdown')pause('VR session ended. Game paused.');headWorld=M.trs([0,1.7,advance19.active?advance19.z:9],[pitch,yaw,0]);lastHead=[0,1.7,advance19.active?advance19.z:9];refreshMenu();updateHUD();});
+ session.addEventListener('end',()=>{xrSession=null;xrRef=null;xrLayer=null;controllers.clear();lastTime=0;document.body.classList.remove('in-vr');if(phase==='playing'||phase==='countdown')pause('VR session ended. Game paused.');headWorld=M.trs([advance19.active?(advance19.x||0):0,1.7,advance19.active?advance19.z:9],[pitch,yaw,0]);lastHead=[advance19.active?(advance19.x||0):0,1.7,advance19.active?advance19.z:9];refreshMenu();updateHUD();});
  session.addEventListener('visibilitychange',()=>{if(session.visibilityState!=='visible')pause('Headset focus changed. Resume when ready.');});
  session.addEventListener('selectstart',event=>{if(!xrRef)return;const p=event.frame.getPose(event.inputSource.targetRaySpace,xrRef);if(!p)return;const model=M.mul(xrRig,p.transform.matrix),o=M.point(model,[0,0,0]),d=V.norm(M.dir(model,[0,0,-1]));if(event.inputSource.handedness===settings.hand)gunWorld=model;audio.unlock();if(['lobby','paused','results'].includes(phase)){const h=uiRay(o,d);if(h)clickUI(buttonAt(h.x,h.y));}else if(event.inputSource.handedness===settings.hand)fire(o,d,event.inputSource);else if(phase==='playing')tryCollectSupply(o,d,event.inputSource);});
  session.addEventListener('squeezestart',e=>{if(e.inputSource.handedness===settings.hand)requestReload();else if(phase==='playing')toggleIon()});
@@ -1725,7 +1725,7 @@ function desktopFrame(time){requestAnimationFrame(desktopFrame);if(xrSession)ret
 const elapsedDt=lastTime?Math.max(0,(time-lastTime)/1000):1/60,dt=Math.min(elapsedDt,.08);lastTime=time;if(!qaFrozen)updateDesktopDodge(Math.min(elapsedDt,.25));desktopCamera();if(!qaFrozen&&!document.hidden)tick(dt,elapsedDt);desktopCamera();const items=renderItems();R.renderShadow(world.items.concat(world.bossDoor?.shadow||[]));R.begin(null,viewCanvas.width,viewCanvas.height);R.view(desktopVP,lastHead,[0,0,viewCanvas.width,viewCanvas.height],items);renderHitOverlay();}
 const countdownElement=document.getElementById('countdown');
 viewCanvas.addEventListener('pointerdown',e=>{audio.unlock();mouse={x:e.clientX,y:e.clientY};if(e.button===2){rightDragging=true;viewCanvas.setPointerCapture?.(e.pointerId);return}if(e.button===0){desktopCamera();aimGun();const r=mouseRay();fire(r.o,r.d);}});
-window.addEventListener('pointermove',e=>{mouse={x:e.clientX,y:e.clientY};crosshair.style.left=e.clientX+'px';crosshair.style.top=e.clientY+'px';if(rightDragging){yaw=clamp(yaw-e.movementX*.0025,-1.25,1.25);pitch=clamp(pitch-e.movementY*.0025,-.55,.65);}});
+window.addEventListener('pointermove',e=>{mouse={x:e.clientX,y:e.clientY};crosshair.style.left=e.clientX+'px';crosshair.style.top=e.clientY+'px';if(rightDragging){yaw=world.advance?Math.atan2(Math.sin(yaw-e.movementX*.0025),Math.cos(yaw-e.movementX*.0025)):clamp(yaw-e.movementX*.0025,-1.25,1.25);pitch=clamp(pitch-e.movementY*.0025,-.55,.65);}});
 window.addEventListener('pointerup',()=>rightDragging=false);viewCanvas.addEventListener('lostpointercapture',()=>rightDragging=false);viewCanvas.addEventListener('contextmenu',e=>e.preventDefault());
 uiCanvas.addEventListener('pointermove',e=>{const r=uiCanvas.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*1024,y=(e.clientY-r.top)/r.height*1152,i=buttonAt(x,y);if(i!==uiHover){uiHover=i;drawMenu()}uiCanvas.style.cursor=i>=0?'pointer':'default'});
 uiCanvas.addEventListener('pointerleave',()=>{uiHover=-1;drawMenu()});uiCanvas.addEventListener('click',e=>{const r=uiCanvas.getBoundingClientRect();clickUI(buttonAt((e.clientX-r.left)/r.width*1024,(e.clientY-r.top)/r.height*1152))});
@@ -1990,7 +1990,7 @@ const HOME_LEVELS=Object.freeze([
  {id:'warden',level:3,title:'Warden Hunt',sub:'Guards, ION rounds, boss',info:'Collect ION ammunition. Hit the Warden\'s open chest core.'},
  {id:'night',level:4,title:'Night Breach',sub:'NEW / cinematic showdown',info:'12 guards + 2 drones, then the Warden. Choose Dark for the film look.'},
  {id:'pillars',level:5,title:'Pillar Hall',sub:'NEW / 3 rooms + final boss',info:'Tall pillars, reshuffled walls, 3 waves, then the Warden finale.'},
-  {id:'advance',level:6,title:'Pillar Advance',sub:'MOVING / 6 pillar ambushes',info:'Hold off-hand stick forward or W to move. Release to stop. Final boss.'},
+  {id:'advance',level:6,title:'Pillar Advance',sub:'FAST MOVE / FRONT + REAR',info:'Off-hand stick / WASD: move freely. Turn to face rear attackers. Release to stop. Warden finale.'},
   {id:'guardian',level:0,title:'Guardian Campaign',sub:'Six missions / final boss',info:'A complete six-mission operation. Saved progress is in Game Setup.'}
 ]);
 const HOME_DIFFICULTY=['Easy','Normal','Hard'];
@@ -2435,7 +2435,7 @@ function drawFriendlyMenu(){
  };
  const section=(n,label,y)=>{text(n,60,y,25,'#94cfc8',900);text(label,112,y,27,'#c6d9db',800);};
  const wrap=(str,x,y,width=900,size=27)=>{c.font='500 '+size+'px Arial';let lineText='';for(const word of str.split(' ')){if(c.measureText(lineText+word).width>width){text(lineText,x,y,size,'#b4c9ce',500);lineText='';y+=size*1.38;}lineText+=word+' ';}if(lineText)text(lineText,x,y,size,'#b4c9ce',500);return y;};
- text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V19',900,58,23,'#abc1c8');
+ text('ZEE / TACTICAL RANGE',60,58,23,'#9ecbc7',800);text('V19.1',882,58,23,'#abc1c8');
  if(introActive){
   text('WELCOME TO THE RANGE',58,148,52);text('Your uploaded game intro / 10 seconds',60,199,27,'#acc7cc',500);
   c.fillStyle='#03090c';roundRect(c,56,238,912,513,10);c.fill();
@@ -2472,11 +2472,12 @@ function drawFriendlyMenu(){
   b('Intro on launch',settings.introOnStart?'On / always skippable':'Off / replay still available',524,588,()=>toggle('introOnStart'));
   button('MUSIC + SOUND',60,703,440,73,()=>{menuPage='sound16';refreshMenu();});
   button('WATCH INTRO',524,703,440,73,openIntro);
-  button('CAMPAIGN / MISSION SELECT',60,797,904,73,()=>{if(phase==='lobby'){menuPage='missions16';refreshMenu();}else toast('Return to the main menu to change missions.');},false,'',27);
+  button('CAMPAIGN MISSIONS',60,797,440,73,()=>{if(phase==='lobby'){menuPage='missions16';refreshMenu();}else toast('Return to the main menu to change missions.');},false,'',27);
+  button('MOVEMENT SPEED',524,797,440,73,()=>cycle('travelSpeed',['comfort','fast','run']),false,settings.travelSpeed.toUpperCase()+' / '+(V191_SPEEDS[settings.travelSpeed]||3.2)+' m/s',25);
   button('SHUFFLE ROOM',60,892,440,68,()=>{if(phase==='lobby')shuffleLobby();else toast('Use Retry / Shuffle from Pause to reset the active wave.');},false,'',25);
   button(xrSession?'LEAVE VR':'ENTER VR',524,892,440,68,xrSession?exitVR:enterVR);
   button(phase==='paused'?'BACK TO PAUSE':'BACK TO PLAY',60,993,904,84,()=>{menuPage='main';refreshMenu();},true,'',30);
-  text('Pillar Advance: hold stick / W to move. Other levels stay stationary.',60,1113,21,'#a6bdc3',500);
+  text('Pillar Advance: stick / WASD moves. Other levels stay stationary.',60,1113,21,'#a6bdc3',500);
  }else if(menuPage==='sound16'||menuPage==='av'){
   text('MUSIC + SOUND',56,152,60);text('Keep the warnings clear. Set your own sound balance.',60,214,25,'#aec5cb',500);line(250);
   button('BACKGROUND MUSIC',60,292,904,88,()=>toggle('music'),settings.music,settings.music?'On / original score':'Off',28);
@@ -2650,7 +2651,7 @@ function buildAdvanceWorld(R,A,seed,stage){
   b.box([0,7.72,z],[11.2,.25,.55],'steel','#586a63',[0,0,0],true);
   for(const x of [-3.9,3.9])b.box([x,7.0,z],[1.3,.08,.32],'glow','#b1c5ba');
   b.box([0,.012,z+3.5],[3.35,.016,.06],'plain','#9caa91');
-  if(i%2===0)b.sign('SECTOR '+String(i+1).padStart(2,'0'),'ADVANCE / IDENTIFY / CLEAR',[0,6.70,z-.03],[3.8,.54],'#a6c2b8');
+  if(i%2===0)b.sign('SECTOR '+String(i+1).padStart(2,'0'),'KEEP MOVING / CHECK YOUR SIX',[0,6.70,z-.03],[3.8,.54],'#a6c2b8');
  }
  for(const side of [-1,1]){
   b.box([side*1.48,.015,-21],[.035,.012,60],'plain','#b4b09a');
@@ -2813,7 +2814,7 @@ updateHUD=function(){V19PriorHUD();const cfg=waves[wave];if(!cfg)return;
 const V19PriorObjective=combatObjective;
 combatObjective=function(){const c=waves[wave];if(world.advance&&bossStage==='guards')return 'SECTOR '+Math.max(1,advance19.triggered)+'/6 | '+stats.destroyed+'/'+c.count+' DOWN';if(c.objective==='eliminate')return 'DOWN '+stats.destroyed+'/'+c.count+' | DRONES '+stats.dronesDestroyed+'/'+c.droneCount;return V19PriorObjective();};
 const V19PriorBoard=drawBoard;
-drawBoard=function(){V19PriorBoard();const c=boardCanvas.getContext('2d');if(phase==='lobby')return;c.fillStyle='#102330';c.fillRect(18,12,700,36);c.font='700 21px monospace';c.fillStyle='#b7d5cd';c.fillText(world.advance?'PILLAR ADVANCE / HOLD FORWARD TO MOVE':'ROOM '+(waves[wave].stage+1)+' / '+world.layoutVariant.toUpperCase(),30,38);R.updateTexture(boardTexture);};
+drawBoard=function(){V19PriorBoard();const c=boardCanvas.getContext('2d');if(phase==='lobby')return;c.fillStyle='#102330';c.fillRect(18,12,700,36);c.font='700 21px monospace';c.fillStyle='#b7d5cd';c.fillText(world.advance?'FAST CROSSFIRE / MOVE FREELY / CHECK YOUR SIX':'ROOM '+(waves[wave].stage+1)+' / '+world.layoutVariant.toUpperCase(),30,38);R.updateTexture(boardTexture);};
 const V19PriorId=recordId;recordId=function(){return V19PriorId()+':close-v19';};
 window.addEventListener('keydown',e=>{if(e.code==='KeyW'&&!['INPUT','TEXTAREA'].includes(e.target.tagName)){advance19.held=true;e.preventDefault();}});
 window.addEventListener('keyup',e=>{if(e.code==='KeyW')advance19.held=false;});
@@ -2855,14 +2856,244 @@ function v19PedestrianAhead(e){
  }return false;
 }
 
+/* V19.1 FAST CROSSFIRE: additive movement / encounter patch for Pillar Advance.
+   No character, animation, audio or intro payloads are changed. */
+const V191_SPEEDS={comfort:2.0,fast:3.2,run:4.2};
+if(!Object.hasOwn(V191_SPEEDS,settings.travelSpeed))settings.travelSpeed='fast';
+const move191Keys=new Set();
+Object.assign(advance19,{x:0,frontier:9,sectorSpawns:[0,0,0,0,0,0],sectorTimes:[0,0,0,0,0,0],rearShots:0,lastRearShot:-100,movementBlocked:'',pendingSector:-1});
+function v191Input(){
+ if(!xrSession){
+  const x=(move191Keys.has('KeyD')?1:0)-(move191Keys.has('KeyA')?1:0);
+  const y=((advance19.held||move191Keys.has('KeyW'))?1:0)-(move191Keys.has('KeyS')?1:0);
+  const len=Math.hypot(x,y);return len>1?[x/len,y/len]:[x,y];
+ }
+ const item=[...controllers.values()].find(c=>c.source.handedness!==settings.hand&&c.source.gamepad?.mapping==='xr-standard');
+ if(!item?.model||!rawHead||xrSession.visibilityState!=='visible'){advance19.neutralRequired=true;return [0,0];}
+ const axes=item.source.gamepad.axes,x=Number.isFinite(axes?.[2])?axes[2]:0,y=Number.isFinite(axes?.[3])?-axes[3]:0,len=Math.hypot(x,y);
+ if(len<=.16){advance19.neutralRequired=false;return [0,0];}
+ if(advance19.neutralRequired)return [0,0];
+ const strength=clamp((len-.16)/.84,0,1);return [x/len*strength,y/len*strength];
+}
+function v191Translate(x,z){
+ const dx=x-(advance19.x||0),dz=z-advance19.z;advance19.x=x;advance19.z=z;
+ if(xrSession){
+  xrRig[12]+=dx;xrRig[14]+=dz;headWorld[12]+=dx;headWorld[14]+=dz;lastHead[0]+=dx;lastHead[2]+=dz;gunWorld[12]+=dx;gunWorld[14]+=dz;
+  for(const c of controllers.values())if(c.model){c.model[12]+=dx;c.model[14]+=dz;}
+ }else desktopCamera();
+ R.shadowDirty=true;
+}
+v19SetTravelZ=function(z){v191Translate(advance19.x||0,z);};
+v19ResetTravel=function(active){
+ v191Translate(0,9);move191Keys.clear();
+ Object.assign(advance19,{active,x:0,z:9,frontier:9,triggered:0,quota:0,held:false,axis:0,moving:false,speed:0,announced:-1,neutralRequired:true,sectorSpawns:[0,0,0,0,0,0],sectorTimes:[0,0,0,0,0,0],rearShots:0,lastRearShot:-100,movementBlocked:'',pendingSector:-1});
+};
+function v191StaticClear(a,b,radius=.38){
+ const v=V.sub(b,a),len=Math.hypot(...v),dir=len>1e-8?V.mul(v,1/len):[0,0,1];
+ for(const c of world.colliders){
+  const m=c.model,ey=(Math.abs(m[1])+Math.abs(m[5])+Math.abs(m[9]))*.5;
+  if(m[13]+ey<.15||m[13]-ey>1.85)continue;
+  const ex=(Math.abs(m[0])+Math.abs(m[4])+Math.abs(m[8]))*.5,ez=(Math.abs(m[2])+Math.abs(m[6])+Math.abs(m[10]))*.5;
+  if(m[12]+ex+radius<Math.min(a[0],b[0])||m[12]-ex-radius>Math.max(a[0],b[0])||m[14]+ez+radius<Math.min(a[2],b[2])||m[14]-ez-radius>Math.max(a[2],b[2]))continue;
+  const sx=Math.hypot(m[0],m[1],m[2]),sz=Math.hypot(m[8],m[9],m[10]);if(sx<1e-5||sz<1e-5)continue;
+  const o=M.point(c.inv,[a[0],1,a[2]]),d=M.dir(c.inv,dir),q=M.point(c.inv,[b[0],1,b[2]]),lo=[-.5-radius/sx,-1,-.5-radius/sz],hi=[.5+radius/sx,1,.5+radius/sz];o[1]=d[1]=q[1]=0;
+  const inside=p=>p[0]>lo[0]&&p[0]<hi[0]&&p[2]>lo[2]&&p[2]<hi[2];
+  // A head tracked into a boundary can move back out, not farther inside it.
+  if(inside(o)){const depth=p=>Math.min(p[0]-lo[0],hi[0]-p[0],p[2]-lo[2],hi[2]-p[2]);if(inside(q)&&depth(q)>=depth(o)-1e-6)return false;continue;}
+  if(inside(q))return false;
+  const hit=rayBox(o,d,lo,hi);if(hit!==null&&hit<=len+.001)return false;
+ }
+ return true;
+}
+function v191BodyClear(a,b){
+ // Only actual bodies block contact. A civilian's future crossing no longer
+ // freezes the player anywhere in the hallway; the player can strafe around it.
+ const people=civilians.filter(t=>t.state==='live').map(t=>({p:[t.x,0,t.z],r:.53}));
+ for(const t of targets)if(t.state==='live'&&t.shown)people.push({p:[t.model[12],0,t.model[14]],r:t.isBoss?.84:.57});
+ for(const {p,r} of people){const before=Math.hypot(a[0]-p[0],a[2]-p[2]),after=Math.hypot(b[0]-p[0],b[2]-p[2]);if(segmentDistance(a,b,p)<r&&after<before-.00001)return false;}
+ return true;
+}
+function v191Move(dx,dz){
+ let eye=playerEye(),left=Math.hypot(dx,dz);if(left<1e-8)return;
+ const pieces=Math.ceil(left/.10),sx=dx/pieces,sz=dz/pieces;
+ const test=(x,z)=>{
+  const a=[eye[0],0,eye[2]],b=[x,0,z];
+  if(x<world.bounds.xmin+.4||x>world.bounds.xmax-.4||z<world.bounds.zmin+.4||z>world.bounds.zmax-.4)return false;
+  return v191StaticClear(a,b)&&v191BodyClear(a,b);
+ };
+ for(let i=0;i<pieces;i++){
+  let ax=sx,az=sz;
+  if(!test(eye[0]+ax,eye[2]+az)){
+   // Slide along geometry rather than stopping both axes at a corner.
+   if(Math.abs(sx)>Math.abs(sz)){if(test(eye[0]+sx,eye[2]))az=0;else if(test(eye[0],eye[2]+sz))ax=0;else ax=az=0;}
+   else {if(test(eye[0],eye[2]+sz))ax=0;else if(test(eye[0]+sx,eye[2]))az=0;else ax=az=0;}
+  }
+  if(Math.hypot(ax,az)<1e-8){advance19.movementBlocked='solid geometry or body';break;}
+  v191Translate(advance19.x+ax,advance19.z+az);eye=playerEye();advance19.moving=true;
+ }
+}
+function v191UnlockSectors(){
+ advance19.frontier=Math.min(advance19.frontier,playerEye()[2]);
+ while(advance19.triggered<world.encounters.length&&advance19.frontier<=world.encounters[advance19.triggered].triggerZ+.02){
+  const i=advance19.triggered++;advance19.quota=(i+1)*3;advance19.sectorTimes[i]=clockTime;
+  nextSpawn=Math.min(nextSpawn,.30+Math.random()*.25);updateHUD();
+ }
+}
+v19AdvanceStep=function(dt){
+ advance19.moving=false;advance19.movementBlocked='';
+ if(!world.advance||!advance19.active||phase!=='playing'){advance19.speed=0;return;}
+ v191UnlockSectors();
+ const input=v191Input(),mag=Math.hypot(...input);
+ if(mag<.001){advance19.speed=0;return;}
+ // Head-relative horizontal motion: turning the headset never turns the camera
+ // for the player. Stick sideways/backwards works while looking at a pursuer.
+ let fx=-headWorld[8],fz=-headWorld[10],l=Math.hypot(fx,fz);
+ if(l<.05){fx=advance19.lastForward?.[0]||0;fz=advance19.lastForward?.[1]||-1;l=Math.hypot(fx,fz);}
+ fx/=l;fz/=l;advance19.lastForward=[fx,fz];
+ const top=V191_SPEEDS[settings.travelSpeed]||3.2;
+ advance19.speed=Math.min(top*mag,advance19.speed+dt*12);
+ const dx=(-fz*input[0]+fx*input[1])/mag*advance19.speed*dt,dz=(fx*input[0]+fz*input[1])/mag*advance19.speed*dt;
+ v191Move(dx,dz);v191UnlockSectors();
+};
+const V191OldDodge=updateDesktopDodge;
+updateDesktopDodge=function(dt){if(!world.advance)return V191OldDodge(dt);desktopLean=0;desktopDuck=lerp(desktopDuck,move191Keys.has('ControlLeft')||move191Keys.has('ControlRight')?.57:0,1-Math.exp(-18*dt));};
+const V191OldPause=pause;
+pause=function(message){move191Keys.clear();advance19.held=false;advance19.speed=0;advance19.neutralRequired=true;return V191OldPause(message);};
+window.addEventListener('keydown',e=>{if(['KeyW','KeyA','KeyS','KeyD','ControlLeft','ControlRight'].includes(e.code)&&!['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)&&world.advance&&phase==='playing'){move191Keys.add(e.code);e.preventDefault();}});
+window.addEventListener('keyup',e=>move191Keys.delete(e.code));window.addEventListener('blur',()=>move191Keys.clear());
+
+function v191Station(base){
+ const c=world.columns[base.id],eye=playerEye();if(!c)return {...base};
+ const sign=eye[2]>=c.z?1:-1,side=Math.sign(c.x);
+ return {...base,x:c.x-side*1.35,z:c.z-sign*1.16,hiddenX:c.x,side:-side,sector:base.sector};
+}
+function v191IsRear(p){const e=playerEye(),f=V.norm([-headWorld[8],0,-headWorld[10]]);return V.dot(V.sub(p,e),f)<-1.3;}
+function v191PendingSector(){
+ for(let i=0;i<advance19.triggered;i++){
+  const count=advance19.sectorSpawns[i];if(count>=3)continue;
+  // The third member is a delayed rear ambush when the player pushes past.
+  // Stationary players can still clear a checkpoint: it releases after 7 sec.
+  if(count===2&&advance19.frontier>world.encounters[i].z-1.3&&clockTime-advance19.sectorTimes[i]<7)continue;
+  return i;
+ }
+ return -1;
+}
+function v191StationChoices(except=null,sector=-1){
+ const used=new Set(targets.filter(t=>t!==except).flatMap(t=>[t.station.id,...(t.moveTo?[t.moveTo.id]:[])])),eye=playerEye();
+ const preferRear=sector>=0&&(advance19.sectorSpawns[sector]===2||stats.presented%3===2);
+ return world.stations.filter(s=>s.sector<advance19.triggered&&!used.has(s.id)).map(v191Station).filter(s=>{
+  const d=Math.hypot(s.x-eye[0],s.z-eye[2]);return d>2.8&&d<24&&combatStationVisible(s)&&v191StaticClear([s.hiddenX,0,s.z],[s.x,0,s.z],.34);
+ }).map(s=>{
+  const d=Math.hypot(s.x-eye[0],s.z-eye[2]),rear=v191IsRear([s.x,1.4,s.z]);
+  return {s,w:1/(1+Math.abs(d-7)*.22)*(s.sector===sector?1.6:1)*(preferRear&&rear?2.5:1)/(1+(stationUse[s.id]||0)*.12)};
+ }).sort((a,b)=>b.w-a.w);
+}
+const V191OldChoose=chooseCombatStation;
+chooseCombatStation=function(except=null){
+ if(!world.advance)return V191OldChoose(except);
+ const choices=v191StationChoices(except,advance19.pendingSector);if(!choices.length)return null;
+ const hidden=choices.filter(q=>!canSee(playerEye(),[q.s.hiddenX,1.35,q.s.z]));
+ const list=hidden.length?hidden:choices;let p=Math.random()*list.reduce((n,q)=>n+q.w,0);
+ for(const q of list){p-=q.w;if(p<=0)return q.s;}return list.at(-1).s;
+};
+const V191OldSpawn=spawnCombatSoldier;
+spawnCombatSoldier=function(){
+ if(!world.advance)return V191OldSpawn();
+ if(bossStage!=='guards'||stats.presented>=waves[wave].count)return false;
+ const sector=v191PendingSector();if(sector<0)return false;advance19.pendingSector=sector;
+ const before=stats.presented,ok=V191OldSpawn();advance19.pendingSector=-1;
+ if(ok&&stats.presented>before){advance19.sectorSpawns[sector]++;const t=targets.at(-1);t.originSector=sector;t.rearAmbush=v191IsRear([t.station.x,1.4,t.station.z]);if(t.rearAmbush)t.aimLeft+=.35;}
+ return ok;
+};
+function v191RelocationPath(t,s){
+ const a=[t.model[12],0,t.model[14]],b=[s.hiddenX,0,s.z],lane=Math.sign(t.station.hiddenX||t.station.x)*1.04;
+ const choices=[[a,b],[a,[lane,0,a[2]],[lane,0,b[2]],b],[a,[0,0,a[2]],[0,0,b[2]],b]];
+ for(const path of choices)if(path.slice(1).every((p,i)=>v191StaticClear(path[i],p,.34)))return path;
+ return null;
+}
+const V191OldRelocate=startRelocation;
+startRelocation=function(t){
+ if(!world.advance)return V191OldRelocate(t);
+ const eye=playerEye(),here=Math.hypot(t.model[12]-eye[0],t.model[14]-eye[2]);
+ let choices=v191StationChoices(t).sort((a,b)=>Math.abs(Math.hypot(a.s.x-eye[0],a.s.z-eye[2])-8)-Math.abs(Math.hypot(b.s.x-eye[0],b.s.z-eye[2])-8));
+ for(const {s}of choices){
+  if(s.id===t.station.id&&Math.abs(s.z-t.station.z)<.1)continue;
+  if(here<11&&s.id!==t.station.id&&Math.random()<.5)continue;
+  const path=v191RelocationPath(t,s);if(!path)continue;
+  Object.assign(t,{movePath:path,moveTo:s,moveIndex:1,position:[t.model[12],0,t.model[14]],aiState:'relocate',lockPoint:null,runBlend:0,moveTime:0,walkWait:0,moveCrouch:t.crouchBlend||0,hiddenLeft:0});stats.repositions++;stationUse[s.id]=(stationUse[s.id]||0)+1;return true;
+ }
+ return false;
+};
+const V191OldCombat=updateCombat;
+updateCombat=function(dt){
+ if(world.advance&&phase==='playing')for(const t of targets){
+  if(t.isBoss||t.state!=='live')continue;
+  const distance=Math.hypot(t.model[12]-playerEye()[0],t.model[14]-playerEye()[2]);
+  if(distance>17&&['engage','emerge'].includes(t.aiState)&&t.age>2){t.aiState='withdraw';t.lockPoint=null;}
+ }
+ return V191OldCombat(dt);
+};
+const V191OldEnemyFire=enemyFire;
+enemyFire=function(t){const behind=world.advance&&v191IsRear([t.model[12],1.4,t.model[14]]),ok=V191OldEnemyFire(t);if(ok&&behind){advance19.rearShots++;advance19.lastRearShot=clockTime;}return ok;};
+const V191OldStartWave=startWave;
+startWave=function(index,shuffle=false){V191OldStartWave(index,shuffle);if(world.advance)waves[wave].max=run.speed===0?2:3;};
+const V191OldStatus=combatStatus;
+combatStatus=function(){if(world.advance&&phase==='playing'&&bossStage==='guards')return clockTime-advance19.lastRearShot<1.8?'REAR CONTACT / TURN AND RETURN FIRE':advance19.triggered===6?'CLEAR REMAINING CONTACTS / WARDEN AHEAD':'FREE MOVE / CHECK FRONT AND REAR';return V191OldStatus();};
+const V191OldHUD=updateHUD;
+updateHUD=function(){V191OldHUD();if(!world.advance)return;const h=document.querySelector('.hints');if(h)h.textContent='STICK / WASD: MOVE  /  TURN TO CHECK BEHIND  /  RELEASE: STOP';if(phase==='playing'&&clockTime-advance19.lastRearShot<1.8)document.getElementById('hThreat').textContent='REAR CONTACT / TURN AND RETURN FIRE';};
+const V191OldRecord=recordId;
+recordId=function(){const id=V191OldRecord();return waves[wave]?.level===6?id+':fast-crossfire-v191':id;};
+// Long hall drone routing: a player can outrun the old one-corner search.
+// Route to the unobstructed central air lane, then back toward visible cover.
+// Every segment uses the same swept-volume collision test as normal flight.
+function v191AirRoute(from,goal){
+ for(const dz of [0,1.6,-1.6,3.2,-3.2,4.8,-4.8]){
+  const z=clamp(from[2]+dz,-50.8,9.8);
+  const raw=[from,[from[0],from[1],z],[0,from[1],z],[0,goal[1],z],[0,goal[1],goal[2]],goal],path=[from.slice()];
+  for(const p of raw.slice(1))if(Math.hypot(...V.sub(p,path.at(-1)))>.03)path.push(p.slice());
+  if(!path.slice(1).every((p,i)=>v19AirClear(path[i],p)))continue;
+  const fine=[path[0]];for(const p of path.slice(1)){const a=fine.at(-1),v=V.sub(p,a),n=Math.ceil(Math.hypot(...v)/7);for(let i=1;i<=n;i++)fine.push(V.add(a,V.mul(v,i/n)));}
+  return fine;
+ }
+ return null;
+}
+const V191OldDroneGoal=droneGoal;
+droneGoal=function(t){
+ if(!world.advance)return V191OldDroneGoal(t);
+ t.route191=[];
+ const candidates=v19AirCandidates().filter(p=>Math.hypot(...V.sub(p,t.pos))>1).sort((a,b)=>Math.abs(a[0])-Math.abs(b[0]));
+ const direct=candidates.filter(p=>v19AirClear(t.pos,p));
+ if(direct.length)return direct[Math.floor(Math.random()*Math.min(direct.length,6))].slice();
+ for(const p of candidates.slice(0,12)){const path=v191AirRoute(t.pos,p);if(path&&path.length>1){t.route191=path.slice(2);return path[1];}}
+ return t.pos.slice();
+};
+const V191OldDrones=updateDrones;
+updateDrones=function(dt){
+ V191OldDrones(dt);if(!world.advance)return;
+ for(const t of drones)if(t.state==='live'&&t.ai==='aim'){
+  if(t.route191?.length){
+   const p=t.route191.shift();if(!v19AirClear(t.pos,p)){t.route191=[];continue;}
+   t.from=t.pos.slice();t.goal=p;t.flight=0;t.flightDuration=Math.max(.48,Math.hypot(...V.sub(p,t.pos))/4.8);t.ai='move';t.lockPoint=null;
+  }else if(!canSee(t.pos,playerEye())||Math.hypot(...V.sub(t.pos,playerEye()))>18){
+   t.from=t.pos.slice();t.goal=droneGoal(t);t.flight=0;t.flightDuration=Math.max(.55,Math.hypot(...V.sub(t.goal,t.pos))/4.8);t.ai='move';t.lockPoint=null;
+  }
+ }
+};
+
 settings.level=homeChoice().level;waves=makeWaves(settings.level);wave=0;
 replaceWorld(newRoomSeed(),settings.level,0);saveSettings();
 if(introActive){prepareIntroVideo();syncIntroControls();}
 
 
-demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V19 / PILLAR ADVANCE';requestAnimationFrame(desktopFrame);
+demoTargets=makeDemo();resize();drawMenu();drawBoard();drawAmmo();drawCombatHUD();updateHUD();document.getElementById('loading').style.display='none';document.getElementById('build').textContent='V19.1 / FAST CROSSFIRE';requestAnimationFrame(desktopFrame);
 // Opt-in diagnostics, absent from the normal player interface.
 if(new URLSearchParams(location.search).get('qa')==='1')window.__rangeQA={
+ v191(){return {version:'19.1',speed:settings.travelSpeed,maxSpeed:V191_SPEEDS[settings.travelSpeed],advance:{...advance19},eye:playerEye(),facing:[-headWorld[8],0,-headWorld[10]],phase,bossStage,actors:targets.map(t=>({id:t.id,state:t.state,position:[t.model[12],0,t.model[14]],originSector:t.originSector,station:t.station,ai:t.aiState,shown:t.shown,visible:t.visible,shots:t.shotCount,rearAmbush:t.rearAmbush})),enemyShots:enemyShots.map(t=>({owner:t.owner,origin:t.a,pos:t.pos,dir:t.dir})),stats:{...stats},health:combatHealth,gl:gl.getError()};},
+ moveInput(x=0,y=1){move191Keys.clear();advance19.held=false;if(x<0)move191Keys.add('KeyA');if(x>0)move191Keys.add('KeyD');if(y>0)move191Keys.add('KeyW');if(y<0)move191Keys.add('KeyS');},
+ moveOnly(seconds){for(let t=0;t<seconds;t+=.016)v19AdvanceStep(Math.min(.016,seconds-t));},
+ forcePosition(x,z){v191Translate(x,z);v191UnlockSectors();},
+ solidSweep(a,b){return v191StaticClear(a,b);},
+ stepRender(seconds=.016){this.step(seconds);desktopCamera();const items=renderItems();R.renderShadow(world.items.concat(world.bossDoor?.shadow||[]));R.begin(null,viewCanvas.width,viewCanvas.height);R.view(desktopVP,lastHead,[0,0,viewCanvas.width,viewCanvas.height],items);renderHitOverlay();gl.finish();return gl.getError();},
  v19(){return {version:19,advance:{...advance19},eye:playerEye(),room:{seed:world.seed,layout:world.layoutVariant,index:world.layoutIndex,level:world.level,stage:world.stage,theme:world.theme,length:world.length,columns:world.columns,doors:world.doors.length,encounters:world.encounters,stations:world.stations.map(s=>({...s,visible:combatStationVisible(s),distance:Math.hypot(s.x-playerEye()[0],s.z-playerEye()[2])}))},progress:v19FlightStatus(),drones:drones.map(t=>({id:t.id,hp:t.hp,state:t.state,pos:t.pos.slice(),goal:t.goal?.slice(),clear:v19AirClear(t.pos,t.pos),visible:canSee(t.pos,playerEye())})),wave,waves,phase,bossStage,boss:boss?{hp:boss.hp,state:boss.state,phase:boss.bossPhase,pos:boss.position}:null,gl:gl.getError()};},
  holdForward(v=true){advance19.held=v;},
  forceTravel(z){if(!world.advance)throw Error('Not the corridor');v19SetTravelZ(z);},
